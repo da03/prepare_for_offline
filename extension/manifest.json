@@ -1,0 +1,17 @@
+{
+  "manifest_version": 3,
+  "name": "Prepare for Offline - Page Clipper",
+  "version": "0.1.0",
+  "description": "Send the current page into your local Prepare for Offline pack.",
+  "permissions": ["activeTab", "scripting", "storage", "tabs"],
+  "host_permissions": ["http://127.0.0.1/*", "http://localhost/*"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_title": "Add page to offline pack"
+  },
+  "side_panel": {
+    "default_path": "sidepanel.html"
+  }
+}

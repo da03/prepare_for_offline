@@ -1,0 +1,33 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "Prepare for Offline",
+  "version": "0.1.0",
+  "identifier": "com.prepareforoffline.app",
+  "build": {
+    "frontendDist": "../../frontend/dist"
+  },
+  "app": {
+    "windows": [
+      {
+        "title": "Prepare for Offline",
+        "width": 460,
+        "height": 640,
+        "resizable": true,
+        "visible": false,
+        "label": "main"
+      }
+    ],
+    "security": {
+      "csp": null
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": ["app", "dmg"],
+    "icon": ["icons/icon.icns", "icons/icon.png"],
+    "externalBin": ["binaries/pfo-backend"],
+    "macOS": {
+      "minimumSystemVersion": "11.0"
+    }
+  }
+}
