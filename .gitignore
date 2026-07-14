@@ -16,6 +16,11 @@ desktop/src-tauri/target/
 desktop/src-tauri/binaries/
 desktop/src-tauri/gen/
 
+# PyInstaller artifacts
+backend/build/
+backend/dist/
+backend/*.spec
+
 # App data / local
 *.db
 *.db-wal

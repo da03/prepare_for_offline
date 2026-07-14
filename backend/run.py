@@ -12,6 +12,7 @@ import socket
 import uvicorn
 
 from app.config import get_settings
+from app.main import app as fastapi_app
 
 
 def _free_port() -> int:
@@ -28,7 +29,9 @@ def main() -> None:
     print(f"[prepare-for-offline] app token: {settings.app_token}")
     print(f"[prepare-for-offline] runtime:   {settings.runtime_path}")
     print(f"[prepare-for-offline] http://{settings.host}:{port}")
-    uvicorn.run("app.main:app", host=settings.host, port=port, reload=False)
+    # Pass the app object directly (not an import string) so this works both in
+    # dev and inside a frozen PyInstaller binary.
+    uvicorn.run(fastapi_app, host=settings.host, port=port, reload=False)
 
 
 if __name__ == "__main__":
