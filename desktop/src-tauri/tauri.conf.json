@@ -7,16 +7,7 @@
     "frontendDist": "../../frontend/dist"
   },
   "app": {
-    "windows": [
-      {
-        "title": "Prepare for Offline",
-        "width": 460,
-        "height": 640,
-        "resizable": true,
-        "visible": false,
-        "label": "main"
-      }
-    ],
+    "windows": [],
     "security": {
       "csp": null
     }
