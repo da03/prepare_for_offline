@@ -45,5 +45,9 @@ jobs:
       - name: Check desktop
         working-directory: desktop/src-tauri
         run: |
+          target="$(rustc -Vv | sed -n 's/host: //p')"
+          mkdir -p binaries
+          touch "binaries/pfo-backend-$target"
+          chmod +x "binaries/pfo-backend-$target"
           cargo fmt --check
           cargo check
