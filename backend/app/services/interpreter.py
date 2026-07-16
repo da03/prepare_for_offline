@@ -32,6 +32,8 @@ class LocalInterpreter:
         self._lock = threading.Lock()
 
     def _ensure_loaded(self):
+        if os.environ.get("PREPARE_OFFLINE_SKIP_MODEL_DOWNLOAD") == "1":
+            raise RuntimeError("Interpreter loading is disabled for this process")
         if self._llm is not None:
             return self._llm
         with self._lock:
@@ -50,6 +52,8 @@ class LocalInterpreter:
             return self._llm
 
     def is_available(self) -> bool:
+        if os.environ.get("PREPARE_OFFLINE_SKIP_MODEL_DOWNLOAD") == "1":
+            return False
         try:
             cache.get_base_model_path(get_settings().interpreter)
             return True
