@@ -269,7 +269,10 @@ def _run(job_id: str, raw_plan: dict) -> None:
             except Exception as exc:
                 _update(conn, job_id, "downloading",
                         f"Base model not cached ({exc}); deterministic answers only")
-        if raw_plan.get("cache_ui_router", True):
+        if (
+            raw_plan.get("cache_ui_router", True)
+            and os.environ.get("PREPARE_OFFLINE_SKIP_MODEL_DOWNLOAD") != "1"
+        ):
             try:
                 paw_experts.ensure_ui_router_cached()
                 paw_experts.ensure_global_programs_cached()
