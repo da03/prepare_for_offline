@@ -13,6 +13,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import os
 import sqlite3
 import threading
 import time
@@ -257,11 +258,14 @@ def _run(job_id: str, raw_plan: dict) -> None:
         if pack_plan.include_base_model:
             _update(conn, job_id, "downloading", "Ensuring base interpreter is cached")
             try:
-                from programasweights import cache
-                from ..config import get_settings
+                if os.environ.get("PREPARE_OFFLINE_SKIP_MODEL_DOWNLOAD") == "1":
+                    base_ok = True
+                else:
+                    from programasweights import cache
+                    from ..config import get_settings
 
-                cache.get_base_model_path(get_settings().interpreter)
-                base_ok = True
+                    cache.get_base_model_path(get_settings().interpreter)
+                    base_ok = True
             except Exception as exc:
                 _update(conn, job_id, "downloading",
                         f"Base model not cached ({exc}); deterministic answers only")

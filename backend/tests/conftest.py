@@ -7,6 +7,7 @@ import pytest
 def isolated_home(tmp_path, monkeypatch):
     monkeypatch.setenv("PREPARE_OFFLINE_HOME", str(tmp_path / "data"))
     monkeypatch.setenv("PREPARE_OFFLINE_DEV", "1")
+    monkeypatch.setenv("PREPARE_OFFLINE_SKIP_MODEL_DOWNLOAD", "1")
     from app.config import get_settings
 
     get_settings.cache_clear()
