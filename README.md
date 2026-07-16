@@ -20,9 +20,9 @@ first trip, then runs locally.
    may improve quietly in the background.
 4. Open **Ask** and use it with or without a connection.
 
-Current public DMGs target Apple Silicon. Intel users can build natively using
-`bash scripts/build_release.sh`; automated Intel release artifacts are also
-produced by the release workflow.
+The current public DMG targets Apple Silicon. Intel users must currently build
+natively with `bash scripts/build_release.sh`; a prebuilt Intel DMG is not yet
+published.
 
 Anticipatory neural compilation for travel. Describe a trip in one sentence
 while online; Prepare for Offline discovers current public sources, combines
