@@ -1,13 +1,7 @@
 // Prevents an extra console window on Windows in release.
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
-use std::{
-    fs,
-    path::PathBuf,
-    sync::Mutex,
-    thread,
-    time::Duration,
-};
+use std::{fs, path::PathBuf, process::Command as StdCommand, sync::Mutex, thread, time::Duration};
 
 use serde::Deserialize;
 use tauri::{
@@ -15,7 +9,12 @@ use tauri::{
     tray::TrayIconBuilder,
     Manager, RunEvent, WebviewUrl, WebviewWindowBuilder,
 };
-use tauri_plugin_shell::{process::CommandChild, ShellExt};
+use tauri_plugin_shell::{
+    process::{CommandChild, CommandEvent},
+    ShellExt,
+};
+
+const TRAY_ICON: tauri::image::Image<'_> = tauri::include_image!("icons/tray-template@2x.png");
 
 #[derive(Deserialize)]
 struct Runtime {
@@ -29,8 +28,13 @@ struct Runtime {
 struct SidecarHandle(Mutex<Option<CommandChild>>);
 
 fn runtime_path() -> PathBuf {
+    if let Ok(home) = std::env::var("PREPARE_OFFLINE_HOME") {
+        return PathBuf::from(home).join("runtime.json");
+    }
     let home = std::env::var("HOME").unwrap_or_else(|_| ".".into());
-    PathBuf::from(home).join(".prepare_offline").join("runtime.json")
+    PathBuf::from(home)
+        .join(".prepare_offline")
+        .join("runtime.json")
 }
 
 /// Wait for the backend sidecar to write its port+token handshake.
@@ -45,6 +49,28 @@ fn read_runtime(timeout_secs: u64) -> Option<Runtime> {
         thread::sleep(Duration::from_millis(200));
     }
     None
+}
+
+fn terminate_sidecar(app_handle: &tauri::AppHandle) {
+    let Some(state) = app_handle.try_state::<SidecarHandle>() else {
+        return;
+    };
+    let Ok(mut guard) = state.0.lock() else {
+        return;
+    };
+    let Some(child) = guard.take() else {
+        return;
+    };
+    let pid = child.pid().to_string();
+    // PyInstaller's one-file bootloader spawns the actual Python process.
+    // Terminate that descendant before killing the bootloader parent.
+    #[cfg(target_family = "unix")]
+    {
+        let _ = StdCommand::new("pkill")
+            .args(["-TERM", "-P", &pid])
+            .status();
+    }
+    let _ = child.kill();
 }
 
 fn main() {
@@ -62,9 +88,28 @@ fn main() {
                         .env("PREPARE_OFFLINE_PORT", "0")
                         .env("PREPARE_OFFLINE_DEV", "0");
                     match cmd.spawn() {
-                        Ok((_rx, child)) => {
+                        Ok((mut rx, child)) => {
                             let state = app.state::<SidecarHandle>();
                             *state.0.lock().unwrap() = Some(child);
+                            tauri::async_runtime::spawn(async move {
+                                while let Some(event) = rx.recv().await {
+                                    match event {
+                                        CommandEvent::Stdout(line) => {
+                                            eprintln!(
+                                                "[pfo-backend] {}",
+                                                String::from_utf8_lossy(&line)
+                                            );
+                                        }
+                                        CommandEvent::Stderr(line) => {
+                                            eprintln!(
+                                                "[pfo-backend:error] {}",
+                                                String::from_utf8_lossy(&line)
+                                            );
+                                        }
+                                        _ => {}
+                                    }
+                                }
+                            });
                         }
                         Err(e) => eprintln!("[pfo] failed to spawn sidecar: {e}"),
                     }
@@ -105,11 +150,10 @@ fn main() {
                 MenuItem::with_id(app, "quit", "Quit", true, None::<&str>),
             ) {
                 if let Ok(menu) = Menu::with_items(app, &[&show, &quit]) {
-                    let mut builder = TrayIconBuilder::new().menu(&menu);
-                    if let Some(icon) = app.default_window_icon().cloned() {
-                        builder = builder.icon(icon);
-                    }
-                    let _ = builder
+                    let _ = TrayIconBuilder::new()
+                        .menu(&menu)
+                        .icon(TRAY_ICON.clone())
+                        .icon_as_template(true)
                         .on_menu_event(|app, event| match event.id().as_ref() {
                             "show" => {
                                 if let Some(w) = app.get_webview_window("main") {
@@ -130,13 +174,8 @@ fn main() {
 
     match app {
         Ok(app) => app.run(|app_handle, event| {
-            if let RunEvent::ExitRequested { .. } = event {
-                // Terminate the backend sidecar so it does not outlive the app.
-                if let Some(state) = app_handle.try_state::<SidecarHandle>() {
-                    if let Some(child) = state.0.lock().unwrap().take() {
-                        let _ = child.kill();
-                    }
-                }
+            if matches!(event, RunEvent::ExitRequested { .. } | RunEvent::Exit) {
+                terminate_sidecar(app_handle);
             }
         }),
         Err(e) => eprintln!("[pfo] error while starting Prepare for Offline: {e}"),

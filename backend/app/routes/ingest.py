@@ -1,4 +1,4 @@
-"""Ingest page content into an offline pack (used by the browser extension).
+"""Ingest page content into an editable context (used by the browser extension).
 
 Security:
 - Requires the app token (like every /api route).
@@ -11,15 +11,16 @@ Security:
 from __future__ import annotations
 
 import hashlib
+import json
 from html.parser import HTMLParser
 
 from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel, Field
 
 from ..db import connect
+from ..models import ContextSourceCreate
 from ..security import require_token
-from ..services import retrieval
-from ..services.packs import KOREA_PACK_ID
+from ..services import contexts
 
 router = APIRouter(dependencies=[Depends(require_token)])
 
@@ -59,7 +60,7 @@ class IngestRequest(BaseModel):
     text: str | None = Field(default=None)
     html: str | None = Field(default=None)
     url: str = Field(default="", max_length=2000)
-    pack_id: str | None = None
+    context_id: str | None = None
 
 
 @router.post("/api/ingest")
@@ -71,26 +72,57 @@ def ingest(req: IngestRequest) -> dict:
     if not text:
         raise HTTPException(status_code=400, detail="No usable text content")
 
-    pack_id = req.pack_id or KOREA_PACK_ID
     digest = hashlib.sha256((req.url + text).encode()).hexdigest()[:10]
-    source_id = f"clip-{digest}"
     title = req.title or (req.url[:80] if req.url else "Saved page")
 
     conn = connect()
     try:
+        context_id = req.context_id
+        if not context_id:
+            row = conn.execute(
+                "SELECT value FROM settings WHERE key='active_context_id'"
+            ).fetchone()
+            if row:
+                try:
+                    context_id = json.loads(row["value"])
+                except json.JSONDecodeError:
+                    context_id = None
+        if not context_id or not contexts.get(conn, context_id):
+            raise HTTPException(
+                status_code=409,
+                detail="Choose or create an active context before saving this page.",
+            )
         exists = conn.execute(
-            "SELECT 1 FROM documents WHERE pack_id=? AND source_id=?",
-            (pack_id, source_id),
+            "SELECT source_id FROM context_sources WHERE context_id=? "
+            "AND json_extract(metadata, '$.digest')=?",
+            (context_id, digest),
         ).fetchone()
         if exists:
-            return {"source_id": source_id, "status": "already_saved"}
-        doc_id = retrieval.ingest_document(
-            conn, pack_id, source_id, title, text,
-            lang="", tier=3, stable=True,
-            aliases=[req.url] if req.url else [],
-            meta={"topic": "clip", "url": req.url},
+            return {
+                "source_id": exists["source_id"],
+                "context_id": context_id,
+                "status": "already_saved",
+            }
+        source = contexts.add_source(
+            conn,
+            context_id,
+            ContextSourceCreate(
+                title=title,
+                source_type="web",
+                url=req.url or None,
+                content=text,
+                metadata={
+                    "digest": digest,
+                    "aliases": [req.url] if req.url else [],
+                    "stable": True,
+                },
+            ),
         )
-        conn.commit()
-        return {"source_id": source_id, "doc_id": doc_id, "status": "saved"}
+        return {
+            "source_id": source["source_id"],
+            "context_id": context_id,
+            "status": "saved",
+            "rebuild_required": True,
+        }
     finally:
         conn.close()

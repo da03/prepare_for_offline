@@ -1,0 +1,35 @@
+{
+  "max_branches": 3,
+  "relative_score_threshold": 0.5,
+  "branches": {
+    "itinerary": {
+      "label": "your itinerary",
+      "keywords": [
+        "flight", "hotel", "reservation", "booking", "check-in", "checkout",
+        "tomorrow", "my schedule", "confirmation", "itinerary"
+      ]
+    },
+    "event": {
+      "label": "event schedule and venue",
+      "keywords": [
+        "conference", "keynote", "workshop", "speaker", "session", "venue",
+        "registration", "icml", "neurips", "acl", "cvpr", "schedule"
+      ]
+    },
+    "language": {
+      "label": "language and culture",
+      "keywords": [
+        "mean", "say", "phrase", "translate", "language", "korean", "japanese",
+        "etiquette", "custom", "polite"
+      ]
+    },
+    "local_info": {
+      "label": "local transit, food, and safety",
+      "keywords": [
+        "airport", "train", "subway", "metro", "bus", "taxi", "food",
+        "restaurant", "emergency", "currency", "tip", "weather", "safety",
+        "transit", "get there", "reach"
+      ]
+    }
+  }
+}

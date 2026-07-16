@@ -13,7 +13,7 @@ from __future__ import annotations
 
 import os
 
-from . import seed
+from . import seed, travel_questions
 
 # Templated questions per topic (local, private).
 _TEMPLATES: dict[str, list[str]] = {
@@ -86,3 +86,44 @@ def generate(topics: list[str], *, allow_online: bool = False) -> list[str]:
         pass
 
     return questions
+
+
+def generate_for_context(
+    context: dict,
+    sources: list[dict],
+    topics: list[str],
+    *,
+    allow_online: bool = False,
+) -> list[str]:
+    """Generate a private, editable first draft for arbitrary contexts."""
+    if context.get("trip_brief"):
+        return travel_questions.generate(
+            context,
+            [source.get("title", "") for source in sources],
+            context.get("expected_needs", []),
+        )
+    questions = generate(topics, allow_online=allow_online) if context.get("template_id") == "korea" else []
+    seen = {q.casefold() for q in questions}
+
+    def add(value: str) -> None:
+        q = " ".join(value.strip().split())
+        if q and q.casefold() not in seen:
+            seen.add(q.casefold())
+            questions.append(q)
+
+    for need in context.get("expected_needs", []):
+        need = str(need).strip()
+        if not need:
+            continue
+        add(need if need.endswith("?") else f"What do I need to know about {need}?")
+
+    for source in sources[:20]:
+        title = source.get("title", "").strip()
+        if title:
+            add(f"What are the key details in {title}?")
+
+    goal = context.get("goal", "").strip()
+    if goal and not questions:
+        add(f"What should I remember about {goal}?")
+
+    return questions[:100]

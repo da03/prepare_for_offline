@@ -80,7 +80,9 @@ class Settings:
         payload = {
             "port": port,
             "token": self.app_token,
-            "api_base": f"http://{self.host}:{port}",
+            # WKWebView's App Transport Security supports an explicit
+            # localhost exception; keep the server itself bound to 127.0.0.1.
+            "api_base": f"http://localhost:{port}",
         }
         self.runtime_path.write_text(json.dumps(payload), encoding="utf-8")
         try:

@@ -22,6 +22,14 @@ Tauri shell (Rust)
 
 ## Build steps
 
+From the repository root, the complete validated build is:
+
+```bash
+bash scripts/build_release.sh
+```
+
+Or run the individual steps below.
+
 ```bash
 # 1. Build the web frontend
 cd ../frontend && npm install && npm run build
@@ -29,15 +37,28 @@ cd ../frontend && npm install && npm run build
 # 2. Package the Python backend into a sidecar binary
 cd ../desktop && bash scripts/build_sidecar.sh
 
-# 3. Generate app icons once (from any square PNG, e.g. the PAW logo)
-npm run tauri icon /path/to/logo.png
+# 3. Regenerate app icons from the checked-in brand master
+npm run tauri icon ../brand/paw-app-icon-1024.png
 
 # 4. Build the macOS app / dmg
-npm run build            # -> src-tauri/target/release/bundle/
+npm run build -- --target aarch64-apple-darwin
+# -> src-tauri/target/aarch64-apple-darwin/release/bundle/
 ```
 
 For iteration you can run `npm run dev` (Tauri dev), which still spawns the
 packaged sidecar; rebuild the sidecar after backend changes.
+
+## Icon sources and pre-ship check
+
+- `../brand/paw-app-icon.svg` is the editable app-icon master;
+  `../brand/paw-app-icon-1024.png` is the checked-in input to `tauri icon`.
+- `../brand/paw-tray-template.svg` is the separate monochrome tray master.
+  Keep its generated 22 px and 44 px PNGs black with transparency so macOS can
+  recolor them as template images.
+- Before shipping, inspect the 16/32 px app icons against both light and dark
+  backgrounds, then verify Finder, Spotlight, Dock, and the menu bar at their
+  smallest normal sizes in both macOS appearances. The paw must remain distinct,
+  with no clipped edges or colored tray pixels.
 
 ## Notes
 

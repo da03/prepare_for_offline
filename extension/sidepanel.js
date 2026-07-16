@@ -6,18 +6,65 @@ function setStatus(msg, cls = "muted") {
   el.className = cls;
 }
 
+async function loadContexts(base, token, preferred) {
+  const res = await fetch(`${base}/api/contexts`, {
+    headers: { "X-App-Token": token },
+  });
+  if (!res.ok) throw new Error(`Could not connect (${res.status})`);
+  const { contexts } = await res.json();
+  const select = $("context");
+  select.innerHTML = "";
+  if (!contexts.length) {
+    const option = document.createElement("option");
+    option.textContent = "Create a context in the app";
+    option.value = "";
+    select.append(option);
+    select.disabled = true;
+    return;
+  }
+  for (const context of contexts) {
+    const option = document.createElement("option");
+    option.value = context.context_id;
+    option.textContent = context.name;
+    if (context.context_id === preferred) option.selected = true;
+    select.append(option);
+  }
+  select.disabled = false;
+  await chrome.storage.local.set({ contextId: select.value });
+}
+
 // Load saved connection settings.
-chrome.storage.local.get(["base", "token"], (data) => {
+chrome.storage.local.get(["base", "token", "contextId"], async (data) => {
   if (data.base) $("base").value = data.base;
   if (data.token) $("token").value = data.token;
+  if (data.base && data.token) {
+    try {
+      await loadContexts(data.base, data.token, data.contextId);
+      setStatus("Connected.", "ok");
+    } catch (e) {
+      setStatus(String(e.message || e), "err");
+    }
+  }
 });
 
-$("pair").addEventListener("click", () => {
+$("pair").addEventListener("click", async () => {
   const base = $("base").value.trim().replace(/\/$/, "");
   const token = $("token").value.trim();
-  chrome.storage.local.set({ base, token }, () => {
-    setStatus("Connection saved.", "ok");
-  });
+  if (!base || !token) {
+    setStatus("Enter the address and token from Settings → Advanced.", "err");
+    return;
+  }
+  try {
+    await loadContexts(base, token);
+    await chrome.storage.local.set({ base, token });
+    setStatus("Connected.", "ok");
+  } catch (e) {
+    setStatus(String(e.message || e), "err");
+  }
+});
+
+$("context").addEventListener("change", () => {
+  chrome.storage.local.set({ contextId: $("context").value });
 });
 
 // Extract page content in the tab's context (no server-side fetching).
@@ -34,9 +81,13 @@ function extractPage() {
 }
 
 $("save").addEventListener("click", async () => {
-  const { base, token } = await chrome.storage.local.get(["base", "token"]);
-  if (!base || !token) {
-    setStatus("Set the app address and token first.", "err");
+  const { base, token, contextId } = await chrome.storage.local.get([
+    "base",
+    "token",
+    "contextId",
+  ]);
+  if (!base || !token || !contextId) {
+    setStatus("Connect to the app and choose a context first.", "err");
     return;
   }
   setStatus("Reading page…");
@@ -47,16 +98,18 @@ $("save").addEventListener("click", async () => {
       target: { tabId: tab.id },
       func: extractPage,
     });
-    setStatus("Sending to local pack…");
+    setStatus("Saving to your context…");
     const res = await fetch(`${base}/api/ingest`, {
       method: "POST",
       headers: { "Content-Type": "application/json", "X-App-Token": token },
-      body: JSON.stringify(result),
+      body: JSON.stringify({ ...result, context_id: contextId }),
     });
     if (!res.ok) throw new Error(`${res.status}: ${await res.text()}`);
     const data = await res.json();
     setStatus(
-      data.status === "already_saved" ? "Already in your pack." : "Saved to your offline pack.",
+      data.status === "already_saved"
+        ? "Already saved."
+        : "Saved. Prepare the context again to include it offline.",
       "ok"
     );
   } catch (e) {

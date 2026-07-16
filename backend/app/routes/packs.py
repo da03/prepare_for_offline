@@ -26,12 +26,7 @@ def list_packs() -> dict:
 def delete_pack(pack_id: str) -> dict:
     conn = connect()
     try:
-        cur = conn.execute("DELETE FROM packs WHERE pack_id=?", (pack_id,))
-        conn.execute("DELETE FROM documents WHERE pack_id=?", (pack_id,))
-        conn.execute("DELETE FROM answer_cards WHERE pack_id=?", (pack_id,))
-        conn.execute("DELETE FROM experts WHERE pack_id=?", (pack_id,))
-        conn.commit()
-        if cur.rowcount == 0:
+        if not packs_svc.delete_pack(conn, pack_id):
             raise HTTPException(status_code=404, detail="Pack not found")
         return {"deleted": pack_id}
     finally:
