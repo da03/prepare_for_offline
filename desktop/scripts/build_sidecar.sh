@@ -23,6 +23,7 @@ pyinstaller --noconfirm --clean --onefile --name pfo-backend \
   --collect-all llama_cpp \
   --collect-submodules app \
   --add-data "app/services/neural_programs.json:app/services" \
+  --add-data "app/services/factual_packs:app/services/factual_packs" \
   --hidden-import programasweights \
   --hidden-import programasweights.runtime_llamacpp \
   --hidden-import programasweights.cache \

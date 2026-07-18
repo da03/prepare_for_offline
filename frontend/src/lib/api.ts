@@ -105,6 +105,7 @@ export interface AskStreamEvent {
   message_id?: string;
   refined?: boolean;
   used_context?: boolean;
+  support?: string;
   [key: string]: unknown;
 }
 

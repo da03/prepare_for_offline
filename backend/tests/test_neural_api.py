@@ -351,6 +351,46 @@ def test_one_prepared_match_bypasses_broad_aggregation(client, monkeypatch):
     assert ids["aggregator"] not in calls
 
 
+def test_factual_pack_overrides_hallucinating_answer(client, monkeypatch):
+    conn = connect()
+    try:
+        program_registry.ensure_builtins(conn)
+        topic = program_registry.ensure_topic(conn, "South Korea travel")
+        program_registry.add_version(
+            conn,
+            program_key=topic["program_key"],
+            program_id="prepared-korea",
+            compiler="paw-ft-bs48",
+            stage="finetuned",
+            spec="South Korea travel specialist",
+            contract_score=1.0,
+            contract_result={},
+            activate=True,
+        )
+        broad_id = program_registry.active(conn, "broad")["program_id"]
+    finally:
+        conn.close()
+
+    def fake_run(program_id, text, **kwargs):
+        del text, kwargs
+        if program_id == broad_id:
+            output = "South Korea's major cities are Seoul, Gangnam, and Gimpo."
+        else:
+            output = "Seoul, Gangnam, Incheon, and Gimpo."
+        return ProgramResult(output, 1.0, 100.0, True)
+
+    monkeypatch.setattr("app.services.program_runtime.run", fake_run)
+    payload = client.post(
+        "/api/ask",
+        json={"text": "What are the major cities of South Korea?"},
+    ).json()
+
+    assert payload["support"] == "prepared_facts"
+    assert payload["program_labels"] == ["country:south-korea"]
+    assert "Busan" in payload["answer"] and "Daegu" in payload["answer"]
+    assert payload["trace"]["factual_pack"]["pack_key"] == "country:south-korea"
+
+
 def test_explicit_topic_name_routes_without_paw_matcher(client, monkeypatch):
     conn = connect()
     try:
@@ -390,7 +430,7 @@ def test_explicit_topic_name_routes_without_paw_matcher(client, monkeypatch):
     monkeypatch.setattr("app.services.program_runtime.run", fake_run)
     result = client.post(
         "/api/ask",
-        json={"text": "Why does Singapore have a lion symbol?"},
+        json={"text": "What surprises first-time visitors about Singapore?"},
     ).json()
     assert result["answer"] == "The prepared Singapore answer."
     assert result["program_labels"] == [topic["program_key"]]

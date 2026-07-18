@@ -1,0 +1,72 @@
+{
+  "schema_version": "factual-pack/v1",
+  "pack_key": "country:south-korea",
+  "title": "South Korea",
+  "as_of": "2026-07-18",
+  "entities": [
+    {"canonical": "South Korea", "type": "country", "aliases": ["Korea", "Republic of Korea", "ROK", "S. Korea"]}
+  ],
+  "sources": [
+    {"publisher": "CIA World Factbook", "url": "https://www.cia.gov/the-world-factbook/countries/korea-south/", "as_of": "2026-07-18"}
+  ],
+  "facts": [
+    {
+      "id": "kr-capital",
+      "family": "capital_vs_seat",
+      "answer": "Seoul is the capital and largest city of South Korea.",
+      "triggers": [
+        "capital of south korea",
+        "capital of korea",
+        "south korea capital",
+        "what is the capital of south korea"
+      ]
+    },
+    {
+      "id": "kr-major-cities",
+      "family": "major_cities",
+      "answer": "South Korea's major cities include Seoul (the capital), Busan, Incheon, Daegu, Daejeon, Gwangju, and Ulsan. Gangnam is a district of Seoul, not a separate city, and Gimpo is a smaller city known mainly for Gimpo International Airport rather than being one of the largest cities.",
+      "triggers": [
+        "major cities of south korea",
+        "major cities of korea",
+        "largest cities of south korea",
+        "largest cities in korea",
+        "biggest cities in south korea",
+        "biggest cities in korea",
+        "main cities of south korea",
+        "cities in south korea"
+      ]
+    },
+    {
+      "id": "kr-gangnam-district",
+      "family": "entity_hierarchy",
+      "answer": "Gangnam is a district (gu) of Seoul, not a separate city. It is well known as an affluent commercial and residential area south of the Han River.",
+      "triggers": [
+        "is gangnam a city",
+        "gangnam a city",
+        "is gangnam a city in south korea",
+        "is gangnam its own city"
+      ]
+    },
+    {
+      "id": "kr-gangnam-style",
+      "family": "landmarks_culture",
+      "answer": "Gangnam Style is a 2012 song and music video by the South Korean artist Psy. It became a global hit and is a satire that pokes fun at the flashy, status-obsessed lifestyle associated with Seoul's affluent Gangnam district.",
+      "triggers": [
+        "gangnam style",
+        "what is gangnam style",
+        "what is gangnam style about"
+      ]
+    },
+    {
+      "id": "kr-languages",
+      "family": "language_currency_government",
+      "answer": "Korean is the official language of South Korea, written in the Hangul alphabet.",
+      "triggers": [
+        "official language of south korea",
+        "language of south korea",
+        "languages of south korea",
+        "what language do they speak in korea"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "schema_version": "factual-pack/v1",
+  "pack_key": "country:japan",
+  "title": "Japan",
+  "as_of": "2026-07-18",
+  "entities": [
+    {"canonical": "Japan", "type": "country", "aliases": ["Nippon", "Nihon"]}
+  ],
+  "sources": [
+    {"publisher": "CIA World Factbook", "url": "https://www.cia.gov/the-world-factbook/countries/japan/", "as_of": "2026-07-18"}
+  ],
+  "facts": [
+    {
+      "id": "jp-capital",
+      "family": "capital_vs_seat",
+      "answer": "Tokyo is the capital and largest city of Japan.",
+      "triggers": ["capital of japan", "what is the capital of japan", "japan capital"]
+    },
+    {
+      "id": "jp-major-cities",
+      "family": "major_cities",
+      "answer": "Japan's major cities include Tokyo (the capital), Yokohama, Osaka, Nagoya, Sapporo, Fukuoka, Kobe, and Kyoto. Shibuya and Shinjuku are districts within Tokyo, not separate cities.",
+      "triggers": [
+        "major cities of japan",
+        "largest cities of japan",
+        "largest cities in japan",
+        "biggest cities in japan",
+        "main cities of japan",
+        "cities in japan"
+      ]
+    }
+  ]
+}

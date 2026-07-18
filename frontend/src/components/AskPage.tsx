@@ -13,6 +13,8 @@ export interface AnswerTurn {
   state: "working" | "complete" | "error";
   status: string;
   refined: boolean;
+  support?: string;
+  sourceLabel?: string;
   conversationId?: string;
   answerMessageId?: string;
   isFollowUp?: boolean;
@@ -92,6 +94,12 @@ export function AskPage({
                     ) : null}
                     {turn.state === "error" ? (
                       <p className="form-error">{turn.status}</p>
+                    ) : null}
+                    {turn.state === "complete" && turn.support === "prepared_facts" ? (
+                      <p className="answer-support">
+                        Verified facts
+                        {turn.sourceLabel ? ` · ${turn.sourceLabel}` : ""}
+                      </p>
                     ) : null}
                     {turn.state === "complete" && turn.answerMessageId ? (
                       <div className="answer-actions">

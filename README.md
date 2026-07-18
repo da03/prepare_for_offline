@@ -41,6 +41,18 @@ question
         └── everything else → leakage-free finetuned broad answerer
 ```
 
+A prepared PAW adapter over the frozen 0.6B interpreter is not a reliable fact
+store. An offline **factual pack** layer therefore answers structured questions
+(capitals, major cities, entity hierarchy, official languages, well-known
+landmarks) deterministically from curated, source-backed knowledge and takes
+precedence over the neural answerer, so a hallucinating adapter can never
+override a verified fact. Curated answers are labeled "Verified facts" in the UI.
+
+Built-in packs currently cover a starter set of countries
+(`backend/app/services/factual_packs`). Questions about countries without a pack
+fall back to the neural answerer, which remains best-effort and can be wrong;
+factual grounding must be built per country rather than assumed.
+
 The broad draft can appear first in the same answer card while specialists and
 aggregation finish. Program names and routing details are intentionally hidden
 from the normal UI.
@@ -148,6 +160,16 @@ python -m eval.run_leakage_free_eval
 python -m eval.run_language_generalization
 python -m eval.run_prepared_ottoman_eval
 python -m eval.run_followup_eval
+```
+
+Factual country QA has a dedicated deterministic benchmark with a held-out split
+whose countries are disjoint from development, so fixing one country cannot pass
+the held-out split by memorization:
+
+```bash
+cd backend
+python -m eval.country_facts.runner validate
+python -m eval.run_country_facts_eval --split dev --require-zero-severe --min-pass-rate 1.0
 ```
 
 Release candidates must maintain a 100% answer rate and are compared by relative

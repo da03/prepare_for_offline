@@ -82,6 +82,34 @@ describe("Ask", () => {
     ).toBeInTheDocument();
   });
 
+  it("labels curated factual answers as verified", () => {
+    render(
+      <AskPage
+        turns={[
+          {
+            id: "turn",
+            question: "What are the major cities of South Korea?",
+            answer: "Seoul, Busan, Incheon, Daegu, Daejeon, Gwangju, and Ulsan.",
+            state: "complete",
+            status: "",
+            refined: true,
+            support: "prepared_facts",
+            sourceLabel: "South Korea",
+            answerMessageId: "msg-answer",
+          },
+        ]}
+        value=""
+        asking={false}
+        followUpTarget={null}
+        onValueChange={vi.fn()}
+        onSubmit={vi.fn()}
+        onFollowUp={vi.fn()}
+        onCancelFollowUp={vi.fn()}
+      />,
+    );
+    expect(screen.getByText("Verified facts · South Korea")).toBeInTheDocument();
+  });
+
   it("anchors follow-ups to a chosen answer while new questions stay independent", () => {
     const followUp = vi.fn();
     const cancel = vi.fn();

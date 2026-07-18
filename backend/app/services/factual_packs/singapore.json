@@ -1,0 +1,51 @@
+{
+  "schema_version": "factual-pack/v1",
+  "pack_key": "country:singapore",
+  "title": "Singapore",
+  "as_of": "2026-07-18",
+  "entities": [
+    {"canonical": "Singapore", "type": "country", "aliases": ["Republic of Singapore"]}
+  ],
+  "sources": [
+    {"publisher": "CIA World Factbook", "url": "https://www.cia.gov/the-world-factbook/countries/singapore/", "as_of": "2026-07-18"},
+    {"publisher": "Singapore Tourism Board", "url": "https://www.visitsingapore.com/see-do-singapore/recreation-leisure/viewpoints/merlion-park/", "as_of": "2026-07-18"}
+  ],
+  "facts": [
+    {
+      "id": "sg-merlion",
+      "family": "landmarks_culture",
+      "answer": "The lion symbol is the Merlion, which has the head of a lion and the body and tail of a fish. The lion head recalls Singapore's old name Singapura, meaning 'Lion City' in Sanskrit, while the fish tail recalls its origins as the ancient fishing village of Temasek.",
+      "triggers": [
+        "lion thing",
+        "lion statue",
+        "lion symbol",
+        "merlion",
+        "why does singapore have a lion",
+        "why does singapore have that lion thing",
+        "why singapore has that lion"
+      ]
+    },
+    {
+      "id": "sg-languages",
+      "family": "language_currency_government",
+      "answer": "Singapore has four official languages: English, Malay, Mandarin Chinese, and Tamil. Malay is the national language, and English is the main working language.",
+      "triggers": [
+        "official languages of singapore",
+        "official language of singapore",
+        "languages of singapore",
+        "what languages are spoken in singapore",
+        "singapore languages"
+      ]
+    },
+    {
+      "id": "sg-capital",
+      "family": "capital_vs_seat",
+      "answer": "Singapore is a city-state, so the city of Singapore is effectively its capital; there is no separate capital city.",
+      "triggers": [
+        "capital of singapore",
+        "what is the capital of singapore",
+        "singapore capital"
+      ]
+    }
+  ]
+}

@@ -7,7 +7,7 @@ import re
 import sqlite3
 from collections.abc import Iterator
 
-from . import program_registry, program_runtime
+from . import factual_packs, program_registry, program_runtime
 
 MAX_SPECIALISTS = 3
 MAX_CANDIDATE_CHARS = 1200
@@ -142,6 +142,44 @@ def answer_events(conn: sqlite3.Connection, question: str) -> Iterator[dict]:
         "status": "Thinking…",
     }
 
+    # A curated factual pack is authoritative: a same-base adapter must never be
+    # allowed to override a verified structured fact.
+    pack_answer = factual_packs.lookup(question)
+    if pack_answer:
+        yield {"type": "route", "labels": [pack_answer["pack_key"]]}
+        yield {
+            "type": "final",
+            "answer": pack_answer["answer"],
+            "program_labels": [pack_answer["pack_key"]],
+            "support": pack_answer["support"],
+            "trace": {
+                "route": [pack_answer["pack_key"]],
+                "programs": [
+                    {
+                        "role": broad_result["role"],
+                        "program_key": broad_result["program_key"],
+                        "program_id": broad_result["program_id"],
+                        "elapsed_ms": broad_result["elapsed_ms"],
+                        "peak_rss_mb": broad_result["peak_rss_mb"],
+                    }
+                ],
+                "factual_pack": {
+                    "pack_key": pack_answer["pack_key"],
+                    "pack_title": pack_answer["pack_title"],
+                    "fact_id": pack_answer["fact_id"],
+                    "family": pack_answer["family"],
+                    "as_of": pack_answer["as_of"],
+                    "sources": pack_answer["sources"],
+                },
+                "prepared_matcher": [],
+                "aggregator": None,
+                "critic": None,
+                "revision": None,
+            },
+            "refined": True,
+        }
+        return
+
     labels, matcher_results = _matching_prepared(conn, question)
     yield {"type": "route", "labels": labels}
     prepared_candidates = []
@@ -237,11 +275,18 @@ def answer_events(conn: sqlite3.Connection, question: str) -> Iterator[dict]:
         "critic": critic_result,
         "revision": revision_result,
     }
+    if labels:
+        support = "prepared_program"
+    elif language_result:
+        support = "language_program"
+    else:
+        support = "broad"
     yield {
         "type": "final",
         "answer": final_result["output"],
         "program_labels": labels
         + ([language_result["role"]] if language_result else []),
+        "support": support,
         "trace": trace,
         "refined": final_result["output"] != broad_result["output"],
     }

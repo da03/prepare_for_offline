@@ -1,0 +1,184 @@
+{
+  "schema_version": "country-facts-dataset/v1",
+  "split": "test",
+  "description": "Held-out country-facts cases. Countries are disjoint from the development split so fixing a development country cannot pass this split by memorization. This is a starter suite intended to grow toward broad regional coverage.",
+  "as_of": "2026-07-18",
+  "cases": [
+    {
+      "id": "test-de-major-cities",
+      "country": "Germany",
+      "aliases": ["Federal Republic of Germany", "Deutschland"],
+      "question": "What are the major cities of Germany?",
+      "family": "major_cities",
+      "freshness": "slow_changing",
+      "severity": "high",
+      "must_include": [["Berlin"], ["Munich", "Munchen", "Munchen"], ["Hamburg"], ["Cologne", "Koln"]],
+      "should_include": [["Frankfurt"], ["Stuttgart"], ["Dusseldorf", "Duesseldorf"]],
+      "must_not_include": ["bavaria is a city", "bavaria is a major city"],
+      "entity_type_errors": [],
+      "sources": [
+        {"title": "Germany", "publisher": "CIA World Factbook", "url": "https://www.cia.gov/the-world-factbook/countries/germany/", "as_of": "2026-07-18"}
+      ]
+    },
+    {
+      "id": "test-de-capital",
+      "country": "Germany",
+      "aliases": ["Deutschland"],
+      "question": "What is the capital of Germany?",
+      "family": "capital_vs_seat",
+      "freshness": "stable",
+      "severity": "high",
+      "must_include": [["Berlin"]],
+      "should_include": [["largest city"]],
+      "must_not_include": ["capital is bonn", "capital is munich", "capital of germany is frankfurt"],
+      "entity_type_errors": [],
+      "sources": [
+        {"title": "Germany", "publisher": "CIA World Factbook", "url": "https://www.cia.gov/the-world-factbook/countries/germany/", "as_of": "2026-07-18"}
+      ]
+    },
+    {
+      "id": "test-br-capital",
+      "country": "Brazil",
+      "aliases": ["Federative Republic of Brazil"],
+      "question": "Is Rio de Janeiro the capital of Brazil?",
+      "family": "capital_vs_seat",
+      "freshness": "stable",
+      "severity": "high",
+      "must_include": [["Brasilia", "Brasilia"]],
+      "should_include": [["not the capital", "former capital", "no longer the capital"], ["1960"]],
+      "must_not_include": [
+        "rio de janeiro is the capital",
+        "capital is rio",
+        "capital of brazil is sao paulo"
+      ],
+      "entity_type_errors": [],
+      "sources": [
+        {"title": "Brazil", "publisher": "CIA World Factbook", "url": "https://www.cia.gov/the-world-factbook/countries/brazil/", "as_of": "2026-07-18"}
+      ]
+    },
+    {
+      "id": "test-au-capital",
+      "country": "Australia",
+      "aliases": ["Commonwealth of Australia"],
+      "question": "What is the capital of Australia?",
+      "family": "capital_vs_seat",
+      "freshness": "stable",
+      "severity": "high",
+      "must_include": [["Canberra"]],
+      "should_include": [["not Sydney", "largest city is Sydney"]],
+      "must_not_include": [
+        "capital is sydney",
+        "capital is melbourne",
+        "capital of australia is sydney"
+      ],
+      "entity_type_errors": [],
+      "sources": [
+        {"title": "Australia", "publisher": "CIA World Factbook", "url": "https://www.cia.gov/the-world-factbook/countries/australia/", "as_of": "2026-07-18"}
+      ]
+    },
+    {
+      "id": "test-ca-major-cities",
+      "country": "Canada",
+      "aliases": [],
+      "question": "What are the major cities of Canada?",
+      "family": "major_cities",
+      "freshness": "slow_changing",
+      "severity": "high",
+      "must_include": [["Toronto"], ["Montreal", "Montreal"], ["Vancouver"], ["Calgary"]],
+      "should_include": [["Ottawa"], ["Edmonton"], ["Winnipeg"]],
+      "must_not_include": ["ontario is a city", "ontario is a major city"],
+      "entity_type_errors": [],
+      "sources": [
+        {"title": "Canada", "publisher": "CIA World Factbook", "url": "https://www.cia.gov/the-world-factbook/countries/canada/", "as_of": "2026-07-18"}
+      ]
+    },
+    {
+      "id": "test-eg-major-cities",
+      "country": "Egypt",
+      "aliases": ["Arab Republic of Egypt"],
+      "question": "What are the major cities of Egypt?",
+      "family": "major_cities",
+      "freshness": "slow_changing",
+      "severity": "high",
+      "must_include": [["Cairo"], ["Alexandria"]],
+      "should_include": [["Giza"], ["Luxor"], ["Port Said"]],
+      "must_not_include": ["giza is the capital", "capital is alexandria"],
+      "entity_type_errors": [],
+      "sources": [
+        {"title": "Egypt", "publisher": "CIA World Factbook", "url": "https://www.cia.gov/the-world-factbook/countries/egypt/", "as_of": "2026-07-18"}
+      ]
+    },
+    {
+      "id": "test-th-transport",
+      "country": "Thailand",
+      "aliases": ["Kingdom of Thailand"],
+      "question": "How do tourists usually get around central Bangkok?",
+      "family": "transport_norms",
+      "freshness": "slow_changing",
+      "severity": "medium",
+      "must_include": [["BTS", "Skytrain", "MRT", "metro", "subway"], ["taxi", "tuk tuk", "tuk-tuk", "grab", "boat", "bus"]],
+      "should_include": [["Chao Phraya", "river boat", "express boat"]],
+      "must_not_include": ["bangkok has no public transit", "there is no rail transit"],
+      "entity_type_errors": [],
+      "sources": [
+        {"title": "Bangkok transport", "publisher": "Tourism Authority of Thailand", "url": "https://www.tourismthailand.org/Destinations/Provinces/Bangkok/216", "as_of": "2026-07-18"}
+      ]
+    },
+    {
+      "id": "test-vn-currency",
+      "country": "Vietnam",
+      "aliases": ["Socialist Republic of Vietnam"],
+      "question": "What currency is used in Vietnam?",
+      "family": "language_currency_government",
+      "freshness": "slow_changing",
+      "severity": "high",
+      "must_include": [["dong", "dong", "vnd"]],
+      "should_include": [["Vietnamese dong"]],
+      "must_not_include": [
+        "currency is the baht",
+        "official currency is the us dollar",
+        "uses the yuan"
+      ],
+      "entity_type_errors": [],
+      "sources": [
+        {"title": "Vietnam", "publisher": "CIA World Factbook", "url": "https://www.cia.gov/the-world-factbook/countries/vietnam/", "as_of": "2026-07-18"}
+      ]
+    },
+    {
+      "id": "test-ma-borders",
+      "country": "Morocco",
+      "aliases": ["Kingdom of Morocco"],
+      "question": "Which countries or territories border Morocco by land?",
+      "family": "borders_location",
+      "freshness": "slow_changing",
+      "severity": "medium",
+      "must_include": [["Algeria"]],
+      "should_include": [["Western Sahara"], ["Spain", "Ceuta", "Melilla"]],
+      "must_not_include": ["borders france by land", "borders portugal by land"],
+      "entity_type_errors": [],
+      "sources": [
+        {"title": "Morocco", "publisher": "CIA World Factbook", "url": "https://www.cia.gov/the-world-factbook/countries/morocco/", "as_of": "2026-07-18"}
+      ]
+    },
+    {
+      "id": "test-it-pisa",
+      "country": "Italy",
+      "aliases": ["Italian Republic"],
+      "question": "Why is the Leaning Tower of Pisa famous?",
+      "family": "landmarks_culture",
+      "freshness": "stable",
+      "severity": "medium",
+      "must_include": [["lean", "leaning", "tilt", "tilted"], ["Pisa"]],
+      "should_include": [["soft ground", "foundation", "subsidence", "unstable soil", "soft soil"]],
+      "must_not_include": [
+        "designed to lean on purpose",
+        "built leaning intentionally",
+        "intentionally built to tilt"
+      ],
+      "entity_type_errors": [],
+      "sources": [
+        {"title": "Leaning Tower of Pisa", "publisher": "Encyclopaedia Britannica", "url": "https://www.britannica.com/topic/Leaning-Tower-of-Pisa", "as_of": "2026-07-18"}
+      ]
+    }
+  ]
+}

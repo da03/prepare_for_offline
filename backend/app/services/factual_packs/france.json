@@ -1,0 +1,36 @@
+{
+  "schema_version": "factual-pack/v1",
+  "pack_key": "country:france",
+  "title": "France",
+  "as_of": "2026-07-18",
+  "entities": [
+    {"canonical": "France", "type": "country", "aliases": ["French Republic"]}
+  ],
+  "sources": [
+    {"publisher": "CIA World Factbook", "url": "https://www.cia.gov/the-world-factbook/countries/france/", "as_of": "2026-07-18"}
+  ],
+  "facts": [
+    {
+      "id": "fr-capital",
+      "family": "capital_vs_seat",
+      "answer": "Yes. Paris is the capital and largest city of France.",
+      "triggers": [
+        "is paris the capital of france",
+        "capital of france",
+        "what is the capital of france",
+        "france capital"
+      ]
+    },
+    {
+      "id": "fr-major-cities",
+      "family": "major_cities",
+      "answer": "France's major cities include Paris (the capital), Marseille, Lyon, Toulouse, Nice, Nantes, and Bordeaux.",
+      "triggers": [
+        "major cities of france",
+        "largest cities of france",
+        "biggest cities in france",
+        "cities in france"
+      ]
+    }
+  ]
+}

@@ -88,6 +88,7 @@ def _events(req: AskRequest, session=None) -> Iterator[dict]:
                     payload={
                         "answer_mode": "neural_program",
                         "program_labels": event.get("program_labels", []),
+                        "support": event.get("support", "broad"),
                         "refined": event.get("refined", False),
                         "used_context": rewritten["used_context"],
                         "question_message_id": user_message["message_id"],

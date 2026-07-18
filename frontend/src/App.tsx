@@ -31,6 +31,11 @@ function messageTurns(messages: ConversationMessage[]): AnswerTurn[] {
         state: "complete",
         status: "",
         refined: message.payload.refined === true,
+        support:
+          typeof message.payload.support === "string"
+            ? message.payload.support
+            : undefined,
+        sourceLabel: factualPackTitle(message.payload),
         conversationId: message.conversation_id,
         answerMessageId: message.message_id,
         isFollowUp:
@@ -40,6 +45,16 @@ function messageTurns(messages: ConversationMessage[]): AnswerTurn[] {
     }
   }
   return turns;
+}
+
+function factualPackTitle(payload: Record<string, unknown>): string | undefined {
+  const trace = payload.trace;
+  if (trace && typeof trace === "object" && "factual_pack" in trace) {
+    const pack = (trace as { factual_pack?: { pack_title?: unknown } })
+      .factual_pack;
+    if (pack && typeof pack.pack_title === "string") return pack.pack_title;
+  }
+  return undefined;
 }
 
 function friendlyError(caught: unknown): string {
@@ -152,6 +167,11 @@ export default function App() {
               state: "complete",
               status: "",
               refined: event.refined === true,
+              support:
+                typeof event.support === "string" ? event.support : turn.support,
+              sourceLabel: factualPackTitle(
+                event as unknown as Record<string, unknown>,
+              ),
               conversationId: event.conversation_id,
               answerMessageId: event.message_id,
             }));

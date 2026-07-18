@@ -1,0 +1,162 @@
+{
+  "schema_version": "country-facts-dataset/v1",
+  "split": "dev",
+  "description": "Development country-facts cases, including permanent regressions for the observed South Korea major-cities, Gangnam Style, and Singapore Merlion failures.",
+  "as_of": "2026-07-18",
+  "cases": [
+    {
+      "id": "dev-kr-major-cities",
+      "country": "South Korea",
+      "aliases": ["Korea", "Republic of Korea", "ROK"],
+      "question": "What are the major cities of South Korea?",
+      "family": "major_cities",
+      "freshness": "slow_changing",
+      "severity": "high",
+      "must_include": [["Seoul"], ["Busan", "Pusan"], ["Incheon"], ["Daegu", "Taegu"]],
+      "should_include": [["Daejeon"], ["Gwangju"], ["Ulsan"]],
+      "must_not_include": [
+        "gangnam is a city",
+        "gangnam is a major city",
+        "major cities are seoul gangnam",
+        "seoul gangnam incheon"
+      ],
+      "entity_type_errors": [],
+      "sources": [
+        {"title": "South Korea", "publisher": "CIA World Factbook", "url": "https://www.cia.gov/the-world-factbook/countries/korea-south/", "as_of": "2026-07-18"}
+      ]
+    },
+    {
+      "id": "dev-kr-capital",
+      "country": "South Korea",
+      "aliases": ["Korea", "Republic of Korea"],
+      "question": "What is the capital of South Korea?",
+      "family": "capital_vs_seat",
+      "freshness": "stable",
+      "severity": "high",
+      "must_include": [["Seoul"]],
+      "should_include": [["largest city", "capital and largest"]],
+      "must_not_include": [
+        "capital is busan",
+        "capital is pyongyang",
+        "capital of south korea is gangnam"
+      ],
+      "entity_type_errors": [],
+      "sources": [
+        {"title": "South Korea", "publisher": "CIA World Factbook", "url": "https://www.cia.gov/the-world-factbook/countries/korea-south/", "as_of": "2026-07-18"}
+      ]
+    },
+    {
+      "id": "dev-kr-gangnam-district",
+      "country": "South Korea",
+      "aliases": ["Korea"],
+      "question": "Is Gangnam a city in South Korea?",
+      "family": "entity_hierarchy",
+      "freshness": "stable",
+      "severity": "high",
+      "must_include": [["district", "gu", "neighborhood", "area", "part of"], ["Seoul"]],
+      "should_include": [["not a city", "not a separate city"]],
+      "must_not_include": [
+        "gangnam is a city",
+        "gangnam is a separate city",
+        "gangnam is its own city"
+      ],
+      "entity_type_errors": [],
+      "sources": [
+        {"title": "Gangnam District", "publisher": "Encyclopaedia Britannica", "url": "https://www.britannica.com/place/Seoul", "as_of": "2026-07-18"}
+      ]
+    },
+    {
+      "id": "dev-kr-gangnam-style",
+      "country": "South Korea",
+      "aliases": ["Korea"],
+      "question": "What is Gangnam Style about?",
+      "family": "landmarks_culture",
+      "freshness": "stable",
+      "severity": "high",
+      "must_include": [["Psy", "PSY"], ["2012"], ["satire", "parody", "pokes fun", "mocks", "lampoons", "satirical"]],
+      "should_include": [["Gangnam"], ["wealth", "affluent", "upscale", "status", "luxury"]],
+      "must_not_include": [
+        "gangnam style is a k pop subgenre",
+        "gangnam style is a genre of",
+        "gangnam is a greeting"
+      ],
+      "entity_type_errors": [],
+      "sources": [
+        {"title": "Gangnam Style", "publisher": "Encyclopaedia Britannica", "url": "https://www.britannica.com/topic/Gangnam-Style", "as_of": "2026-07-18"}
+      ]
+    },
+    {
+      "id": "dev-sg-merlion",
+      "country": "Singapore",
+      "aliases": ["Republic of Singapore"],
+      "question": "Why does Singapore have that lion thing?",
+      "family": "landmarks_culture",
+      "freshness": "stable",
+      "severity": "high",
+      "must_include": [["Merlion"], ["lion head"], ["fish"], ["Lion City", "Singapura", "Sanskrit", "Singapura simhapura"]],
+      "should_include": [["Temasek", "fishing village", "maritime"]],
+      "must_not_include": [
+        "honor the british crown",
+        "ties to south korea",
+        "lion god",
+        "named after a large island"
+      ],
+      "entity_type_errors": [],
+      "sources": [
+        {"title": "Merlion", "publisher": "Singapore Tourism Board", "url": "https://www.visitsingapore.com/see-do-singapore/recreation-leisure/viewpoints/merlion-park/", "as_of": "2026-07-18"}
+      ]
+    },
+    {
+      "id": "dev-sg-languages",
+      "country": "Singapore",
+      "aliases": ["Republic of Singapore"],
+      "question": "What are the official languages of Singapore?",
+      "family": "language_currency_government",
+      "freshness": "stable",
+      "severity": "high",
+      "must_include": [["English"], ["Malay"], ["Mandarin", "Chinese"], ["Tamil"]],
+      "should_include": [["four official languages", "four languages"]],
+      "must_not_include": [
+        "only official language is english",
+        "sole official language",
+        "english is the only official language"
+      ],
+      "entity_type_errors": [],
+      "sources": [
+        {"title": "Singapore", "publisher": "CIA World Factbook", "url": "https://www.cia.gov/the-world-factbook/countries/singapore/", "as_of": "2026-07-18"}
+      ]
+    },
+    {
+      "id": "dev-fr-capital",
+      "country": "France",
+      "aliases": ["French Republic"],
+      "question": "Is Paris the capital of France?",
+      "family": "capital_vs_seat",
+      "freshness": "stable",
+      "severity": "medium",
+      "must_include": [["Paris"], ["capital"]],
+      "should_include": [["largest city"]],
+      "must_not_include": ["capital of france is lyon", "capital is marseille"],
+      "entity_type_errors": [],
+      "sources": [
+        {"title": "France", "publisher": "CIA World Factbook", "url": "https://www.cia.gov/the-world-factbook/countries/france/", "as_of": "2026-07-18"}
+      ]
+    },
+    {
+      "id": "dev-jp-major-cities",
+      "country": "Japan",
+      "aliases": ["Nippon", "Nihon"],
+      "question": "What are the major cities of Japan?",
+      "family": "major_cities",
+      "freshness": "slow_changing",
+      "severity": "high",
+      "must_include": [["Tokyo"], ["Osaka"], ["Yokohama"], ["Nagoya"]],
+      "should_include": [["Sapporo"], ["Fukuoka"], ["Kyoto"], ["Kobe"]],
+      "must_not_include": ["shibuya is a city", "shinjuku is a major city"],
+      "entity_type_errors": [],
+      "sources": [
+        {"title": "Japan", "publisher": "CIA World Factbook", "url": "https://www.cia.gov/the-world-factbook/countries/japan/", "as_of": "2026-07-18"}
+      ]
+    }
+  ]
+}

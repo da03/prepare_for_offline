@@ -1,7 +1,21 @@
 {
-  "schema_version": 6,
+  "schema_version": 7,
   "generated_at": "2026-07-18",
   "selection_status": "selected",
+  "factual_layer": {
+    "problem": "A prepared PAW adapter over the frozen 0.6B interpreter is not a reliable fact store; it answered 'major cities of South Korea' with Seoul, Gangnam (a Seoul district), Incheon, and Gimpo, omitting Busan and Daegu.",
+    "resolution": "Added an offline curated factual-pack layer (app/services/factual_packs) that answers structured questions deterministically with provenance and takes precedence over the neural answerer.",
+    "benchmark": "backend/eval/country_facts (dev + held-out test, held-out countries disjoint from dev)",
+    "dev_pack_pass_rate": 1.0,
+    "dev_pack_severe_violations": 0,
+    "held_out_status": "countries without a pack are intentionally unanswered by the pack layer and fall back to the neural answerer; factual grounding must be built per country",
+    "phases_remaining": [
+      "user-prepared packs with DB persistence and evaluation-gated promotion",
+      "grounded synthesis for non-structured questions",
+      "optional larger local synthesis model, benchmark-selected",
+      "release CI gate consuming a machine-generated factual report"
+    ]
+  },
   "methodology_correction": {
     "anchor_examples_were_in_the_original_broad_spec": true,
     "anchor_scores_are_not_used_as_generalization_evidence": true,
@@ -131,6 +145,8 @@
     "standalone_questions_never_inherit_context": true,
     "followups_require_explicit_answer_anchor": true,
     "isolated_worker_memory_bounded": true,
-    "finetuned_pairs_evaluated": true
+    "finetuned_pairs_evaluated": true,
+    "curated_facts_override_adapters": true,
+    "country_facts_dev_zero_severe_violations": true
   }
 }
