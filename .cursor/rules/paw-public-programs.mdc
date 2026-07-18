@@ -1,0 +1,18 @@
+---
+description: Keep every PAW program compiled by this project public
+alwaysApply: true
+---
+
+# Public PAW Programs
+
+- Every PAW compile request in this repository must set `public: true`
+  explicitly.
+- This applies to built-in, evaluation, and user-prepared topic programs,
+  including both Standard and Finetuned compilers.
+- Never change a PAW program to private, unlisted, hidden, or ephemeral unless
+  the user explicitly requests that exact policy change.
+- Tests covering compilation must assert `public is True`.
+- Treat public visibility as a deliberate product requirement, not a privacy
+  default that the agent may reinterpret.
+- Prepare prompts are sent to the public PAW compiler, so user-facing
+  documentation must warn users not to include sensitive information.

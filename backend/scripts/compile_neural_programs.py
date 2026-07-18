@@ -48,7 +48,7 @@ def specifications() -> dict[str, str]:
 
 def compile_program(spec: str, compiler: str) -> str:
     if compiler != "paw-ft-bs48":
-        program = paw.compile(spec, compiler=compiler)
+        program = paw.compile(spec, compiler=compiler, public=True)
         program_id = getattr(program, "id", None) or getattr(
             program, "program_id", None
         )

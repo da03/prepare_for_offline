@@ -505,11 +505,11 @@ def test_standard_and_finetuned_compile_the_identical_topic_spec(
     assert rolled_back.json()["stage"] == "standard"
 
 
-def test_user_prepared_programs_are_not_listed_on_public_hub(monkeypatch):
+def test_user_prepared_programs_are_public(monkeypatch):
     standard_calls = []
 
     class Program:
-        id = "private-standard"
+        id = "public-standard"
 
     def fake_compile(spec, **kwargs):
         standard_calls.append((spec, kwargs))
@@ -524,7 +524,7 @@ def test_user_prepared_programs_are_not_listed_on_public_hub(monkeypatch):
 
         @staticmethod
         def json():
-            return {"program_id": "private-finetuned"}
+            return {"program_id": "public-finetuned"}
 
     finetuned_calls = []
 
@@ -543,11 +543,11 @@ def test_user_prepared_programs_are_not_listed_on_public_hub(monkeypatch):
         lambda program_id, spec: (1.0, {"program_id": program_id, "spec": spec}),
     )
 
-    neural_jobs._compile("private topic spec", "paw-4b-qwen3-0.6b")
-    neural_jobs._compile("private topic spec", "paw-ft-bs48")
+    neural_jobs._compile("public topic spec", "paw-4b-qwen3-0.6b")
+    neural_jobs._compile("public topic spec", "paw-ft-bs48")
 
-    assert standard_calls[0][1]["public"] is False
-    assert finetuned_calls[0][1]["json"]["public"] is False
+    assert standard_calls[0][1]["public"] is True
+    assert finetuned_calls[0][1]["json"]["public"] is True
     assert finetuned_calls[0][0].endswith("/api/v1/compile/async")
 
 

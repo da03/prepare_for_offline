@@ -85,8 +85,8 @@ instead of inventing fine-grained percentages.
 Questions, answers, and routing traces are retained only in the local SQLite
 history used by the app. They are not uploaded as telemetry. Topic prompts
 submitted through **Prepare** are different: the generated specification is
-sent to PAW's online compiler. New user-prepared programs are submitted with
-`public: false` so they are not listed on the public PAW hub.
+sent to PAW's online compiler with `public: true` and may be listed on the
+public PAW hub. Do not put private or sensitive information in a Prepare prompt.
 
 Developers can export deduplicated question candidates for manual review
 without answers:

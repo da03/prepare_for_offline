@@ -1,0 +1,22 @@
+---
+description: Preserve product decisions and publish every completed app update
+alwaysApply: true
+---
+
+# Product Development Workflow
+
+- Do not silently reverse an explicit product decision. If a change conflicts
+  with an established requirement, stop and ask before implementing it.
+- Keep the runtime neural-only: no documents, retrieval, web search, citations,
+  attachments, or knowledge packs unless the user explicitly changes scope.
+- Use benchmark evidence before changing PAW graph composition or selecting a
+  compiler/program.
+- Keep Ask standalone by default, with context only through an explicit
+  answer-anchored follow-up.
+- Keep the primary UI limited to Ask and Prepare, without preset questions.
+- After a requested product change: run relevant tests, build and install the
+  latest macOS app, increment the version, commit all intended changes, push
+  `main`, and publish the Apple Silicon DMG plus SHA-256 checksum as the latest
+  GitHub release.
+- Report factual limitations directly; do not describe compilation success as
+  proof of factual accuracy.

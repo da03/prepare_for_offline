@@ -92,7 +92,7 @@ def _compile(
         for attempt in range(3):
             response = httpx.post(
                 f"{client._api_url}/api/v1/compile/async",
-                json={"spec": spec, "public": False, "compiler": compiler},
+                json={"spec": spec, "public": True, "compiler": compiler},
                 headers=client._headers(),
                 timeout=30.0,
             )
@@ -136,7 +136,7 @@ def _compile(
             else:
                 raise TimeoutError("PAW finetune job timed out after 10 minutes")
     else:
-        program = paw.compile(spec, compiler=compiler, public=False)
+        program = paw.compile(spec, compiler=compiler, public=True)
         program_id = getattr(program, "id", None) or getattr(
             program, "program_id", None
         )

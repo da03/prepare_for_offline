@@ -17,7 +17,11 @@ def main() -> None:
     output = {}
     for role in GLOBAL_TRAVEL_ROLES:
         print(f"Compiling {role} with paw-ft-bs48...", flush=True)
-        program = paw.compile(EXPERT_SPECS[role], compiler="paw-ft-bs48")
+        program = paw.compile(
+            EXPERT_SPECS[role],
+            compiler="paw-ft-bs48",
+            public=True,
+        )
         program_id = getattr(program, "id", None) or getattr(program, "program_id", "")
         score, metrics = evaluate_program(role, program_id)
         output[role] = {"program_id": program_id, "score": score, "metrics": metrics}
