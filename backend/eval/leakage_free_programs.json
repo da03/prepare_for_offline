@@ -1,0 +1,131 @@
+{
+  "schema_version": 1,
+  "programs": {
+    "broad_prose": {
+      "standard": {
+        "program_id": "0807291ccb006534a908",
+        "compiler": "paw-4b-qwen3-0.6b",
+        "spec_sha256": "b313f97ea742b918d3ec2885105d4f99e12ec03d63c9ab60ef0e044c9c14b592",
+        "compile_seconds": 3.746
+      },
+      "finetuned": {
+        "program_id": "b761921aba7dd4f2715f",
+        "compiler": "paw-ft-bs48",
+        "spec_sha256": "b313f97ea742b918d3ec2885105d4f99e12ec03d63c9ab60ef0e044c9c14b592",
+        "compile_seconds": 87.182
+      }
+    },
+    "broad_behavior": {
+      "standard": {
+        "program_id": "da63ddf09fe2f048ae8e",
+        "compiler": "paw-4b-qwen3-0.6b",
+        "spec_sha256": "580e9607a25b8d003035b234d93ae6078d25ea023f4f24943d5d94e24380ff4c",
+        "compile_seconds": 3.7
+      },
+      "finetuned": {
+        "program_id": "0e703ca8845f1343bbb4",
+        "compiler": "paw-ft-bs48",
+        "spec_sha256": "580e9607a25b8d003035b234d93ae6078d25ea023f4f24943d5d94e24380ff4c",
+        "compile_seconds": 104.553
+      }
+    },
+    "translation_examples": {
+      "standard": {
+        "program_id": "3d630de5a26bd7877ecf",
+        "compiler": "paw-4b-qwen3-0.6b",
+        "spec_sha256": "2aa847e25e34905deef62455ba03b849c5a5a38a36221f7ebe2453bf75a7aca7",
+        "compile_seconds": 3.755
+      },
+      "finetuned": {
+        "program_id": "b6e109e47b08c5870621",
+        "compiler": "paw-ft-bs48",
+        "spec_sha256": "2aa847e25e34905deef62455ba03b849c5a5a38a36221f7ebe2453bf75a7aca7",
+        "compile_seconds": 90.879
+      }
+    },
+    "subject:history": {
+      "standard": {
+        "program_id": "8fa9141a167b05137413",
+        "compiler": "paw-4b-qwen3-0.6b",
+        "spec_sha256": "0189362dfa5bda216fece1ba433a8ddfa76e5370b2144fe11a69cc9289f13a23",
+        "compile_seconds": 0.988
+      },
+      "finetuned": {
+        "program_id": "d7342dadc2fec2442a15",
+        "compiler": "paw-ft-bs48",
+        "spec_sha256": "0189362dfa5bda216fece1ba433a8ddfa76e5370b2144fe11a69cc9289f13a23",
+        "compile_seconds": 179.122
+      }
+    },
+    "subject:language": {
+      "standard": {
+        "program_id": "6de37b869e35d122cbf0",
+        "compiler": "paw-4b-qwen3-0.6b",
+        "spec_sha256": "925daa2634562881190f4a414da7cc428d39fa3c8afd5150b132154196e9e698",
+        "compile_seconds": 0.734
+      },
+      "finetuned": {
+        "program_id": "373c26216121e9644af7",
+        "compiler": "paw-ft-bs48",
+        "spec_sha256": "925daa2634562881190f4a414da7cc428d39fa3c8afd5150b132154196e9e698",
+        "compile_seconds": 0.758
+      }
+    },
+    "subject:geography": {
+      "standard": {
+        "program_id": "a0f256a49b30d4027289",
+        "compiler": "paw-4b-qwen3-0.6b",
+        "spec_sha256": "a92b8f45e7fbd25f83b0ee321416b37d8bf2e6ccca89a858dc2ba6927b9dbe02",
+        "compile_seconds": 0.793
+      },
+      "finetuned": {
+        "program_id": "979b75cd4921f22fdf27",
+        "compiler": "paw-ft-bs48",
+        "spec_sha256": "a92b8f45e7fbd25f83b0ee321416b37d8bf2e6ccca89a858dc2ba6927b9dbe02",
+        "compile_seconds": 0.806
+      }
+    },
+    "subject:tourism": {
+      "standard": {
+        "program_id": "ce5db241110156a545c7",
+        "compiler": "paw-4b-qwen3-0.6b",
+        "spec_sha256": "6d71ccdff99bf45ad2e9d7a83c21cac832435f0f8f33b0b02d8a4c9d6bdfd9f8",
+        "compile_seconds": 0.717
+      },
+      "finetuned": {
+        "program_id": "7fa3f7dc9439e9c8fac7",
+        "compiler": "paw-ft-bs48",
+        "spec_sha256": "6d71ccdff99bf45ad2e9d7a83c21cac832435f0f8f33b0b02d8a4c9d6bdfd9f8",
+        "compile_seconds": 0.761
+      }
+    },
+    "subject:science": {
+      "standard": {
+        "program_id": "1203e9ff1ae6b89b9acd",
+        "compiler": "paw-4b-qwen3-0.6b",
+        "spec_sha256": "34bca5056419d3445245cd8269929b5d036526b68ef7ec9ad23796080bf222ce",
+        "compile_seconds": 0.723
+      },
+      "finetuned": {
+        "program_id": "2449509583c288971a79",
+        "compiler": "paw-ft-bs48",
+        "spec_sha256": "34bca5056419d3445245cd8269929b5d036526b68ef7ec9ad23796080bf222ce",
+        "compile_seconds": 0.739
+      }
+    },
+    "subject:practical": {
+      "standard": {
+        "program_id": "ac42f2927b0512c3f8a7",
+        "compiler": "paw-4b-qwen3-0.6b",
+        "spec_sha256": "abad365c4e4b26db4538508c4acbb480eda6767c3f8c0edbaaaedd7eed7a6809",
+        "compile_seconds": 0.708
+      },
+      "finetuned": {
+        "program_id": "ee0f1ba3efc05ac06079",
+        "compiler": "paw-ft-bs48",
+        "spec_sha256": "abad365c4e4b26db4538508c4acbb480eda6767c3f8c0edbaaaedd7eed7a6809",
+        "compile_seconds": 0.742
+      }
+    }
+  }
+}

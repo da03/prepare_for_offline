@@ -19,10 +19,13 @@ from app.services.neural_specs import (
     BROAD_QA_SPEC,
     CRITIC_SPEC,
     FOLLOWUP_SPEC,
+    HEARD_EXPRESSION_SPEC,
+    LANGUAGE_INTENT_SPEC,
     PREPARED_MATCHER_SPEC,
     REVISION_SPEC,
     SUBJECT_SPECS,
     TOPK_ROUTER_SPEC,
+    TRANSLATION_SPEC,
     spec_sha256,
 )
 
@@ -38,6 +41,9 @@ def specifications() -> dict[str, str]:
         "revision": REVISION_SPEC,
         "followup": FOLLOWUP_SPEC,
         "prepared_matcher": PREPARED_MATCHER_SPEC,
+        "language_intent": LANGUAGE_INTENT_SPEC,
+        "heard_expression": HEARD_EXPRESSION_SPEC,
+        "translation": TRANSLATION_SPEC,
         **{f"subject:{name}": spec for name, spec in SUBJECT_SPECS.items()},
     }
 

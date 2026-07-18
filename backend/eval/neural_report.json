@@ -1,94 +1,107 @@
 {
-  "schema_version": 2,
+  "schema_version": 4,
   "generated_at": "2026-07-18",
   "selection_status": "selected",
+  "methodology_correction": {
+    "anchor_examples_were_in_the_original_broad_spec": true,
+    "anchor_scores_are_not_used_as_generalization_evidence": true,
+    "development_questions_in_selected_specs": 0,
+    "held_out_questions_in_selected_specs": 0,
+    "held_out_question_count": 24,
+    "selection_rule": "maximize relative expected answer quality; require 100% answer rate but not 100% factual accuracy"
+  },
   "selected_graph": {
-    "no_prepared_match": {
-      "role": "broad",
-      "program_id": "9baea697447389a8b073",
-      "compiler": "paw-ft-bs48"
+    "prepared_topics": {
+      "matcher_program_id": "78f255318b58dd9e5961",
+      "policy": "evaluate every prepared topic; one match answers directly; multiple matches aggregate all matches"
     },
-    "prepared_matching": {
-      "role": "prepared_matcher",
-      "program_id": "78f255318b58dd9e5961",
+    "language_tasks": {
+      "intent_program_id": "276770e58bd2ef2efb82",
+      "heard_expression_program_id": "04233c917d866a2fa7ea",
+      "translation_program_id": "b6e109e47b08c5870621",
+      "policy": "use narrow programs only for matching interpretation or translation requests"
+    },
+    "default": {
+      "broad_program_id": "b761921aba7dd4f2715f",
       "compiler": "paw-ft-bs48",
-      "policy": "evaluate every prepared topic; never select only the highest"
-    },
-    "one_prepared_match": {
-      "policy": "return the finetuned prepared specialist directly"
+      "spec_examples": 0
     },
     "multiple_prepared_matches": {
-      "role": "aggregator",
-      "program_id": "51cdb1382fdeda45d009",
-      "compiler": "paw-ft-bs48",
-      "policy": "run every matching prepared specialist and aggregate only those specialists"
+      "aggregator_program_id": "51cdb1382fdeda45d009"
     },
-    "followup": {
-      "program_id": "b2648cc9e8f9dfd1ad41",
-      "compiler": "paw-ft-bs48"
-    },
+    "followup_program_id": "b2648cc9e8f9dfd1ad41",
     "rejected": [
-      "built-in subject fan-out",
-      "broad plus built-in subject aggregation",
+      "fact-heavy broad examples",
+      "behavior examples in the broad spec",
+      "generic built-in subject fan-out",
       "critic/revision composition",
       "broad plus one prepared specialist aggregation",
       "user-visible Standard prepared programs"
     ]
   },
-  "compiler_findings": {
-    "sdk_timeout_seconds": 120,
-    "finetuned_expected_seconds": "120-300",
-    "resolution": "use a 600-second request timeout and retry 502/504 responses to retrieve exact-spec cached jobs",
-    "exact_spec_pairing_enforced": true
-  },
   "quality_results": {
-    "broad_anchors": {
-      "standard_score": 0.3625,
-      "finetuned_score": 0.58125,
-      "finetuned_answer_rate": 1.0,
-      "finetuned_median_ms": 1170.9,
-      "finetuned_worker_rss_mb": 1124.9
+    "broad_example_policy": {
+      "prose_only_finetuned_held_out": 0.041667,
+      "behavior_examples_finetuned_held_out": 0.041667,
+      "decision": "select prose-only because examples provide no measured gain"
     },
-    "broad_held_out": {
-      "questions": 24,
-      "standard_score": 0.041667,
-      "finetuned_score": 0.066667,
-      "standard_answer_rate": 1.0,
-      "finetuned_answer_rate": 1.0,
-      "finetuned_median_ms": 919.37,
-      "finetuned_worker_rss_mb": 1122.0
+    "language_intent": {
+      "standard_accuracy": 1.0,
+      "finetuned_accuracy": 1.0,
+      "cases": 8
     },
-    "router": {
-      "cases": 12,
-      "standard_exact_match": 0.667,
-      "standard_mean_label_recall": 0.889,
-      "finetuned_exact_match": 0.917,
-      "finetuned_mean_label_recall": 1.0
+    "heard_expression": {
+      "standard_score": 0.5,
+      "finetuned_score": 1.0,
+      "unseen_cases": 6
     },
-    "built_in_subject_fanout": {
-      "finetuned_broad_only_anchor_score": 0.58125,
-      "finetuned_topk_anchor_score": 0.5,
-      "finetuned_broad_median_ms": 1170.9,
-      "finetuned_topk_median_ms": 10998.16,
-      "conclusion": "dominated by finetuned broad alone"
+    "translation": {
+      "broad_finetuned_score": 0.5,
+      "prose_translation_finetuned_score": 0.5,
+      "example_translation_finetuned_score": 0.666667,
+      "unseen_cases": 6,
+      "decision": "ship the imperfect example-trained specialist because it has the highest measured expected utility"
+    },
+    "generic_subject_oracle": {
+      "development_lift": {
+        "history_finetuned": 0.06,
+        "language_finetuned": 0.14,
+        "geography_finetuned": 0.0,
+        "tourism_finetuned": 0.0,
+        "science_finetuned": 0.0,
+        "practical_finetuned": 0.06
+      },
+      "held_out_lift": {
+        "history_finetuned": 0.0,
+        "language_finetuned": 0.0,
+        "geography_finetuned": 0.0,
+        "tourism_finetuned": 0.0,
+        "science_finetuned": 0.0,
+        "practical_finetuned": 0.0
+      },
+      "decision": "do not ship generic subjects; held-out lift is zero and manual review found additional factual or practical errors"
     },
     "prepared_ottoman": {
       "cases": 5,
-      "broad_standard_score": 0.267,
       "broad_finetuned_score": 0.267,
       "prepared_standard_score": 0.133,
       "prepared_finetuned_score": 0.533,
       "broad_plus_prepared_aggregated_score": 0.467,
-      "answer_rate": 1.0,
-      "conclusion": "activate only the finetuned prepared program; one match should bypass aggregation"
+      "decision": "wait for finetuning and use one matched prepared specialist directly"
     }
+  },
+  "compiler_findings": {
+    "sdk_timeout_seconds": 120,
+    "finetuned_expected_seconds": "120-300",
+    "resolution": "use a 600-second timeout and retry 502/504 to retrieve exact-spec cached jobs",
+    "exact_spec_pairing_enforced": true
   },
   "release_gates": {
     "answer_rate": 1.0,
     "no_source_runtime": true,
+    "held_out_prompt_leakage": false,
     "multiple_prepared_matches_not_collapsed_to_top1": true,
     "isolated_worker_memory_bounded": true,
-    "held_out_evaluated": true,
     "finetuned_pairs_evaluated": true
   }
 }

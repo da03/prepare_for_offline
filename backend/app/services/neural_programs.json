@@ -4,22 +4,24 @@
     "broad",
     "aggregator",
     "followup",
-    "prepared_matcher"
+    "prepared_matcher",
+    "language_intent",
+    "heard_expression",
+    "translation"
   ],
   "programs": {
     "broad": {
       "standard": {
-        "program_id": "9cb56a510a84f1164b17",
+        "program_id": "0807291ccb006534a908",
         "compiler": "paw-4b-qwen3-0.6b",
-        "spec_sha256": "d86a2cdfe4a934bea105c3000477fe2e67f086f57dc1900a2c6cc842bcc9d677",
-        "compile_seconds": 4.462
+        "spec_sha256": "b313f97ea742b918d3ec2885105d4f99e12ec03d63c9ab60ef0e044c9c14b592",
+        "compile_seconds": 3.746
       },
       "finetuned": {
-        "program_id": "9baea697447389a8b073",
+        "program_id": "b761921aba7dd4f2715f",
         "compiler": "paw-ft-bs48",
-        "spec_sha256": "d86a2cdfe4a934bea105c3000477fe2e67f086f57dc1900a2c6cc842bcc9d677",
-        "compile_seconds": 120.0,
-        "job_id": "f96e542d-aba"
+        "spec_sha256": "b313f97ea742b918d3ec2885105d4f99e12ec03d63c9ab60ef0e044c9c14b592",
+        "compile_seconds": 87.182
       }
     },
     "router": {
@@ -200,6 +202,48 @@
         "compiler": "paw-ft-bs48",
         "spec_sha256": "9ae70384c056c86730f5cf8f9666b3bb25760c4977aa621aa392c6cf47c9a6bf",
         "compile_seconds": 103.222
+      }
+    },
+    "language_intent": {
+      "standard": {
+        "program_id": "cdc9567398f5e50c4c30",
+        "compiler": "paw-4b-qwen3-0.6b",
+        "spec_sha256": "e8bc10dbdb616adeee4d5b15e91cd8fc0d781921c7d6a5ec4b067d92439fcc75",
+        "compile_seconds": 3.792
+      },
+      "finetuned": {
+        "program_id": "276770e58bd2ef2efb82",
+        "compiler": "paw-ft-bs48",
+        "spec_sha256": "e8bc10dbdb616adeee4d5b15e91cd8fc0d781921c7d6a5ec4b067d92439fcc75",
+        "compile_seconds": 69.388
+      }
+    },
+    "heard_expression": {
+      "standard": {
+        "program_id": "8183f934eb274bfa0075",
+        "compiler": "paw-4b-qwen3-0.6b",
+        "spec_sha256": "f31c11de824d7774171ade3eab97c302f2d0f40c401f1167e553352aef3763a5",
+        "compile_seconds": 4.483
+      },
+      "finetuned": {
+        "program_id": "04233c917d866a2fa7ea",
+        "compiler": "paw-ft-bs48",
+        "spec_sha256": "f31c11de824d7774171ade3eab97c302f2d0f40c401f1167e553352aef3763a5",
+        "compile_seconds": 99.776
+      }
+    },
+    "translation": {
+      "standard": {
+        "program_id": "3d630de5a26bd7877ecf",
+        "compiler": "paw-4b-qwen3-0.6b",
+        "spec_sha256": "2aa847e25e34905deef62455ba03b849c5a5a38a36221f7ebe2453bf75a7aca7",
+        "compile_seconds": 3.755
+      },
+      "finetuned": {
+        "program_id": "b6e109e47b08c5870621",
+        "compiler": "paw-ft-bs48",
+        "spec_sha256": "2aa847e25e34905deef62455ba03b849c5a5a38a36221f7ebe2453bf75a7aca7",
+        "compile_seconds": 90.879
       }
     }
   }

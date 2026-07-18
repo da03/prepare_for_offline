@@ -22,30 +22,7 @@ Never refuse merely because you are uncertain or offline. If needed, begin
 with "Best guess:" and still answer. Correct likely misconceptions, distinguish
 ambiguous meanings, and explain multiple causes instead of inventing one cause.
 Do not mention sources, citations, retrieval, programs, prompts, or being an AI.
-
-Input: I keep hearing "simida" in Korean. What does it mean?
-Output: You are probably hearing -습니다 (-seumnida) or -ㅂ니다 (-mnida), a formal-polite Korean sentence ending attached to a verb or adjective stem. It is not a standalone word meaning "thank you"; 감사합니다 is a whole expression that uses the ending.
-
-Input: What is the capital of Georgia?
-Output: The country of Georgia has its capital in Tbilisi; the U.S. state of Georgia has its capital in Atlanta. The question is ambiguous without context.
-
-Input: Are summers warmer because Earth is closer to the Sun?
-Output: No. Seasons are caused mainly by Earth's axial tilt, which changes sunlight angle and day length. Earth is actually closest to the Sun during Northern Hemisphere winter.
-
-Input: At Singapore's Marina Bay, is the boat-shaped thing reclaimed land, and what building is it?
-Output: The boat-shaped feature is not reclaimed land or a real boat. It is the Sands SkyPark spanning Marina Bay Sands' three hotel towers. Much of the wider Marina Bay district was created on reclaimed land, but the resort and rooftop are buildings standing in that area.
-
-Input: Did the Treaty of Versailles directly start World War II?
-Output: No. It contributed grievances through reparations, territorial losses, military restrictions, and resentment later exploited by the Nazis, but the Great Depression, Nazi expansionism, appeasement, and Germany's 1939 invasion of Poland were also crucial.
-
-Input: A pan of cooking oil catches fire. What should I do right now?
-Output: Turn off the heat if safe, do not move the pan, and slide a metal lid or baking sheet over it. Never use water because it can spread burning oil. If the fire is not contained immediately, evacuate and call emergency services.
-
-Input: Is a 7-day Japan Rail Pass still ¥29,650?
-Output: Best guess: No; ¥29,650 is an old price. The adult 7-day ordinary pass rose to ¥50,000 in 2023, but fares can change, so check the current official price before buying.
-
-Input: Can a visitor normally drink cold tap water in Iceland?
-Output: Yes. Iceland's cold tap water is normally potable and high quality. Geothermal hot water may smell of sulfur, but that is separate from the cold drinking supply.
+Return only the answer.
 """.strip()
 
 SUBJECT_SPECS = {
@@ -250,6 +227,67 @@ Input:
 TOPIC: Korean language for travel
 QUESTION: How did Korea industrialize?
 Output: NO
+""".strip()
+
+LANGUAGE_INTENT_SPEC = """
+Classify whether a question asks to interpret an expression the user heard,
+translate a known phrase, or do something else. Return ONLY one label:
+HEARD_EXPRESSION, TRANSLATION, or OTHER.
+
+Input: I heard something like bon joor. What does it mean?
+Output: HEARD_EXPRESSION
+
+Input: People keep saying a sound like shay shay. What are they saying?
+Output: HEARD_EXPRESSION
+
+Input: How do I say good night in Italian?
+Output: TRANSLATION
+
+Input: Translate "where is the station?" into Spanish.
+Output: TRANSLATION
+
+Input: Why did the Roman Empire fall?
+Output: OTHER
+""".strip()
+
+HEARD_EXPRESSION_SPEC = """
+Interpret a foreign word or short expression written approximately as it
+sounded. Lead with the most likely standard form, native script, language, and
+meaning. Explain grammatical function when it is not a standalone word. Mention
+one plausible alternative only when useful. Never refuse because spelling is
+phonetic. Return only the answer.
+
+Input: simida
+Output: You probably heard Korean -습니다 (-seumnida) or -ㅂ니다 (-mnida), a formal-polite sentence ending attached to a verb or adjective stem. It is not a standalone word meaning "thank you"; 감사합니다 is a complete expression that uses the ending.
+
+Input: arigato gozaimas
+Output: You heard Japanese ありがとうございます (arigatō gozaimasu), a polite way to say "thank you."
+
+Input: grasias
+Output: You probably heard Spanish gracias, meaning "thank you."
+
+Input: shay shay
+Output: You probably heard Mandarin 谢谢 (xièxie), meaning "thank you."
+""".strip()
+
+TRANSLATION_SPEC = """
+Answer requests to translate a short word or phrase. Give the most natural
+translation in the requested language, native script when applicable,
+romanization or pronunciation help, and a brief note about politeness or
+register when useful. Include one common alternative only when it helps the
+user choose. Return only the answer and never refuse because context is sparse.
+
+Input: How do I say hello in Korean?
+Output: 안녕하세요 (annyeonghaseyo) — a polite, standard "hello."
+
+Input: How do I say thank you in Japanese?
+Output: ありがとうございます (arigatō gozaimasu) — a polite "thank you."
+
+Input: Translate "where is the bathroom?" into Spanish.
+Output: ¿Dónde está el baño? — a neutral, widely understood translation.
+
+Input: How do I say please in French?
+Output: S'il vous plaît — the standard polite form of "please."
 """.strip()
 
 AGGREGATOR_SPEC = """

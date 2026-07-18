@@ -1,0 +1,70 @@
+{
+  "intent": [
+    {"question": "What does annyeong mean?", "expected": "HEARD_EXPRESSION"},
+    {"question": "Someone said kamsahamnida to me. What was it?", "expected": "HEARD_EXPRESSION"},
+    {"question": "How do I say thank you in Korean?", "expected": "TRANSLATION"},
+    {"question": "What is the Japanese phrase for good night?", "expected": "TRANSLATION"},
+    {"question": "Translate station into Spanish.", "expected": "TRANSLATION"},
+    {"question": "Why does the sky look blue?", "expected": "OTHER"},
+    {"question": "What caused the Renaissance?", "expected": "OTHER"},
+    {"question": "What should I do during an earthquake?", "expected": "OTHER"}
+  ],
+  "heard_expression": [
+    {
+      "input": "kamsahamnida",
+      "must_include_any": ["감사합니다", "gamsahamnida", "thank you"]
+    },
+    {
+      "input": "anyong haseyo",
+      "must_include_any": ["안녕하세요", "annyeonghaseyo", "hello"]
+    },
+    {
+      "input": "bon joor",
+      "must_include_any": ["bonjour", "hello", "French"]
+    },
+    {
+      "input": "ohayo gozaimas",
+      "must_include_any": ["おはようございます", "ohayō gozaimasu", "good morning"]
+    },
+    {
+      "input": "shukran",
+      "must_include_any": ["شكراً", "shukran", "thank you"]
+    },
+    {
+      "input": "donde esta el banyo",
+      "must_include_any": ["¿Dónde está el baño?", "dónde está el baño", "bathroom", "restroom"]
+    }
+  ],
+  "translation": [
+    {
+      "input": "How do I say thank you in Korean?",
+      "must_include_any": ["감사합니다", "gamsahamnida"],
+      "must_not_include": ["미안해요", "mianhaeyo"]
+    },
+    {
+      "input": "How do I say good night in Japanese?",
+      "must_include_any": ["おやすみなさい", "oyasuminasai"],
+      "must_not_include": ["おはようございます", "ohayō gozaimasu"]
+    },
+    {
+      "input": "Translate where is the station into Spanish.",
+      "must_include_any": ["¿Dónde está la estación?", "dónde está la estación"],
+      "must_not_include": []
+    },
+    {
+      "input": "How do I say good morning in French?",
+      "must_include_any": ["bonjour"],
+      "must_not_include": []
+    },
+    {
+      "input": "How do I say thank you in Mandarin?",
+      "must_include_any": ["谢谢", "xièxie", "xiexie"],
+      "must_not_include": []
+    },
+    {
+      "input": "How do I say please in Arabic?",
+      "must_include_any": ["من فضلك", "min faḍlik", "min fadlik"],
+      "must_not_include": []
+    }
+  ]
+}

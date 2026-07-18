@@ -182,6 +182,58 @@ def test_one_prepared_match_bypasses_broad_aggregation(client, monkeypatch):
     assert ids["aggregator"] not in calls
 
 
+def test_translation_and_heard_expression_use_distinct_programs(
+    client, monkeypatch
+):
+    conn = connect()
+    try:
+        program_registry.ensure_builtins(conn)
+        ids = {
+            role: program_registry.active(conn, role)["program_id"]
+            for role in (
+                "broad",
+                "language_intent",
+                "translation",
+                "heard_expression",
+            )
+        }
+    finally:
+        conn.close()
+
+    def fake_run(program_id, text, **kwargs):
+        del kwargs
+        if program_id == ids["broad"]:
+            output = "Broad draft"
+        elif program_id == ids["language_intent"]:
+            output = (
+                "TRANSLATION"
+                if "say thank you" in text.casefold()
+                else "HEARD_EXPRESSION"
+            )
+        elif program_id == ids["translation"]:
+            output = "감사합니다 (gamsahamnida) — polite thank you."
+        elif program_id == ids["heard_expression"]:
+            output = "-습니다 (-seumnida) is a formal-polite sentence ending."
+        else:
+            raise AssertionError(program_id)
+        return ProgramResult(output, 1.0, 100.0, True)
+
+    monkeypatch.setattr("app.services.program_runtime.run", fake_run)
+    translated = client.post(
+        "/api/ask",
+        json={"text": "How do I say thank you in Korean?"},
+    ).json()
+    assert "감사합니다" in translated["answer"]
+    assert translated["program_labels"] == ["translation"]
+
+    heard = client.post(
+        "/api/ask",
+        json={"text": "What does simida mean?"},
+    ).json()
+    assert "seumnida" in heard["answer"]
+    assert heard["program_labels"] == ["heard_expression"]
+
+
 def test_standard_and_finetuned_compile_the_identical_topic_spec(
     client, monkeypatch
 ):
@@ -248,6 +300,9 @@ def test_manifest_programs_match_frozen_spec_hashes(client):
         "revision": neural_specs.REVISION_SPEC,
         "followup": neural_specs.FOLLOWUP_SPEC,
         "prepared_matcher": neural_specs.PREPARED_MATCHER_SPEC,
+        "language_intent": neural_specs.LANGUAGE_INTENT_SPEC,
+        "heard_expression": neural_specs.HEARD_EXPRESSION_SPEC,
+        "translation": neural_specs.TRANSLATION_SPEC,
         **{
             f"subject:{name}": spec
             for name, spec in neural_specs.SUBJECT_SPECS.items()
@@ -257,6 +312,54 @@ def test_manifest_programs_match_frozen_spec_hashes(client):
         assert manifest[role]["standard"]["spec_sha256"] == (
             neural_specs.spec_sha256(spec)
         )
+
+
+def test_selected_specs_do_not_contain_their_held_out_questions(client):
+    del client
+    from eval.universal_qa.runner import load_benchmark
+
+    assert "Input:" not in neural_specs.BROAD_QA_SPEC
+    shipping_specs = "\n".join(
+        (
+            neural_specs.BROAD_QA_SPEC,
+            neural_specs.AGGREGATOR_SPEC,
+            neural_specs.FOLLOWUP_SPEC,
+            neural_specs.PREPARED_MATCHER_SPEC,
+            neural_specs.LANGUAGE_INTENT_SPEC,
+            neural_specs.HEARD_EXPRESSION_SPEC,
+            neural_specs.TRANSLATION_SPEC,
+        )
+    )
+    benchmark = load_benchmark()
+    for split in ("dev", "test"):
+        assert not [
+            item["id"]
+            for item in benchmark[split]["questions"]
+            if item["question"] in shipping_specs
+        ]
+
+    language_cases = json.loads(
+        (
+            Path(__file__).resolve().parents[1]
+            / "eval"
+            / "language_generalization.json"
+        ).read_text()
+    )
+    assert not [
+        case["question"]
+        for case in language_cases["intent"]
+        if case["question"] in neural_specs.LANGUAGE_INTENT_SPEC
+    ]
+    assert not [
+        case["input"]
+        for case in language_cases["heard_expression"]
+        if case["input"] in neural_specs.HEARD_EXPRESSION_SPEC
+    ]
+    assert not [
+        case["input"]
+        for case in language_cases["translation"]
+        if case["input"] in neural_specs.TRANSLATION_SPEC
+    ]
 
 
 def test_neural_migration_purges_source_text_but_preserves_conversations():

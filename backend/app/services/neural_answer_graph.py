@@ -63,6 +63,39 @@ def _candidate_program(conn: sqlite3.Connection, label: str) -> dict | None:
     return None
 
 
+def _language_candidate(
+    conn: sqlite3.Connection, question: str
+) -> tuple[dict | None, dict | None]:
+    lowered = question.casefold()
+    cues = (
+        "say ",
+        "translate",
+        " mean",
+        "means",
+        "heard",
+        "hearing",
+        "word",
+        "phrase",
+    )
+    if not any(cue in lowered for cue in cues):
+        return None, None
+    intent = program_registry.active(conn, "language_intent")
+    if not intent:
+        return None, None
+    intent_result = _run(intent, question, max_tokens=8)
+    label = intent_result["output"].strip().upper()
+    role = {
+        "HEARD_EXPRESSION": "heard_expression",
+        "TRANSLATION": "translation",
+    }.get(label)
+    if not role:
+        return None, intent_result
+    program = program_registry.active(conn, role)
+    if not program:
+        return None, intent_result
+    return _run(program, question), intent_result
+
+
 def _aggregate(question: str, candidates: list[dict], aggregator: dict) -> dict:
     lines = [f"QUESTION: {question}"]
     for candidate in candidates:
@@ -104,6 +137,13 @@ def answer_events(conn: sqlite3.Connection, question: str) -> Iterator[dict]:
         prepared_candidates.append(candidate)
         yield {"type": "specialist_complete", "label": label}
 
+    language_result = None
+    language_intent_result = None
+    if not prepared_candidates:
+        language_result, language_intent_result = _language_candidate(
+            conn, question
+        )
+
     aggregator = program_registry.active(conn, "aggregator")
     final_result = broad_result
     aggregate_result = None
@@ -119,6 +159,10 @@ def answer_events(conn: sqlite3.Connection, question: str) -> Iterator[dict]:
             final_result = aggregate_result
         except Exception:
             final_result = prepared_candidates[0]
+    elif len(prepared_candidates) > 1:
+        final_result = prepared_candidates[0]
+    elif language_result:
+        final_result = language_result
 
     critic_result = None
     revision_result = None
@@ -151,8 +195,13 @@ def answer_events(conn: sqlite3.Connection, question: str) -> Iterator[dict]:
                 "elapsed_ms": candidate["elapsed_ms"],
                 "peak_rss_mb": candidate["peak_rss_mb"],
             }
-            for candidate in [broad_result, *prepared_candidates]
+            for candidate in [
+                broad_result,
+                *prepared_candidates,
+                *([language_result] if language_result else []),
+            ]
         ],
+        "language_intent": language_intent_result,
         "prepared_matcher": matcher_results,
         "aggregator": {
             key: aggregate_result.get(key)
@@ -166,7 +215,8 @@ def answer_events(conn: sqlite3.Connection, question: str) -> Iterator[dict]:
     yield {
         "type": "final",
         "answer": final_result["output"],
-        "program_labels": labels,
+        "program_labels": labels
+        + ([language_result["role"]] if language_result else []),
         "trace": trace,
         "refined": final_result["output"] != broad_result["output"],
     }

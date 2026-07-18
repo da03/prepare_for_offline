@@ -6,9 +6,9 @@ Prepare for Offline compiles small [ProgramAsWeights](https://programasweights.c
 neural programs while connected and runs them locally on Qwen3-0.6B. It has
 exactly two primary surfaces:
 
-- **Ask** runs a finetuned broad PAW answerer, then every relevant prepared
-  specialist. One match replaces the broad draft directly; multiple matches
-  are combined by a finetuned PAW aggregator.
+- **Ask** uses a leakage-free finetuned broad PAW answerer, narrow language
+  programs when relevant, and every matching prepared specialist. One prepared
+  match answers directly; multiple matches are combined by a PAW aggregator.
 - **Prepare** compiles one topic prompt—such as `Korean language for travel`—as
   an additional PAW specialist.
 
@@ -32,11 +32,13 @@ Silicon.
 
 ```text
 question
-  ├── finetuned broad PAW answerer
-  └── PAW matcher checks every prepared topic
-        ├── no match → broad answer
-        ├── one match → prepared answer
-        └── multiple matches → PAW aggregator → one answer
+  ├── PAW matcher checks every prepared topic
+  │     ├── one match → prepared answer
+  │     └── multiple matches → PAW aggregator → one answer
+  └── no prepared match
+        ├── heard expression → finetuned expression interpreter
+        ├── translation → finetuned translation helper
+        └── everything else → leakage-free finetuned broad answerer
 ```
 
 The broad draft can appear first in the same answer card while specialists and
@@ -45,6 +47,8 @@ from the normal UI.
 
 Every prepared topic is checked independently. When several match, the app
 runs all of them rather than reducing the question to the highest match.
+The broad spec intentionally contains no examples; examples are used only in
+narrow programs when held-out evaluation proves a meaningful gain.
 
 ## How Prepare works
 
@@ -105,14 +109,15 @@ rubric authors only; they never enter the product or PAW specifications.
 ```bash
 cd backend
 python -m eval.universal_qa.runner validate
-python -m eval.run_neural_matrix \
-  --mode topk --split anchors \
-  --output /tmp/paw-topk-anchors.json
+python -m eval.run_leakage_free_eval
+python -m eval.run_language_generalization
+python -m eval.run_prepared_ottoman_eval
 ```
 
-Release candidates must maintain a 100% answer rate and are compared on rubric
-quality, prohibited errors, top-k lift over top-1, cold/warm latency, worker
-RSS, adapter size, and prepared-topic lift.
+Release candidates must maintain a 100% answer rate and are compared by relative
+rubric quality, prohibited errors, cold/warm latency, worker RSS, adapter size,
+and prepared-topic lift. Imperfect specialists may ship when they are the best
+measured option.
 
 ## Verification
 

@@ -28,6 +28,9 @@ def _specifications() -> dict[str, str]:
         "revision": neural_specs.REVISION_SPEC,
         "followup": neural_specs.FOLLOWUP_SPEC,
         "prepared_matcher": neural_specs.PREPARED_MATCHER_SPEC,
+        "language_intent": neural_specs.LANGUAGE_INTENT_SPEC,
+        "heard_expression": neural_specs.HEARD_EXPRESSION_SPEC,
+        "translation": neural_specs.TRANSLATION_SPEC,
         **{
             f"subject:{name}": spec
             for name, spec in neural_specs.SUBJECT_SPECS.items()
@@ -104,6 +107,9 @@ def _display_name(role: str) -> str:
         "revision": "Answer reviser",
         "followup": "Follow-up rewriter",
         "prepared_matcher": "Prepared topic matcher",
+        "language_intent": "Language intent classifier",
+        "heard_expression": "Heard expression interpreter",
+        "translation": "Translation helper",
     }.get(role, role.replace("_", " ").title())
 
 
