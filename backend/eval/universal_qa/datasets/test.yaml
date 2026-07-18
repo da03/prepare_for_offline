@@ -1,0 +1,419 @@
+{
+  "schema_version": "universal-qa-dataset/v1",
+  "name": "Universal QA held-out split",
+  "split": "test",
+  "description": "Twenty-four held-out cases with distinct questions and rubric language for final evaluation across the benchmark's six required domains.",
+  "as_of": "2026-07-17",
+  "sources": {
+    "netherlands-government": {"title": "The Netherlands: government and capital", "publisher": "Government of the Netherlands", "url": "https://www.government.nl/topics/constitutional-monarchy/question-and-answer/what-are-the-different-parts-of-the-kingdom-of-the-netherlands", "as_of": "2026-07-17"},
+    "tanzania-profile": {"title": "Tanzania country profile", "publisher": "CIA World Factbook", "url": "https://www.cia.gov/the-world-factbook/countries/tanzania/", "as_of": "2026-07-17"},
+    "uk-northern-ireland": {"title": "Devolution settlement: Northern Ireland", "publisher": "UK Government", "url": "https://www.gov.uk/guidance/devolution-settlement-northern-ireland", "as_of": "2026-07-17"},
+    "jnto-tipping": {"title": "Tipping in Japan", "publisher": "Japan National Tourism Organization", "url": "https://www.japan.travel/en/plan/tipping-in-japan/", "as_of": "2026-07-17"},
+    "smithsonian-vikings": {"title": "Viking helmets and archaeology", "publisher": "Smithsonian Institution", "url": "https://www.smithsonianmag.com/history/where-did-vikings-get-their-horned-helmets-180982185/", "as_of": "2026-07-17"},
+    "met-byzantium": {"title": "Byzantium, 330–1453", "publisher": "The Metropolitan Museum of Art", "url": "https://www.metmuseum.org/toah/hd/byza/hd_byza.htm", "as_of": "2026-07-17"},
+    "archives-independence": {"title": "The Declaration of Independence: a history", "publisher": "U.S. National Archives", "url": "https://www.archives.gov/founding-docs/declaration-history", "as_of": "2026-07-17"},
+    "smithsonian-cleopatra": {"title": "Cleopatra and the ancient Egyptian timeline", "publisher": "Smithsonian Institution", "url": "https://www.si.edu/spotlight/ancient-egypt", "as_of": "2026-07-17"},
+    "korean-greeting": {"title": "Basic Korean greetings", "publisher": "National Institute of Korean Language", "url": "https://krdict.korean.go.kr/eng/mainAction", "as_of": "2026-07-17"},
+    "rae-embarazada": {"title": "Embarazado, embarazada", "publisher": "Real Academia Española", "url": "https://dle.rae.es/embarazado", "as_of": "2026-07-17"},
+    "jpf-sayonara": {"title": "Japanese language and culture resources", "publisher": "The Japan Foundation", "url": "https://www.jpf.go.jp/e/project/japanese/education/resource/", "as_of": "2026-07-17"},
+    "academie-liaison": {"title": "French liaison", "publisher": "Académie française", "url": "https://www.academie-francaise.fr/questions-de-langue", "as_of": "2026-07-17"},
+    "noaa-lightning": {"title": "Lightning myths and facts", "publisher": "National Weather Service", "url": "https://www.weather.gov/safety/lightning-myths", "as_of": "2026-07-17"},
+    "usgs-bats": {"title": "All about bats", "publisher": "U.S. Geological Survey", "url": "https://www.usgs.gov/faqs/are-bats-blind", "as_of": "2026-07-17"},
+    "corning-glass": {"title": "Does glass flow?", "publisher": "Corning Museum of Glass", "url": "https://www.cmog.org/article/does-glass-flow", "as_of": "2026-07-17"},
+    "noaa-tides": {"title": "What causes tides?", "publisher": "National Ocean Service", "url": "https://oceanservice.noaa.gov/education/tutorial_tides/tides02_cause.html", "as_of": "2026-07-17"},
+    "apple-liquid": {"title": "If you see a liquid-detection alert", "publisher": "Apple Support", "url": "https://support.apple.com/en-us/102643", "as_of": "2026-07-17"},
+    "usfa-electrical": {"title": "Electrical fire safety", "publisher": "U.S. Fire Administration", "url": "https://www.usfa.fema.gov/prevention/home-fires/prevent-fires/electrical/", "as_of": "2026-07-17"},
+    "usda-freezer": {"title": "Keeping food safe during an emergency", "publisher": "U.S. Department of Agriculture", "url": "https://www.fsis.usda.gov/food-safety/safe-food-handling-and-preparation/emergencies/keeping-food-safe-during-emergency", "as_of": "2026-07-17"},
+    "fda-medicine": {"title": "Taking medicines safely", "publisher": "U.S. Food and Drug Administration", "url": "https://www.fda.gov/drugs/resources-you-drugs/medication-errors", "as_of": "2026-07-17"},
+    "nato-sweden": {"title": "Sweden joins NATO", "publisher": "North Atlantic Treaty Organization", "url": "https://www.nato.int/cps/en/natohq/news_223446.htm", "as_of": "2026-07-17"},
+    "x-brand": {"title": "About X", "publisher": "X Corp.", "url": "https://about.x.com/en", "as_of": "2026-07-17"},
+    "un-turkiye": {"title": "Türkiye country profile", "publisher": "United Nations", "url": "https://www.un.org/en/about-us/member-states/turkiye", "as_of": "2026-07-17"},
+    "who-covid-emergency": {"title": "Statement on the fifteenth meeting of the COVID-19 IHR Emergency Committee", "publisher": "World Health Organization", "url": "https://www.who.int/news/item/05-05-2023-statement-on-the-fifteenth-meeting-of-the-international-health-regulations-(2005)-emergency-committee-regarding-the-coronavirus-disease-(covid-19)-pandemic", "as_of": "2026-07-17"}
+  },
+  "questions": [
+    {
+      "id": "test-netherlands-capital",
+      "question": "If Amsterdam is the Dutch capital, why are the government and embassies in The Hague?",
+      "category": "country_city_overview",
+      "domain": "country_travel",
+      "language": "en",
+      "answer_policy": {"must_answer": true, "allow_refusal": false, "rationale": "The constitutional capital and governmental seat have distinct documented roles."},
+      "references": ["netherlands-government"],
+      "freshness": {"classification": "stable", "as_of": "2026-07-17", "expectation": "State both city roles without inventing a second legal capital."},
+      "rubric": {
+        "must_include": [{"id": "test-netherlands-capital.m1", "claim": "Explains that Amsterdam is the constitutional capital, while The Hague is the seat of government, parliament, ministries, and most foreign missions.", "weight": 0.7, "aliases": [{"all": ["Amsterdam", "capital", "The Hague", "seat of government"]}, {"all": ["parliament", "ministries", "The Hague"]}], "rationale": "The split of ceremonial-constitutional and working-government functions resolves the question.", "accepted_evidence": ["Correctly assigns capital status to Amsterdam and national-government operations to The Hague."], "references": ["netherlands-government"]}],
+        "should_include": [{"id": "test-netherlands-capital.s1", "claim": "Notes that the monarch’s working palace and the Supreme Court are also in The Hague.", "weight": 0.3, "aliases": ["working palace", "Supreme Court", "The Hague"], "rationale": "Additional institutions illustrate the long-standing concentration of state functions.", "accepted_evidence": ["Names one major national institution located in The Hague."], "references": ["netherlands-government"]}],
+        "must_not_include": [{"id": "test-netherlands-capital.n1", "claim": "Says The Hague has replaced Amsterdam as the Netherlands’ official capital.", "penalty": 0.8, "aliases": ["The Hague is the official capital", "Amsterdam is no longer capital", "capital was moved to The Hague"], "rationale": "The governmental seat has not displaced Amsterdam's constitutional title.", "accepted_evidence": ["Penalize reassignment of formal capital status."], "references": ["netherlands-government"]}]
+      },
+      "follow_ups": []
+    },
+    {
+      "id": "test-tanzania-capital",
+      "question": "Is Dar es Salaam still the capital of Tanzania?",
+      "category": "country_city_overview",
+      "domain": "country_travel",
+      "language": "en",
+      "answer_policy": {"must_answer": true, "allow_refusal": false, "rationale": "The political capital move is settled even though commercial functions remain split."},
+      "references": ["tanzania-profile"],
+      "freshness": {"classification": "slow_changing", "as_of": "2026-07-17", "expectation": "Name Dodoma and explain Dar es Salaam's continuing importance."},
+      "rubric": {
+        "must_include": [{"id": "test-tanzania-capital.m1", "claim": "Says Dodoma is Tanzania’s official capital, while Dar es Salaam is the largest city and main commercial center.", "weight": 0.7, "aliases": [{"all": ["Dodoma", "official capital", "Dar es Salaam", "commercial"]}], "rationale": "Both roles explain why older sources and practical activity may point to different cities.", "accepted_evidence": ["Answers no, identifies Dodoma, and gives Dar es Salaam's economic role."], "references": ["tanzania-profile"]}],
+        "should_include": [{"id": "test-tanzania-capital.s1", "claim": "Mentions that government functions were moved gradually and some institutions or international activity have remained in Dar es Salaam.", "weight": 0.3, "aliases": ["gradual move", "some institutions remain", "diplomatic activity"], "rationale": "The transition history accounts for mixed real-world signals.", "accepted_evidence": ["Describes an incomplete or gradual functional relocation without denying Dodoma's status."], "references": ["tanzania-profile"]}],
+        "must_not_include": [{"id": "test-tanzania-capital.n1", "claim": "Claims Dar es Salaam is Tanzania’s sole current official capital.", "penalty": 0.85, "aliases": ["Dar es Salaam is the official capital", "Dodoma is not the capital", "capital remains only Dar es Salaam"], "rationale": "That repeats outdated information.", "accepted_evidence": ["Penalize current exclusive-capital status for Dar es Salaam."], "references": ["tanzania-profile"]}]
+      },
+      "follow_ups": [{"id": "test-tanzania-f1", "question": "Which city is more practical for an international business trip?", "purpose": "Tests application of the political-commercial distinction."}]
+    },
+    {
+      "id": "test-northern-ireland",
+      "question": "Is Northern Ireland part of Ireland or the United Kingdom?",
+      "category": "country_city_overview",
+      "domain": "country_travel",
+      "language": "en",
+      "answer_policy": {"must_answer": true, "allow_refusal": false, "rationale": "Political jurisdiction and island geography can be distinguished clearly."},
+      "references": ["uk-northern-ireland"],
+      "freshness": {"classification": "slow_changing", "as_of": "2026-07-17", "expectation": "Separate the UK constituent country from the island and Republic of Ireland."},
+      "rubric": {
+        "must_include": [{"id": "test-northern-ireland.m1", "claim": "States that Northern Ireland is one of the four constituent countries of the United Kingdom and lies on the island of Ireland, beside the separate Republic of Ireland.", "weight": 0.7, "aliases": [{"all": ["part of the United Kingdom", "island of Ireland", "Republic of Ireland"]}, "UK constituent country"], "rationale": "Political and geographic senses of Ireland must both be addressed.", "accepted_evidence": ["Assigns sovereignty to the UK while locating it on the island and distinguishing the republic."], "references": ["uk-northern-ireland"]}],
+        "should_include": [{"id": "test-northern-ireland.s1", "claim": "Acknowledges that identity and constitutional preference are politically sensitive and vary among residents.", "weight": 0.3, "aliases": ["identity is politically sensitive", "British Irish or both", "constitutional preference"], "rationale": "A careful answer should not reduce lived identity to jurisdiction.", "accepted_evidence": ["Briefly notes diverse British, Irish, and Northern Irish identities."], "references": ["uk-northern-ireland"]}],
+        "must_not_include": [{"id": "test-northern-ireland.n1", "claim": "Says Northern Ireland is governed by the Republic of Ireland.", "penalty": 0.85, "aliases": ["part of the Republic of Ireland", "governed from Dublin", "not in the UK"], "rationale": "That is legally incorrect under the current settlement.", "accepted_evidence": ["Penalize assigning present sovereignty to the republic."], "references": ["uk-northern-ireland"]}]
+      },
+      "follow_ups": []
+    },
+    {
+      "id": "test-japan-tipping",
+      "question": "Will a restaurant server in Japan be offended if I leave a cash tip?",
+      "category": "travel",
+      "domain": "country_travel",
+      "language": "en",
+      "answer_policy": {"must_answer": true, "allow_refusal": false, "rationale": "Normal tipping practice can be stated while avoiding claims about every individual's reaction."},
+      "references": ["jnto-tipping"],
+      "freshness": {"classification": "slow_changing", "as_of": "2026-07-17", "expectation": "Say tipping is generally unnecessary and explain how cash may be interpreted."},
+      "rubric": {
+        "must_include": [{"id": "test-japan-tipping.m1", "claim": "Says routine tipping is generally not expected in Japan; loose cash may be returned because staff think it was forgotten, so paying the stated bill is normal.", "weight": 0.7, "aliases": [{"all": ["tipping is not expected", "cash may be returned"]}, {"all": ["pay the stated bill", "Japan"]}], "rationale": "The user needs behavior guidance rather than a stereotype about emotion.", "accepted_evidence": ["Advises no routine tip and explains a likely practical response."], "references": ["jnto-tipping"]}],
+        "should_include": [{"id": "test-japan-tipping.s1", "claim": "Notes that a listed service charge, guided-tour custom, or special gratuity envelope can be handled according to the business or host’s guidance.", "weight": 0.3, "aliases": ["service charge", "tour guide", "gratuity envelope", "follow local guidance"], "rationale": "Specific exceptions exist without creating a general tipping norm.", "accepted_evidence": ["Names a bounded exception and recommends checking the venue's practice."], "references": ["jnto-tipping"]}],
+        "must_not_include": [{"id": "test-japan-tipping.n1", "claim": "Guarantees that every Japanese worker will regard any tip as a personal insult.", "penalty": 0.7, "aliases": ["always deeply offended", "tipping is an insult", "every server will be angry"], "rationale": "The norm is non-tipping, but universal claims about offense are unsupported.", "accepted_evidence": ["Penalize categorical emotional stereotyping."], "references": ["jnto-tipping"]}]
+      },
+      "follow_ups": []
+    },
+    {
+      "id": "test-viking-horns",
+      "question": "Did Viking warriors really wear horned helmets in battle?",
+      "category": "world_history",
+      "domain": "history",
+      "language": "en",
+      "answer_policy": {"must_answer": true, "allow_refusal": false, "rationale": "Archaeological evidence supports a direct myth correction."},
+      "references": ["smithsonian-vikings"],
+      "freshness": {"classification": "stable", "as_of": "2026-07-17", "expectation": "Separate Viking Age battle gear from later artistic imagery."},
+      "rubric": {
+        "must_include": [{"id": "test-viking-horns.m1", "claim": "Says there is no evidence that Viking Age warriors used horned helmets in combat; known helmets were practical and lacked horns.", "weight": 0.7, "aliases": [{"all": ["no evidence", "Viking", "combat", "horned helmets"]}, "known Viking helmets had no horns"], "rationale": "Archaeological absence and impracticality undercut the familiar image.", "accepted_evidence": ["Rejects combat use and refers to surviving or depicted Viking Age helmets."], "references": ["smithsonian-vikings"]}],
+        "should_include": [{"id": "test-viking-horns.s1", "claim": "Attributes the popular horned image largely to nineteenth-century Romantic art, costume, and opera design.", "weight": 0.3, "aliases": ["nineteenth-century", "opera costumes", "Romantic art"], "rationale": "The later visual tradition explains the myth's persistence.", "accepted_evidence": ["Places the stereotype in modern European art or Wagnerian staging."], "references": ["smithsonian-vikings"]}],
+        "must_not_include": [{"id": "test-viking-horns.n1", "claim": "Claims horned helmets were standard Viking battlefield equipment.", "penalty": 0.9, "aliases": ["standard Viking battle helmet", "warriors attached horns for combat", "most Vikings wore horns"], "rationale": "This is the misconception being tested.", "accepted_evidence": ["Penalize routine combat use of horned helmets."], "references": ["smithsonian-vikings"]}]
+      },
+      "follow_ups": []
+    },
+    {
+      "id": "test-byzantine-roman",
+      "question": "Did people in the Byzantine Empire think of themselves as Byzantines?",
+      "category": "world_history",
+      "domain": "history",
+      "language": "en",
+      "answer_policy": {"must_answer": true, "allow_refusal": false, "rationale": "Self-designation and later historiographic naming are well documented."},
+      "references": ["met-byzantium"],
+      "freshness": {"classification": "stable", "as_of": "2026-07-17", "expectation": "Explain Roman identity and the later label."},
+      "rubric": {
+        "must_include": [{"id": "test-byzantine-roman.m1", "claim": "Explains that the empire’s inhabitants generally called themselves Romans and their state the Roman Empire; “Byzantine Empire” is a later scholarly label.", "weight": 0.7, "aliases": [{"all": ["called themselves Romans", "later label"]}, {"all": ["Roman Empire", "Byzantine"]}], "rationale": "Modern terminology should not be projected onto historical self-identity.", "accepted_evidence": ["Says Rhomaioi/Romans and identifies Byzantine as retrospective terminology."], "references": ["met-byzantium"]}],
+        "should_include": [{"id": "test-byzantine-roman.s1", "claim": "Notes that the eastern empire was Greek-speaking and Christian while maintaining Roman political identity and law.", "weight": 0.3, "aliases": [{"all": ["Greek-speaking", "Christian", "Roman identity"]}, "Roman law"], "rationale": "Language and religion explain why modern readers perceive difference without negating continuity.", "accepted_evidence": ["Distinguishes cultural evolution from political self-designation."], "references": ["met-byzantium"]}],
+        "must_not_include": [{"id": "test-byzantine-roman.n1", "claim": "Claims Byzantines universally rejected any Roman identity.", "penalty": 0.8, "aliases": ["did not consider themselves Roman", "separate non-Roman empire", "always called themselves Byzantines"], "rationale": "Roman self-identification was central.", "accepted_evidence": ["Penalize denial of Roman identity or use of the later label as universal self-name."], "references": ["met-byzantium"]}]
+      },
+      "follow_ups": []
+    },
+    {
+      "id": "test-us-independence-dates",
+      "question": "Did the United States become independent on July 4, 1776, or only when the war ended?",
+      "category": "world_history",
+      "domain": "history",
+      "language": "en",
+      "answer_policy": {"must_answer": true, "allow_refusal": false, "rationale": "Declaration, political decision, and international recognition can be dated separately."},
+      "references": ["archives-independence"],
+      "freshness": {"classification": "stable", "as_of": "2026-07-17", "expectation": "Distinguish declared independence from secured and recognized independence."},
+      "rubric": {
+        "must_include": [{"id": "test-us-independence-dates.m1", "claim": "Says the colonies declared independence in July 1776, with Congress voting on July 2 and adopting the Declaration on July 4, while Britain recognized independence in the 1783 Treaty of Paris.", "weight": 0.7, "aliases": [{"all": ["July 2", "July 4", "1783", "Treaty of Paris"]}, {"all": ["declared independence", "recognized independence"]}], "rationale": "Different legal and military milestones answer both sides of the question.", "accepted_evidence": ["Separates vote/adoption from eventual British recognition."], "references": ["archives-independence"]}],
+        "should_include": [{"id": "test-us-independence-dates.s1", "claim": "Explains that July 4 commemorates the Declaration’s adoption rather than the final military victory or signing by every delegate.", "weight": 0.3, "aliases": ["commemorates adoption", "not the final victory", "delegates signed later"], "rationale": "The holiday's meaning is often compressed into a single event.", "accepted_evidence": ["States what July 4 marks and what it does not."], "references": ["archives-independence"]}],
+        "must_not_include": [{"id": "test-us-independence-dates.n1", "claim": "Claims the Revolutionary War ended on July 4, 1776.", "penalty": 0.85, "aliases": ["war ended on July 4 1776", "Britain surrendered on Independence Day", "peace treaty signed July 4"], "rationale": "The war continued for years.", "accepted_evidence": ["Penalize collapsing declaration and war termination."], "references": ["archives-independence"]}]
+      },
+      "follow_ups": []
+    },
+    {
+      "id": "test-cleopatra-pyramids",
+      "question": "Is it true that Cleopatra lived closer to the Moon landing than to the building of the Great Pyramid?",
+      "category": "world_history",
+      "domain": "history",
+      "language": "en",
+      "answer_policy": {"must_answer": true, "allow_refusal": false, "rationale": "Approximate accepted dates are sufficient to verify the comparison."},
+      "references": ["smithsonian-cleopatra"],
+      "freshness": {"classification": "stable", "as_of": "2026-07-17", "expectation": "Show approximate dates and intervals rather than repeat the meme unsupported."},
+      "rubric": {
+        "must_include": [{"id": "test-cleopatra-pyramids.m1", "claim": "Confirms the comparison using Cleopatra’s death in 30 BCE, Great Pyramid construction around 2560 BCE, and the 1969 Moon landing.", "weight": 0.7, "aliases": [{"all": ["30 BCE", "2560 BCE", "1969"]}, {"all": ["Cleopatra", "Great Pyramid", "Moon landing", "closer"]}], "rationale": "Dates make the surprising chronology auditable.", "accepted_evidence": ["Shows roughly 2,500 years to the pyramid versus about 2,000 years to Apollo 11."], "references": ["smithsonian-cleopatra"]}],
+        "should_include": [{"id": "test-cleopatra-pyramids.s1", "claim": "Uses approximate language because ancient construction dates and interval conventions are not exact to a single year.", "weight": 0.3, "aliases": ["approximately", "around 2560 BCE", "roughly"], "rationale": "False precision is unnecessary for a robust inequality.", "accepted_evidence": ["Qualifies the ancient date while preserving the conclusion."], "references": ["smithsonian-cleopatra"]}],
+        "must_not_include": [{"id": "test-cleopatra-pyramids.n1", "claim": "Places Cleopatra alive during the Great Pyramid’s construction.", "penalty": 0.9, "aliases": ["Cleopatra built the Great Pyramid", "Cleopatra lived when the pyramids were built", "same era as pyramid construction"], "rationale": "The pyramid predates her by more than two millennia.", "accepted_evidence": ["Penalize contemporaneity or authorship claims."], "references": ["smithsonian-cleopatra"]}]
+      },
+      "follow_ups": []
+    },
+    {
+      "id": "test-annyeong",
+      "question": "Does Korean “annyeong” mean hello or goodbye?",
+      "category": "language_phonetic",
+      "domain": "language_phonetic",
+      "language": "en",
+      "answer_policy": {"must_answer": true, "allow_refusal": false, "rationale": "The greeting's context-dependent uses and register are standard."},
+      "references": ["korean-greeting"],
+      "freshness": {"classification": "stable", "as_of": "2026-07-17", "expectation": "Answer both meanings and distinguish casual from polite forms."},
+      "rubric": {
+        "must_include": [{"id": "test-annyeong.m1", "claim": "Says 안녕 (annyeong) can mean either hi or bye in casual speech, with context determining whether it is a greeting or leave-taking.", "weight": 0.7, "aliases": [{"all": ["안녕", "hi", "bye", "casual"]}, "both hello and goodbye"], "rationale": "A one-word English gloss cannot capture its two common interactional uses.", "accepted_evidence": ["Gives both meanings and labels the bare form informal/casual."], "references": ["korean-greeting"]}],
+        "should_include": [{"id": "test-annyeong.s1", "claim": "Provides 안녕하세요 (annyeonghaseyo) as the usual polite greeting and names a polite leave-taking form if useful.", "weight": 0.3, "aliases": ["안녕하세요", "annyeonghaseyo", "안녕히 가세요", "polite greeting"], "rationale": "Register guidance prevents a learner from using the casual form indiscriminately.", "accepted_evidence": ["Supplies the -haseyo greeting and explains when the bare form fits."], "references": ["korean-greeting"]}],
+        "must_not_include": [{"id": "test-annyeong.n1", "claim": "Claims annyeong can only mean goodbye and is never a greeting.", "penalty": 0.8, "aliases": ["only means goodbye", "never means hello", "not used as a greeting"], "rationale": "The form commonly serves both functions.", "accepted_evidence": ["Penalize an exclusive goodbye definition."], "references": ["korean-greeting"]}]
+      },
+      "follow_ups": [{"id": "test-annyeong-f1", "question": "Which polite goodbye form should I use when I am the person leaving?", "purpose": "Tests role-sensitive follow-up guidance."}]
+    },
+    {
+      "id": "test-embarazada",
+      "question": "Does Spanish “embarazada” mean embarrassed?",
+      "category": "multilingual",
+      "domain": "language_phonetic",
+      "language": "en",
+      "answer_policy": {"must_answer": true, "allow_refusal": false, "rationale": "This common false friend has a direct lexical correction."},
+      "references": ["rae-embarazada"],
+      "freshness": {"classification": "stable", "as_of": "2026-07-17", "expectation": "Translate pregnant and give a normal expression for embarrassed."},
+      "rubric": {
+        "must_include": [{"id": "test-embarazada.m1", "claim": "Says embarazada normally means pregnant, not embarrassed; avergonzada or avergonzado is a common word for embarrassed.", "weight": 0.7, "aliases": [{"all": ["embarazada", "pregnant", "avergonzada"]}, "false friend"], "rationale": "Both correction and replacement prevent a consequential vocabulary error.", "accepted_evidence": ["Translates embarazada as pregnant and offers avergonzado/a for embarrassed."], "references": ["rae-embarazada"]}],
+        "should_include": [{"id": "test-embarazada.s1", "claim": "Notes gender agreement in forms such as embarazada/embarazado and avergonzada/avergonzado where context calls for it.", "weight": 0.3, "aliases": ["gender agreement", "avergonzado", "embarazado"], "rationale": "Morphological variation helps the learner use the correction accurately.", "accepted_evidence": ["Briefly explains adjective endings without distracting from the false friend."], "references": ["rae-embarazada"]}],
+        "must_not_include": [{"id": "test-embarazada.n1", "claim": "Translates estoy embarazada as I am embarrassed.", "penalty": 0.95, "aliases": ["estoy embarazada means I am embarrassed", "embarazada is embarrassed", "embarrassment translation"], "rationale": "The mistranslation can materially alter meaning.", "accepted_evidence": ["Penalize the English-cognate guess."], "references": ["rae-embarazada"]}]
+      },
+      "follow_ups": []
+    },
+    {
+      "id": "test-sayonara",
+      "question": "Is sayonara the normal Japanese word to use every time I say goodbye?",
+      "category": "language_phonetic",
+      "domain": "language_phonetic",
+      "language": "en",
+      "answer_policy": {"must_answer": true, "allow_refusal": false, "rationale": "Register and expected separation provide a useful bounded answer."},
+      "references": ["jpf-sayonara"],
+      "freshness": {"classification": "stable", "as_of": "2026-07-17", "expectation": "Correct the universal-use assumption and provide everyday alternatives."},
+      "rubric": {
+        "must_include": [{"id": "test-sayonara.m1", "claim": "Explains that さようなら (sayōnara) is a real farewell but can sound formal or suggest a longer separation, so it is not the default for every casual goodbye.", "weight": 0.7, "aliases": [{"all": ["sayōnara", "formal", "long separation"]}, "not used for every casual goodbye"], "rationale": "Literal translation alone misses important pragmatic force.", "accepted_evidence": ["Says it fits some farewells but is often avoided for routine see-you-soon situations."], "references": ["jpf-sayonara"]}],
+        "should_include": [{"id": "test-sayonara.s1", "claim": "Offers context-appropriate alternatives such as じゃあね, またね, or 失礼します.", "weight": 0.3, "aliases": ["じゃあね", "またね", "失礼します", "mata ne"], "rationale": "Alternatives make the register explanation usable.", "accepted_evidence": ["Gives at least one casual or workplace alternative with context."], "references": ["jpf-sayonara"]}],
+        "must_not_include": [{"id": "test-sayonara.n1", "claim": "Says Japanese speakers use sayonara for every brief parting.", "penalty": 0.75, "aliases": ["always say sayonara", "standard for every goodbye", "use it whenever leaving"], "rationale": "That overgeneralizes a marked farewell.", "accepted_evidence": ["Penalize universal routine-use advice."], "references": ["jpf-sayonara"]}]
+      },
+      "follow_ups": []
+    },
+    {
+      "id": "test-french-liaison",
+      "question": "Why does the final s in French “les amis” sound like a z?",
+      "category": "language_phonetic",
+      "domain": "language_phonetic",
+      "language": "en",
+      "answer_policy": {"must_answer": true, "allow_refusal": false, "rationale": "The liaison phenomenon directly explains the observed pronunciation."},
+      "references": ["academie-liaison"],
+      "freshness": {"classification": "stable", "as_of": "2026-07-17", "expectation": "Describe latent consonant linking and voicing in this phrase."},
+      "rubric": {
+        "must_include": [{"id": "test-french-liaison.m1", "claim": "Explains that liaison pronounces an otherwise silent final consonant before a following vowel sound, and plural s or x is realized as /z/, yielding roughly lay-zah-mee.", "weight": 0.7, "aliases": [{"all": ["liaison", "silent final consonant", "/z/"]}, {"all": ["les amis", "z sound"]}], "rationale": "The linking rule and specific consonant value answer the phonetic observation.", "accepted_evidence": ["Names liaison and explains why s links as z before amis."], "references": ["academie-liaison"]}],
+        "should_include": [{"id": "test-french-liaison.s1", "claim": "Notes that liaison can be required, optional, or forbidden depending on grammar and register, so not every written final s links.", "weight": 0.3, "aliases": ["required optional or forbidden", "not every final s", "depends on grammar"], "rationale": "A bounded rule prevents overgeneralization.", "accepted_evidence": ["Warns against applying liaison mechanically across all word boundaries."], "references": ["academie-liaison"]}],
+        "must_not_include": [{"id": "test-french-liaison.n1", "claim": "Claims every final s in French is normally pronounced z even before a consonant or pause.", "penalty": 0.8, "aliases": ["every final s sounds like z", "always pronounce final s", "z before consonants too"], "rationale": "Most such consonants remain silent outside licensed liaison.", "accepted_evidence": ["Penalize a universal final-s pronunciation rule."], "references": ["academie-liaison"]}]
+      },
+      "follow_ups": []
+    },
+    {
+      "id": "test-lightning-repeat",
+      "question": "Is it true that lightning never strikes the same place twice?",
+      "category": "science_common_knowledge",
+      "domain": "science",
+      "language": "en",
+      "answer_policy": {"must_answer": true, "allow_refusal": false, "rationale": "Observed repeat strikes and safety guidance clearly refute the saying."},
+      "references": ["noaa-lightning"],
+      "freshness": {"classification": "stable", "as_of": "2026-07-17", "expectation": "Reject the myth and preserve lightning precautions after one strike."},
+      "rubric": {
+        "must_include": [{"id": "test-lightning-repeat.m1", "claim": "Says lightning can and often does strike the same location repeatedly, especially tall, isolated, or conductive objects.", "weight": 0.7, "aliases": [{"all": ["strikes the same place", "repeatedly"]}, {"all": ["tall objects", "lightning"]}], "rationale": "Repeat strikes follow electric-field and path conditions, not a one-use exclusion.", "accepted_evidence": ["Directly rejects the proverb and gives a feature that attracts repeated strikes."], "references": ["noaa-lightning"]}],
+        "should_include": [{"id": "test-lightning-repeat.s1", "claim": "Warns that a prior strike does not make an area safe and advises going to a substantial building or hard-topped vehicle during thunder.", "weight": 0.3, "aliases": ["does not make it safe", "substantial building", "hard-topped vehicle"], "rationale": "The myth can lead to immediate unsafe decisions.", "accepted_evidence": ["Connects repeat-strike reality to standard shelter guidance."], "references": ["noaa-lightning"]}],
+        "must_not_include": [{"id": "test-lightning-repeat.n1", "claim": "Claims a previously struck tree or building is protected from future lightning.", "penalty": 0.9, "aliases": ["cannot be struck again", "safe after one strike", "lightning avoids previous locations"], "rationale": "Past strikes may indicate continued exposure.", "accepted_evidence": ["Penalize one-strike immunity."], "references": ["noaa-lightning"]}]
+      },
+      "follow_ups": []
+    },
+    {
+      "id": "test-bats-vision",
+      "question": "Are bats blind because they use echolocation?",
+      "category": "science_common_knowledge",
+      "domain": "science",
+      "language": "en",
+      "answer_policy": {"must_answer": true, "allow_refusal": false, "rationale": "Bat vision and echolocation are well-studied complementary senses."},
+      "references": ["usgs-bats"],
+      "freshness": {"classification": "stable", "as_of": "2026-07-17", "expectation": "Correct blindness and avoid claiming every bat echolocates identically."},
+      "rubric": {
+        "must_include": [{"id": "test-bats-vision.m1", "claim": "Says bats are not blind; they can see, and many species combine vision with echolocation for navigation and hunting.", "weight": 0.7, "aliases": [{"all": ["not blind", "vision", "echolocation"]}, "bats can see"], "rationale": "The senses complement rather than exclude each other.", "accepted_evidence": ["Affirms functional vision and explains a role for echolocation."], "references": ["usgs-bats"]}],
+        "should_include": [{"id": "test-bats-vision.s1", "claim": "Notes that sensory abilities vary among bat species and some large fruit bats rely strongly on vision and smell.", "weight": 0.3, "aliases": ["varies by species", "fruit bats", "vision and smell"], "rationale": "Species diversity prevents a one-model account of all bats.", "accepted_evidence": ["Gives a valid species-level qualification."], "references": ["usgs-bats"]}],
+        "must_not_include": [{"id": "test-bats-vision.n1", "claim": "Claims all bats have no usable eyesight.", "penalty": 0.85, "aliases": ["all bats are completely blind", "bats have no eyes", "cannot see anything"], "rationale": "The phrase blind as a bat is biologically false.", "accepted_evidence": ["Penalize total absence of bat vision."], "references": ["usgs-bats"]}]
+      },
+      "follow_ups": []
+    },
+    {
+      "id": "test-glass-flow",
+      "question": "Are old windows thicker at the bottom because glass slowly flows like a liquid?",
+      "category": "science_common_knowledge",
+      "domain": "science",
+      "language": "en",
+      "answer_policy": {"must_answer": true, "allow_refusal": false, "rationale": "Materials science and manufacturing history jointly resolve the misconception."},
+      "references": ["corning-glass"],
+      "freshness": {"classification": "stable", "as_of": "2026-07-17", "expectation": "Describe glass as an amorphous solid and explain uneven panes."},
+      "rubric": {
+        "must_include": [{"id": "test-glass-flow.m1", "claim": "Says ordinary window glass is an amorphous solid and does not measurably sag on historical timescales; old panes were uneven because of manufacturing methods and installation.", "weight": 0.7, "aliases": [{"all": ["amorphous solid", "does not flow", "manufacturing"]}, {"all": ["old panes", "uneven"]}], "rationale": "Both material state and historical pane production are needed.", "accepted_evidence": ["Rejects observable centuries-scale flow and attributes thickness variation to manufacture or placement."], "references": ["corning-glass"]}],
+        "should_include": [{"id": "test-glass-flow.s1", "claim": "Explains that installers often placed the heavier edge downward, but old panes are not consistently thickest at the bottom.", "weight": 0.3, "aliases": ["heavier edge downward", "not consistently thicker", "installation choice"], "rationale": "This accounts for the observation without turning it into universal evidence.", "accepted_evidence": ["Mentions orientation practices or inconsistent thickness patterns."], "references": ["corning-glass"]}],
+        "must_not_include": [{"id": "test-glass-flow.n1", "claim": "Claims room-temperature glass visibly flows downward over a few centuries.", "penalty": 0.85, "aliases": ["glass flowed to the bottom", "windows sag over centuries", "glass is a slow liquid"], "rationale": "The timescale for such flow is vastly beyond historic windows.", "accepted_evidence": ["Penalize the slow-liquid explanation for old panes."], "references": ["corning-glass"]}]
+      },
+      "follow_ups": []
+    },
+    {
+      "id": "test-ocean-tides",
+      "question": "Does the Moon cause tides by pulling only on the ocean water closest to it?",
+      "category": "science_common_knowledge",
+      "domain": "science",
+      "language": "en",
+      "answer_policy": {"must_answer": true, "allow_refusal": false, "rationale": "Differential gravity explains both tidal bulges without advanced mathematics."},
+      "references": ["noaa-tides"],
+      "freshness": {"classification": "stable", "as_of": "2026-07-17", "expectation": "Explain near- and far-side bulges plus solar and local effects."},
+      "rubric": {
+        "must_include": [{"id": "test-ocean-tides.m1", "claim": "Explains that tides come mainly from differences in the Moon’s gravitational pull across Earth, producing bulges on both the near and far sides as the Earth-Moon system moves.", "weight": 0.7, "aliases": [{"all": ["difference", "Moon's gravity", "near side", "far side"]}, {"all": ["two tidal bulges", "Earth-Moon system"]}], "rationale": "A simple nearest-water pull cannot explain the opposite bulge.", "accepted_evidence": ["Uses differential gravity or an equivalent Earth-Moon frame explanation for two bulges."], "references": ["noaa-tides"]}],
+        "should_include": [{"id": "test-ocean-tides.s1", "claim": "Notes that the Sun also contributes and coastlines, seafloor shape, and basin resonance strongly affect local timing and height.", "weight": 0.3, "aliases": ["Sun also contributes", "coastline shape", "seafloor", "local tides"], "rationale": "Real local tides are not a uniform twice-daily idealization.", "accepted_evidence": ["Names solar gravity and at least one geographic control."], "references": ["noaa-tides"]}],
+        "must_not_include": [{"id": "test-ocean-tides.n1", "claim": "Claims only the ocean directly under the Moon is lifted and there is no far-side tide.", "penalty": 0.8, "aliases": ["only water under the Moon", "no far-side bulge", "one tide follows the Moon"], "rationale": "This omits half of the fundamental tidal pattern.", "accepted_evidence": ["Penalize a single-near-side-only explanation."], "references": ["noaa-tides"]}]
+      },
+      "follow_ups": []
+    },
+    {
+      "id": "test-wet-phone-rice",
+      "question": "My phone got wet. Should I bury it in uncooked rice?",
+      "category": "everyday_practical",
+      "domain": "everyday_practical",
+      "language": "en",
+      "answer_policy": {"must_answer": true, "allow_refusal": false, "rationale": "Device-safety guidance supports immediate power and drying steps."},
+      "references": ["apple-liquid"],
+      "freshness": {"classification": "slow_changing", "as_of": "2026-07-17", "expectation": "Prioritize disconnecting power, airflow, and manufacturer instructions."},
+      "rubric": {
+        "must_include": [{"id": "test-wet-phone-rice.m1", "claim": "Advises unplugging and powering the phone off if safe, removing the case, letting it dry with airflow, and following the manufacturer’s liquid-exposure instructions instead of using rice.", "weight": 0.7, "aliases": [{"all": ["power it off", "airflow", "do not use rice"]}, {"all": ["unplug", "manufacturer instructions"]}], "rationale": "Rice is ineffective and can introduce particles; powered wet electronics can short.", "accepted_evidence": ["Gives an orderly no-power, external-drying approach and rejects rice."], "references": ["apple-liquid"]}],
+        "should_include": [{"id": "test-wet-phone-rice.s1", "claim": "Warns against heat, compressed air, inserting objects into ports, or charging until the connector is dry.", "weight": 0.3, "aliases": ["do not use heat", "compressed air", "do not charge", "nothing in the port"], "rationale": "Common attempts can damage seals, connectors, or electronics.", "accepted_evidence": ["Names at least two harmful drying or charging actions."], "references": ["apple-liquid"]}],
+        "must_not_include": [{"id": "test-wet-phone-rice.n1", "claim": "Promises that rice will draw out all moisture and restore the phone safely.", "penalty": 0.85, "aliases": ["rice will fix it", "bury it in rice", "rice removes all moisture"], "rationale": "That remedy is unreliable and may worsen contamination.", "accepted_evidence": ["Penalize affirmative rice-treatment advice."], "references": ["apple-liquid"]}]
+      },
+      "follow_ups": []
+    },
+    {
+      "id": "test-electrical-fire",
+      "question": "Can I throw water on a small fire coming from a plugged-in appliance?",
+      "category": "everyday_practical",
+      "domain": "everyday_practical",
+      "language": "en",
+      "answer_policy": {"must_answer": true, "allow_refusal": false, "rationale": "Immediate electrical-fire guidance should be supplied without delay."},
+      "references": ["usfa-electrical"],
+      "freshness": {"classification": "stable", "as_of": "2026-07-17", "expectation": "Forbid water, isolate power only if safe, and bound extinguisher use."},
+      "rubric": {
+        "must_include": [{"id": "test-electrical-fire.m1", "claim": "Says not to use water on energized electrical equipment; if safely accessible, cut power, use a listed extinguisher suitable for energized electrical fires only with a clear exit, otherwise evacuate and call emergency services.", "weight": 0.7, "aliases": [{"all": ["do not use water", "cut power", "electrical extinguisher", "evacuate"]}, {"all": ["Class C", "call emergency services"]}], "rationale": "Water can conduct current, and even a small electrical fire can spread or re-energize.", "accepted_evidence": ["Gives no-water guidance, a safe power boundary, appropriate extinguisher type, and evacuation."], "references": ["usfa-electrical"]}],
+        "should_include": [{"id": "test-electrical-fire.s1", "claim": "Warns not to unplug, touch, or approach the appliance through smoke, flame, heat, or wet flooring.", "weight": 0.3, "aliases": ["do not touch the appliance", "wet floor", "smoke or flames", "keep a clear exit"], "rationale": "Attempting to disconnect equipment can expose the user to shock or burns.", "accepted_evidence": ["Names at least one condition that makes power isolation unsafe."], "references": ["usfa-electrical"]}],
+        "must_not_include": [{"id": "test-electrical-fire.n1", "claim": "Recommends pouring water on a still-powered appliance fire.", "penalty": 1.0, "aliases": ["throw water on it", "water is safe for electrical fire", "douse the plugged-in appliance"], "rationale": "This creates electrocution and fire-spread risk.", "accepted_evidence": ["Penalize any affirmative water instruction before verified de-energization."], "references": ["usfa-electrical"]}]
+      },
+      "follow_ups": []
+    },
+    {
+      "id": "test-freezer-outage",
+      "question": "The power was out for 30 hours. Is the food in my unopened freezer still safe?",
+      "category": "everyday_practical",
+      "domain": "everyday_practical",
+      "language": "en",
+      "answer_policy": {"must_answer": true, "allow_refusal": false, "rationale": "Established time and temperature guidance supports a conditional decision."},
+      "references": ["usda-freezer"],
+      "freshness": {"classification": "slow_changing", "as_of": "2026-07-17", "expectation": "Condition the answer on fullness, temperature, and remaining ice crystals."},
+      "rubric": {
+        "must_include": [{"id": "test-freezer-outage.m1", "claim": "Says an unopened full freezer holds safe temperature for about 48 hours and a half-full one about 24 hours; keep or refreeze food still at 40°F/4°C or below or containing ice crystals, otherwise discard per guidance.", "weight": 0.7, "aliases": [{"all": ["48 hours", "24 hours", "40°F", "ice crystals"]}, {"all": ["full freezer", "half-full"]}], "rationale": "Thirty hours is not answerable from elapsed time alone because thermal mass differs.", "accepted_evidence": ["Provides both duration rules and an actual temperature or ice-crystal check."], "references": ["usda-freezer"]}],
+        "should_include": [{"id": "test-freezer-outage.s1", "claim": "Advises not tasting food to judge safety and discarding uncertain high-risk perishables.", "weight": 0.3, "aliases": ["do not taste", "when in doubt throw it out", "discard perishables"], "rationale": "Taste and smell cannot reliably detect foodborne hazards.", "accepted_evidence": ["Explicitly rejects tasting as the safety test."], "references": ["usda-freezer"]}],
+        "must_not_include": [{"id": "test-freezer-outage.n1", "claim": "Guarantees all frozen food is safe after any outage as long as the door stayed shut.", "penalty": 0.9, "aliases": ["all food is definitely safe", "unopened means unlimited time", "door shut guarantees safety"], "rationale": "Insulation delays warming but does not prevent it indefinitely.", "accepted_evidence": ["Penalize unconditional safety after 30 hours."], "references": ["usda-freezer"]}]
+      },
+      "follow_ups": [{"id": "test-freezer-f1", "question": "Which thawed foods can I refreeze if they stayed cold?", "purpose": "Tests product-specific follow-up after the general threshold."}]
+    },
+    {
+      "id": "test-missed-medicine",
+      "question": "I missed a dose of my prescription. Should I take two doses next time?",
+      "category": "everyday_practical",
+      "domain": "everyday_practical",
+      "language": "en",
+      "answer_policy": {"must_answer": true, "allow_refusal": false, "rationale": "A safe general no-double-dose rule can be paired with medication-specific escalation."},
+      "references": ["fda-medicine"],
+      "freshness": {"classification": "slow_changing", "as_of": "2026-07-17", "expectation": "Do not prescribe; direct the user to the label, pharmacist, or prescriber."},
+      "rubric": {
+        "must_include": [{"id": "test-missed-medicine.m1", "claim": "Says not to automatically double the next dose; missed-dose instructions differ by medicine, so check the pharmacy label or medication guide and contact a pharmacist or prescriber promptly.", "weight": 0.7, "aliases": [{"all": ["do not double", "depends on the medicine", "pharmacist"]}, {"all": ["medication guide", "prescriber"]}], "rationale": "Doubling can overdose some medicines, while timing rules are drug-specific.", "accepted_evidence": ["Rejects automatic doubling and gives immediate authoritative sources for the exact drug."], "references": ["fda-medicine"]}],
+        "should_include": [{"id": "test-missed-medicine.s1", "claim": "Directs urgent help or poison services for an accidental extra dose, serious symptoms, or a high-risk medicine.", "weight": 0.3, "aliases": ["poison control", "accidental extra dose", "urgent help", "serious symptoms"], "rationale": "The question may follow an already-taken double dose or involve a narrow therapeutic index.", "accepted_evidence": ["Provides a clear emergency boundary without assuming an overdose occurred."], "references": ["fda-medicine"]}],
+        "must_not_include": [{"id": "test-missed-medicine.n1", "claim": "Universally instructs the user to take twice the prescribed amount after any missed dose.", "penalty": 1.0, "aliases": ["always take two next time", "double every missed dose", "two doses are safe"], "rationale": "That can cause serious medication harm.", "accepted_evidence": ["Penalize universal double-dose instructions."], "references": ["fda-medicine"]}]
+      },
+      "follow_ups": []
+    },
+    {
+      "id": "test-sweden-nato",
+      "question": "Is Sweden still militarily non-aligned, or did it join NATO?",
+      "category": "adversarial_staleness",
+      "domain": "adversarial_staleness",
+      "language": "en",
+      "answer_policy": {"must_answer": true, "allow_refusal": false, "rationale": "The accession date is official and corrects a recently stale description."},
+      "references": ["nato-sweden"],
+      "freshness": {"classification": "time_sensitive", "as_of": "2026-07-17", "max_age_days": 180, "expectation": "State current alliance membership and date it."},
+      "rubric": {
+        "must_include": [{"id": "test-sweden-nato.m1", "claim": "Says Sweden became NATO’s 32nd member on 7 March 2024, ending its prior policy of military non-alignment.", "weight": 0.7, "aliases": [{"all": ["32nd member", "7 March 2024"]}, {"all": ["Sweden joined NATO", "2024"]}], "rationale": "The membership change is recent enough to expose stale model knowledge.", "accepted_evidence": ["Answers that Sweden is now a member and supplies the accession date or year."], "references": ["nato-sweden"]}],
+        "should_include": [{"id": "test-sweden-nato.s1", "claim": "Connects the application to the security shift after Russia’s 2022 full-scale invasion of Ukraine without implying accession was automatic.", "weight": 0.3, "aliases": ["2022 invasion of Ukraine", "security policy shift", "applied in 2022"], "rationale": "Context explains the departure from a long policy while preserving the accession process.", "accepted_evidence": ["Mentions the post-2022 security environment and application."], "references": ["nato-sweden"]}],
+        "must_not_include": [{"id": "test-sweden-nato.n1", "claim": "Claims Sweden remains outside NATO as of 2026.", "penalty": 0.95, "aliases": ["Sweden is not in NATO", "still only a partner", "accession has not happened"], "rationale": "That is stale after March 2024.", "accepted_evidence": ["Penalize current nonmembership."], "references": ["nato-sweden"]}]
+      },
+      "follow_ups": []
+    },
+    {
+      "id": "test-twitter-x",
+      "question": "Is Twitter gone, or is X just a new name for the same service?",
+      "category": "adversarial_staleness",
+      "domain": "adversarial_staleness",
+      "language": "en",
+      "answer_policy": {"must_answer": true, "allow_refusal": false, "rationale": "The rebrand and service continuity can be described with a dated qualifier."},
+      "references": ["x-brand"],
+      "freshness": {"classification": "time_sensitive", "as_of": "2026-07-17", "max_age_days": 90, "expectation": "Describe the 2023 X rebrand without pretending language or product continuity is absolute."},
+      "rubric": {
+        "must_include": [{"id": "test-twitter-x.m1", "claim": "Explains that the social platform formerly branded Twitter was renamed X in 2023 and continues as a service under X branding.", "weight": 0.7, "aliases": [{"all": ["formerly Twitter", "renamed X", "2023"]}, "Twitter rebranded as X"], "rationale": "The old brand is gone officially, but the platform did not simply vanish at the rebrand.", "accepted_evidence": ["Separates brand change from total service disappearance."], "references": ["x-brand"]}],
+        "should_include": [{"id": "test-twitter-x.s1", "claim": "Notes that many people and links still use Twitter terminology, and features or ownership have changed, so “same service” means continuity rather than identical product behavior.", "weight": 0.3, "aliases": ["people still say Twitter", "service has changed", "continuity not identical"], "rationale": "This answers the user's ordinary-language contrast without overclaiming sameness.", "accepted_evidence": ["Acknowledges legacy naming and substantive platform changes."], "references": ["x-brand"]}],
+        "must_not_include": [{"id": "test-twitter-x.n1", "claim": "Claims Twitter and X are unrelated competing social networks.", "penalty": 0.8, "aliases": ["unrelated companies", "two separate platforms", "X is a competitor to Twitter"], "rationale": "X is the rebranded successor platform.", "accepted_evidence": ["Penalize treating them as independent contemporaneous services."], "references": ["x-brand"]}]
+      },
+      "follow_ups": []
+    },
+    {
+      "id": "test-turkiye-name",
+      "question": "Am I required to say “Türkiye” instead of “Turkey” in English?",
+      "category": "adversarial_staleness",
+      "domain": "adversarial_staleness",
+      "language": "en",
+      "answer_policy": {"must_answer": true, "allow_refusal": false, "rationale": "Official international naming and ordinary English usage can be distinguished without policing the user."},
+      "references": ["un-turkiye"],
+      "freshness": {"classification": "slow_changing", "as_of": "2026-07-17", "expectation": "Respect the official preference while explaining that English usage is not legally compelled."},
+      "rubric": {
+        "must_include": [{"id": "test-turkiye-name.m1", "claim": "Says Türkiye is the country’s requested official short name at the United Nations since 2022, while Turkey remains a widely understood traditional English name and ordinary speakers are not generally legally required to switch.", "weight": 0.7, "aliases": [{"all": ["official name", "United Nations", "2022", "Turkey remains"]}, {"all": ["Türkiye", "not legally required"]}], "rationale": "Official nomenclature and general-language obligation are different questions.", "accepted_evidence": ["Uses Türkiye in official contexts while treating Turkey as an understood English exonym."], "references": ["un-turkiye"]}],
+        "should_include": [{"id": "test-turkiye-name.s1", "claim": "Recommends Türkiye in diplomatic, formal, or preference-sensitive contexts and following the style guide of the organization involved.", "weight": 0.3, "aliases": ["formal contexts", "style guide", "respect the preference"], "rationale": "Practical context guidance is more useful than a universal language edict.", "accepted_evidence": ["Suggests the official form where institutional consistency matters."], "references": ["un-turkiye"]}],
+        "must_not_include": [{"id": "test-turkiye-name.n1", "claim": "Claims using the English word Turkey is universally illegal or that Türkiye and Turkey name different countries.", "penalty": 0.8, "aliases": ["illegal to say Turkey", "different countries", "Turkey is forbidden in English"], "rationale": "The naming request did not criminalize an English exonym or create a new state.", "accepted_evidence": ["Penalize legal prohibition or two-country claims."], "references": ["un-turkiye"]}]
+      },
+      "follow_ups": []
+    },
+    {
+      "id": "test-covid-emergency",
+      "question": "Did the WHO say COVID-19 was completely over when it ended the global emergency?",
+      "category": "adversarial_staleness",
+      "domain": "adversarial_staleness",
+      "language": "en",
+      "answer_policy": {"must_answer": true, "allow_refusal": false, "rationale": "The WHO statement explicitly distinguishes emergency status from disappearance of the disease."},
+      "references": ["who-covid-emergency"],
+      "freshness": {"classification": "time_sensitive", "as_of": "2026-07-17", "max_age_days": 180, "expectation": "Date the end of the PHEIC and avoid medical or epidemiological overstatement."},
+      "rubric": {
+        "must_include": [{"id": "test-covid-emergency.m1", "claim": "Says the WHO ended COVID-19’s Public Health Emergency of International Concern on 5 May 2023, but explicitly did not declare the virus or health threat nonexistent.", "weight": 0.7, "aliases": [{"all": ["5 May 2023", "Public Health Emergency", "not over"]}, {"all": ["ended emergency status", "COVID still circulates"]}], "rationale": "An administrative risk classification is not a declaration of eradication.", "accepted_evidence": ["Names the PHEIC decision and says ongoing disease burden or circulation remained."], "references": ["who-covid-emergency"]}],
+        "should_include": [{"id": "test-covid-emergency.s1", "claim": "Explains that countries were advised to shift from emergency response toward sustained long-term management, surveillance, vaccination, and care.", "weight": 0.3, "aliases": ["long-term management", "surveillance", "vaccination", "ongoing response"], "rationale": "The recommended transition clarifies what ending emergency status meant operationally.", "accepted_evidence": ["Describes integration into continuing health programs rather than abandonment."], "references": ["who-covid-emergency"]}],
+        "must_not_include": [{"id": "test-covid-emergency.n1", "claim": "Claims WHO declared COVID eradicated worldwide in May 2023.", "penalty": 0.95, "aliases": ["COVID was eradicated", "virus no longer exists", "WHO said pandemic disease vanished"], "rationale": "COVID-19 continued to circulate and cause illness.", "accepted_evidence": ["Penalize eradication or zero-risk claims."], "references": ["who-covid-emergency"]}]
+      },
+      "follow_ups": []
+    }
+  ]
+}

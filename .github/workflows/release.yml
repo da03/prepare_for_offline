@@ -28,6 +28,12 @@ jobs:
         with:
           components: rustfmt
 
+      - name: Verify neural release selection
+        run: >-
+          python -c "import json;
+          report=json.load(open('backend/eval/neural_report.json'));
+          assert report['selection_status']=='selected',
+          'Neural graph is still benchmark-blocked'"
       - name: Install backend build dependencies
         run: >-
           python -m pip install

@@ -84,9 +84,30 @@ fn main() {
             // Start the Python backend as a sidecar on an OS-assigned free port.
             match app.shell().sidecar("pfo-backend") {
                 Ok(cmd) => {
-                    let cmd = cmd
+                    let mut cmd = cmd
                         .env("PREPARE_OFFLINE_PORT", "0")
                         .env("PREPARE_OFFLINE_DEV", "0");
+                    if let Some(public_key) = option_env!("PFO_KNOWLEDGE_PUBLIC_KEY") {
+                        if !public_key.is_empty() {
+                            cmd = cmd.env("PFO_KNOWLEDGE_PUBLIC_KEY", public_key);
+                        }
+                    }
+                    if let Ok(resources) = app.path().resource_dir() {
+                        let model = resources.join("resources").join("qwen3-0.6b-q6_k.gguf");
+                        if model.is_file() {
+                            cmd = cmd.env(
+                                "PREPARE_OFFLINE_MODEL_PATH",
+                                model.to_string_lossy().to_string(),
+                            );
+                        }
+                        let paw_programs = resources.join("resources").join("paw-programs");
+                        if paw_programs.is_dir() {
+                            cmd = cmd.env(
+                                "PREPARE_OFFLINE_PAW_PROGRAMS_PATH",
+                                paw_programs.to_string_lossy().to_string(),
+                            );
+                        }
+                    }
                     match cmd.spawn() {
                         Ok((mut rx, child)) => {
                             let state = app.state::<SidecarHandle>();

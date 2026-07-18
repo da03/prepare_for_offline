@@ -1,0 +1,206 @@
+{
+  "schema_version": 1,
+  "shipping_roles": [
+    "broad",
+    "aggregator",
+    "followup",
+    "prepared_matcher"
+  ],
+  "programs": {
+    "broad": {
+      "standard": {
+        "program_id": "9cb56a510a84f1164b17",
+        "compiler": "paw-4b-qwen3-0.6b",
+        "spec_sha256": "d86a2cdfe4a934bea105c3000477fe2e67f086f57dc1900a2c6cc842bcc9d677",
+        "compile_seconds": 4.462
+      },
+      "finetuned": {
+        "program_id": "9baea697447389a8b073",
+        "compiler": "paw-ft-bs48",
+        "spec_sha256": "d86a2cdfe4a934bea105c3000477fe2e67f086f57dc1900a2c6cc842bcc9d677",
+        "compile_seconds": 120.0,
+        "job_id": "f96e542d-aba"
+      }
+    },
+    "router": {
+      "standard": {
+        "program_id": "8f8ca252526e49014899",
+        "compiler": "paw-4b-qwen3-0.6b",
+        "spec_sha256": "daf3909d21f495eb3d15e5cf660da2a03f664237c33d3e6af602334f3af838db",
+        "compile_seconds": 3.687
+      },
+      "finetuned": {
+        "program_id": "4dfc80cba7ff5ed63b1e",
+        "compiler": "paw-ft-bs48",
+        "spec_sha256": "daf3909d21f495eb3d15e5cf660da2a03f664237c33d3e6af602334f3af838db",
+        "compile_seconds": 109.419
+      }
+    },
+    "aggregator": {
+      "standard": {
+        "program_id": "06524a9bd09ff619fd30",
+        "compiler": "paw-4b-qwen3-0.6b",
+        "spec_sha256": "b30b818ac86ea9dcf7251e11416a255d7315a1b578e245beddc46de39b01fd2f",
+        "compile_seconds": 3.963
+      },
+      "finetuned": {
+        "program_id": "51cdb1382fdeda45d009",
+        "compiler": "paw-ft-bs48",
+        "spec_sha256": "b30b818ac86ea9dcf7251e11416a255d7315a1b578e245beddc46de39b01fd2f",
+        "compile_seconds": 0.808
+      }
+    },
+    "critic": {
+      "standard": {
+        "program_id": "a64acc77595c1b2f663b",
+        "compiler": "paw-4b-qwen3-0.6b",
+        "spec_sha256": "5f1e19eb6525fcfb05ba0574cef01059614a8e660dce2bd18a5515100e7bc37a",
+        "compile_seconds": 3.941
+      }
+    },
+    "revision": {
+      "standard": {
+        "program_id": "eb3a19dd509e49967d1f",
+        "compiler": "paw-4b-qwen3-0.6b",
+        "spec_sha256": "c16991c8b80ee34f7e4411cd081a5de909b6877aa6d5d6648c0867acea5b9a1e",
+        "compile_seconds": 3.566
+      }
+    },
+    "followup": {
+      "standard": {
+        "program_id": "6c60e7462e90a2e78bc5",
+        "compiler": "paw-4b-qwen3-0.6b",
+        "spec_sha256": "6c6f7973dcb6134b898894f8143e1056a00e4ab121a2c1878ac73f64c222649f",
+        "compile_seconds": 3.658
+      },
+      "finetuned": {
+        "program_id": "b2648cc9e8f9dfd1ad41",
+        "compiler": "paw-ft-bs48",
+        "spec_sha256": "6c6f7973dcb6134b898894f8143e1056a00e4ab121a2c1878ac73f64c222649f",
+        "compile_seconds": 86.12
+      }
+    },
+    "subject:history": {
+      "standard": {
+        "program_id": "44b4ff26ecbdac31462b",
+        "compiler": "paw-4b-qwen3-0.6b",
+        "spec_sha256": "f18c5ab5d0a18da030cde04bdbd3b412b5ce90d708fb5b8648c951dee2376c78",
+        "compile_seconds": 4.121
+      },
+      "finetuned": {
+        "program_id": "8eb3d783749a37dae14d",
+        "compiler": "paw-ft-bs48",
+        "spec_sha256": "f18c5ab5d0a18da030cde04bdbd3b412b5ce90d708fb5b8648c951dee2376c78",
+        "compile_seconds": 0.832
+      }
+    },
+    "subject:language": {
+      "standard": {
+        "program_id": "0ed044cb1c916376c6e3",
+        "compiler": "paw-4b-qwen3-0.6b",
+        "spec_sha256": "5d5b48d9bda81c4d8642e6143aabc710c4f59539190ae9c60b06698289e74c38",
+        "compile_seconds": 4.107
+      },
+      "finetuned": {
+        "program_id": "a9587ae8ef6726f0aeb7",
+        "compiler": "paw-ft-bs48",
+        "spec_sha256": "5d5b48d9bda81c4d8642e6143aabc710c4f59539190ae9c60b06698289e74c38",
+        "compile_seconds": 159.488
+      }
+    },
+    "subject:culture_society": {
+      "standard": {
+        "program_id": "784778697cdd967df714",
+        "compiler": "paw-4b-qwen3-0.6b",
+        "spec_sha256": "00baef9a0f5626fc9d5bd83e93194406fd686839398f10da2ed73bdb998ab5dc",
+        "compile_seconds": 4.096
+      }
+    },
+    "subject:politics": {
+      "standard": {
+        "program_id": "e80e48d950c12b80c11f",
+        "compiler": "paw-4b-qwen3-0.6b",
+        "spec_sha256": "ec7f918957d411ece187ac240a4f00d2ba7b0e1620cb71191bc148321db92ea9",
+        "compile_seconds": 4.142
+      }
+    },
+    "subject:geography": {
+      "standard": {
+        "program_id": "36730a732566a5e1f1c4",
+        "compiler": "paw-4b-qwen3-0.6b",
+        "spec_sha256": "13cd376bd43a320a9790a7fbd17f453539008dd44cf0ca5e9edc4981fc5b2035",
+        "compile_seconds": 3.607
+      },
+      "finetuned": {
+        "program_id": "427fe9b5c0022bd6b919",
+        "compiler": "paw-ft-bs48",
+        "spec_sha256": "13cd376bd43a320a9790a7fbd17f453539008dd44cf0ca5e9edc4981fc5b2035",
+        "compile_seconds": 95.384
+      }
+    },
+    "subject:economics": {
+      "standard": {
+        "program_id": "14fb4ad75218c4f9dd11",
+        "compiler": "paw-4b-qwen3-0.6b",
+        "spec_sha256": "2d94ec63f6cbf67f0cf0aa57180d8d41030e04cb53a850e79649a5b06475a942",
+        "compile_seconds": 4.057
+      }
+    },
+    "subject:tourism": {
+      "standard": {
+        "program_id": "522224a5e66f5799c7b3",
+        "compiler": "paw-4b-qwen3-0.6b",
+        "spec_sha256": "4bb08d2ad2c9d170393d130ec1efdb931abbacc3115264df5b6809ee465ae0d3",
+        "compile_seconds": 3.777
+      },
+      "finetuned": {
+        "program_id": "0f8fe5fd1b7a882cfabf",
+        "compiler": "paw-ft-bs48",
+        "spec_sha256": "4bb08d2ad2c9d170393d130ec1efdb931abbacc3115264df5b6809ee465ae0d3",
+        "compile_seconds": 137.259
+      }
+    },
+    "subject:science": {
+      "standard": {
+        "program_id": "cdcd50cead44b8473095",
+        "compiler": "paw-4b-qwen3-0.6b",
+        "spec_sha256": "7c1377267212b158ebc18d3b771911c87ff7d9473b5537ee2e06839a87d38656",
+        "compile_seconds": 3.539
+      },
+      "finetuned": {
+        "program_id": "c3b9cb0f200d211a59e6",
+        "compiler": "paw-ft-bs48",
+        "spec_sha256": "7c1377267212b158ebc18d3b771911c87ff7d9473b5537ee2e06839a87d38656",
+        "compile_seconds": 129.614
+      }
+    },
+    "subject:practical": {
+      "standard": {
+        "program_id": "3f000bbdc88ed80ff8cf",
+        "compiler": "paw-4b-qwen3-0.6b",
+        "spec_sha256": "1a440bce83be9b6bafe00147b17dfd75e072985fac44b515fcfd25837a71ffdf",
+        "compile_seconds": 3.854
+      },
+      "finetuned": {
+        "program_id": "0a155da4df29557e9990",
+        "compiler": "paw-ft-bs48",
+        "spec_sha256": "1a440bce83be9b6bafe00147b17dfd75e072985fac44b515fcfd25837a71ffdf",
+        "compile_seconds": 136.206
+      }
+    },
+    "prepared_matcher": {
+      "standard": {
+        "program_id": "d39790e9b10b69daab3a",
+        "compiler": "paw-4b-qwen3-0.6b",
+        "spec_sha256": "9ae70384c056c86730f5cf8f9666b3bb25760c4977aa621aa392c6cf47c9a6bf",
+        "compile_seconds": 3.817
+      },
+      "finetuned": {
+        "program_id": "78f255318b58dd9e5961",
+        "compiler": "paw-ft-bs48",
+        "spec_sha256": "9ae70384c056c86730f5cf8f9666b3bb25760c4977aa621aa392c6cf47c9a6bf",
+        "compile_seconds": 103.222
+      }
+    }
+  }
+}

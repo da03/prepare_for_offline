@@ -15,6 +15,12 @@ npm --prefix "$ROOT/frontend" run build
 echo "==> Python sidecar"
 bash "$ROOT/desktop/scripts/build_sidecar.sh"
 
+echo "==> Bundled Qwen3-0.6B interpreter"
+bash "$ROOT/desktop/scripts/bundle_model.sh"
+
+echo "==> Reusable PAW programs"
+bash "$ROOT/desktop/scripts/bundle_programs.sh"
+
 echo "==> Tauri app + DMG ($TARGET)"
 if [[ ! -d "$ROOT/desktop/node_modules" ]]; then
   npm --prefix "$ROOT/desktop" install

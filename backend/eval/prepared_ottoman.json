@@ -1,0 +1,47 @@
+[
+  {
+    "question": "Who were the Janissaries, and why were they politically important?",
+    "must_include": [
+      ["elite infantry", "elite soldiers", "standing infantry"],
+      ["devshirme", "Christian boys", "recruited"],
+      ["political power", "influence", "sultans"]
+    ],
+    "must_not_include": ["independent country", "European crusader order"]
+  },
+  {
+    "question": "Why was the Ottoman conquest of Constantinople in 1453 significant?",
+    "must_include": [
+      ["Mehmed II", "Mehmed the Conqueror"],
+      ["Byzantine Empire", "Byzantium"],
+      ["capital", "Istanbul", "imperial center"]
+    ],
+    "must_not_include": ["ended the Roman Republic", "captured from the Mongols"]
+  },
+  {
+    "question": "What was the Ottoman millet system?",
+    "must_include": [
+      ["religious communities", "faith communities", "confessional communities"],
+      ["autonomy", "self-government", "own religious affairs"],
+      ["Ottoman authority", "imperial rule", "taxes"]
+    ],
+    "must_not_include": ["modern democracy", "complete independence"]
+  },
+  {
+    "question": "Why did the Ottoman Empire eventually collapse?",
+    "must_include": [
+      ["multiple causes", "not one cause", "combination"],
+      ["nationalism", "separatism"],
+      ["World War I", "First World War"]
+    ],
+    "must_not_include": ["collapsed immediately after 1453", "single battle alone"]
+  },
+  {
+    "question": "Why is Suleiman the Magnificent historically important?",
+    "must_include": [
+      ["territorial expansion", "expanded the empire", "military campaigns"],
+      ["law", "lawgiver", "Kanuni", "legal"],
+      ["culture", "architecture", "arts", "administration"]
+    ],
+    "must_not_include": ["founded the Ottoman Empire", "last Ottoman sultan"]
+  }
+]

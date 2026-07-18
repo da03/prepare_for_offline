@@ -1,4 +1,4 @@
-# Prepare for Offline - desktop (Tauri menu-bar app)
+# Prepare for Offline desktop app
 
 Wraps the React frontend and the Python backend into a single macOS app. The
 backend runs as a bundled **sidecar** on an OS-assigned free loopback port; the
@@ -9,6 +9,7 @@ injects it into the webview before the UI loads.
 Tauri shell (Rust)
   ├── spawns sidecar: pfo-backend (PyInstaller-packaged FastAPI)
   │     └── binds 127.0.0.1:<free port>, writes ~/.prepare_offline/runtime.json
+  ├── passes bundled Qwen3-0.6B GGUF path to the sidecar
   ├── reads runtime.json { port, token, api_base }
   ├── injects window.__API_BASE__ / window.__APP_TOKEN__
   └── loads frontend/dist  +  menu-bar tray icon
@@ -19,6 +20,8 @@ Tauri shell (Rust)
 - Rust toolchain (`rustup`, `cargo`) - not required to develop the web app, only to build the desktop app.
 - `npm install` in `desktop/` (installs the Tauri CLI).
 - `pip install pyinstaller` for packaging the backend sidecar.
+- Backend dependencies installed from the ProgramAsWeights package index; the
+  release script downloads and checksum-verifies the 594 MB interpreter.
 
 ## Build steps
 
@@ -32,17 +35,24 @@ Or run the individual steps below.
 
 ```bash
 # 1. Build the web frontend
-cd ../frontend && npm install && npm run build
+npm --prefix frontend install
+npm --prefix frontend run build
 
 # 2. Package the Python backend into a sidecar binary
-cd ../desktop && bash scripts/build_sidecar.sh
+bash desktop/scripts/build_sidecar.sh
 
-# 3. Regenerate app icons from the checked-in brand master
-npm run tauri icon ../brand/paw-app-icon-1024.png
+# 3. Bundle the pinned Qwen3-0.6B interpreter
+bash desktop/scripts/bundle_model.sh
 
-# 4. Build the macOS app / dmg
-npm run build -- --target aarch64-apple-darwin
-# -> src-tauri/target/aarch64-apple-darwin/release/bundle/
+# 4. Bundle release-gated reusable PAW programs
+bash desktop/scripts/bundle_programs.sh
+
+# 5. Regenerate app icons from the checked-in brand master
+npm --prefix desktop run tauri -- icon brand/paw-app-icon-1024.png
+
+# 6. Build the macOS app / dmg
+npm --prefix desktop run build -- --target aarch64-apple-darwin
+# -> desktop/src-tauri/target/aarch64-apple-darwin/release/bundle/
 ```
 
 For iteration you can run `npm run dev` (Tauri dev), which still spawns the
@@ -68,3 +78,5 @@ packaged sidecar; rebuild the sidecar after backend changes.
   appropriate `--collect-binaries llama_cpp` / hook. Metal acceleration works in
   the packaged app on Apple Silicon.
 - The app data (DB, packs, token, runtime.json) lives in `~/.prepare_offline`.
+- `resources/qwen3-0.6b-q6_k.gguf` is generated and Git-ignored. Its pinned
+  checksum is enforced by `scripts/bundle_model.sh`.

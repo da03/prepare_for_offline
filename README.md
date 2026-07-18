@@ -1,178 +1,131 @@
 # Prepare for Offline
 
+Ask anything, anywhere.
+
+Prepare for Offline compiles small [ProgramAsWeights](https://programasweights.com)
+neural programs while connected and runs them locally on Qwen3-0.6B. It has
+exactly two primary surfaces:
+
+- **Ask** runs a finetuned broad PAW answerer, then every relevant prepared
+  specialist. One match replaces the broad draft directly; multiple matches
+  are combined by a finetuned PAW aggregator.
+- **Prepare** compiles one topic prompt—such as `Korean language for travel`—as
+  an additional PAW specialist.
+
+There are no documents, retrieval indexes, citations, web searches, file
+attachments, or knowledge packs. Prepare uses PAW’s normal
+specification-to-program API; it does not train from a corpus or an online
+teacher.
+
 ## Install on macOS
 
 1. Download the latest DMG from
    [GitHub Releases](https://github.com/da03/prepare_for_offline/releases/latest).
-2. Open the DMG and drag **Prepare for Offline** into **Applications**.
-3. On the first launch, right-click the app and choose **Open** (the current
-   public build is ad-hoc signed but not yet Apple-notarized).
+2. Drag **Prepare for Offline** into **Applications**.
+3. For an ad-hoc-signed build, right-click it and choose **Open** once.
 
-No Python, Node, Rust, terminal, or model setup is required. The app downloads
-the shared Qwen3-0.6B interpreter and prepared PAW programs when you prepare the
-first trip, then runs locally.
+Release builds bundle Qwen3-0.6B and the built-in PAW programs, so Ask works
+without a first-launch download. The current public build targets Apple
+Silicon.
 
-### Use
-
-1. Open **Prepare** and enter something like `I'm going to ICML 2026 in Seoul`.
-2. Optionally attach an itinerary, schedule, PDF, DOCX, or notes.
-3. Wait for **Ready Offline**. The fast program becomes usable first; accuracy
-   may improve quietly in the background.
-4. Open **Ask** and use it with or without a connection.
-
-The current public DMG targets Apple Silicon. Intel users must currently build
-natively with `bash scripts/build_release.sh`; a prebuilt Intel DMG is not yet
-published.
-
-Anticipatory neural compilation for travel. Describe a trip in one sentence
-while online; Prepare for Offline discovers current public sources, combines
-them with private local attachments, and compiles a compact
-[ProgramAsWeights](https://programasweights.com) travel assistant. Ask remains
-fully local, cited, freshness-aware, and able to abstain.
-
-The motivating case: on a plane with no WiFi you heard something like
-_"simida"_ and want to know what it means. Exact search misses it (the
-canonical form is `-습니다` / `-seumnida`), so we combine phonetic-tolerant
-retrieval with a compiled resolver.
-
-## Product experience
-
-The application has exactly two primary pages:
-
-- **Ask** — routed, progressively refined offline answers with bounded
-  follow-ups, citations, support, freshness, and an expandable semantic build
-  summary.
-- **Prepare** — enter `I'm going to ICML 2026 in Seoul`, optionally attach an
-  itinerary or schedule, review one compact trip brief, and reach `Ready
-  Offline`.
-
-History and minimal settings are secondary drawers. Compiler names, program
-IDs, raw trees, topics, and expert controls are not part of the normal product.
-
-## Architecture
-
-- `backend/` FastAPI on `127.0.0.1` (per-install app token auth).
-  - Config-driven program tree: exact answer cards -> finetuned PAW top-k router
-    -> parallel cheap itinerary/event/language/local retrieval -> grounded
-    main/augment aggregation -> one stable answer.
-  - Retrieval: SQLite FTS5 fused with character-trigram/phonetic matching
-    (query-side stopword stripping + phonetic folding + curated aliases).
-  - PAW experts loaded one at a time (LRU) with real RSS metering (measured
-    ~1 GB per resident expert - they do NOT share an in-memory runtime).
-  - Local interpreter: Qwen3-0.6B via llama.cpp, used only for multi-source
-    synthesis; strong single facts are rendered deterministically.
-  - Evidence-support status (high/medium/low) from observable signals, never a
-    model self-report.
-  - Versioned SQLite migrations persist editable contexts, sources, settings,
-    conversations/messages, pack versions, jobs, and linked verification items.
-  - Official-first Prepare-time web acquisition (Brave when configured),
-    original-page fetching, SSRF protection, privacy-safe public queries,
-    licensing metadata, and per-source freshness TTLs.
-  - `PackPlanner` creates semantic travel coverage and 100–150 likely questions;
-    cancellable jobs compile a fast trip program, mark the trip ready, then
-    background-finetune and atomically promote only on non-regression.
-  - Privacy: only behavioral expert specs are sent to the compiler; personal
-    content stays local.
-- `frontend/` Vite + React: only Ask and Prepare, with History/Settings drawers.
-- `extension/` Chrome MV3 side panel: token-paired "Save this page" into the
-  local pack (server never fetches URLs -> no SSRF; HTML sanitized + size-capped).
-- `desktop/` Tauri v2 menu-bar app: spawns the backend as a PyInstaller sidecar
-  on a free port, reads a `runtime.json` handshake, injects the token into the
-  webview. (Requires a Rust toolchain to build; see `desktop/README.md`.)
-- `backend/eval/` evaluation harness (see below).
-
-## Evaluation
-
-`python -m eval.run_travel_eval` evaluates the release travel tree. The current
-synthetic grounded set reports 1.0 top-1/top-k route recall, grounded accuracy,
-citation correctness, and one-sentence parse completion; median first answer is
-sub-millisecond from prepared cards and median final refinement is about 50 ms.
-
-The original component comparison remains available through
-`PREPARE_OFFLINE_HOME=/tmp/pfo_eval python -m eval.run_eval`:
-
-| mode | coverage | grounded acc | citation | over-abstain | phonetic |
-|------|---------:|-------------:|---------:|-------------:|---------:|
-| pack (this product) | 1.00 | 1.00 | 1.00 | 0.00 | 1.00 |
-| rag_base (0.6B over sources) | 0.14 | 0.14 | 0.14 | 0.86 | 0.00 |
-| base_only (0.6B, no retrieval) | 0.07 | 0.00 | 0.00 | 0.93 | 0.00 |
-
-The tiered + deterministic pipeline massively outperforms trusting the tiny
-model with retrieved evidence. Set `EVAL_BASELINE_GGUF=/path/to/model.gguf` to
-also benchmark a stronger generic local model (e.g. Qwen3-1.7B) as a product
-baseline.
-
-## Run
-
-### macOS app
-
-The Apple Silicon release is built at:
+## How Ask works
 
 ```text
-desktop/src-tauri/target/aarch64-apple-darwin/release/bundle/macos/Prepare for Offline.app
-desktop/src-tauri/target/aarch64-apple-darwin/release/bundle/dmg/Prepare for Offline_0.3.0_aarch64.dmg
+question
+  ├── finetuned broad PAW answerer
+  └── PAW matcher checks every prepared topic
+        ├── no match → broad answer
+        ├── one match → prepared answer
+        └── multiple matches → PAW aggregator → one answer
 ```
 
-Open Prepare, describe the trip, optionally attach files, and keep the app open
-until it reports `Ready Offline`. The fast program is usable immediately; a
-tested finetuned version may replace it quietly in the background. Then use Ask
-without a connection. History and Settings remain secondary controls.
+The broad draft can appear first in the same answer card while specialists and
+aggregation finish. Program names and routing details are intentionally hidden
+from the normal UI.
 
-The local build is ad-hoc signed but not Apple-notarized. A public distribution
-must be signed with a Developer ID certificate and notarized.
+Every prepared topic is checked independently. When several match, the app
+runs all of them rather than reducing the question to the highest match.
 
-### Development
+## How Prepare works
+
+Prepare deterministically wraps the user’s prompt in a fixed QA contract and
+passes that exact specification to PAW:
+
+1. Compile with Standard (`paw-4b-qwen3-0.6b`) as an internal prototype.
+2. Run answer-contract smoke tests, without routing user questions to it.
+3. Submit the identical specification to Finetuned Standard (`paw-ft-bs48`).
+4. Mark the topic ready only after the finetuned immutable program passes;
+   retain Standard solely for diagnostics and rollback.
+
+PAW has no corpus-ingestion or arbitrary dataset-finetuning API. A prepared
+program specializes the knowledge represented by the PAW compiler/runtime; it
+cannot promise to learn private, live, or future facts that were never part of
+that process.
+
+## Development
 
 Backend:
 
 ```bash
 cd backend
-pip install -e .
-python run.py            # http://127.0.0.1:8765
+python -m pip install \
+  --extra-index-url https://pypi.programasweights.com/simple/ \
+  -e ".[dev]"
+python run.py
 ```
 
-Frontend (separate terminal):
+Frontend:
 
 ```bash
 cd frontend
 npm install
-npm run dev              # http://127.0.0.1:5173  (proxies /api -> 8765)
+npm run dev
 ```
 
-Optional current public-source discovery uses Brave:
+Open `http://127.0.0.1:5173`.
+
+Build the macOS app:
 
 ```bash
-export BRAVE_SEARCH_API_KEY=...
+bash scripts/build_release.sh
 ```
 
-Without a key, preparation continues from the trip brief and attachments and
-shows the missing public-source coverage instead of failing.
-Personal installations can also add or remove the key under
-**Settings → Advanced**; it is stored locally with owner-only permissions.
+Build, replace, and relaunch the local `/Applications` copy:
 
-New installations start without a hidden destination. Public search is
-official-first and optional; without a configured provider the trip still
-prepares from its brief and attachments while showing the coverage gap.
+```bash
+bash scripts/install_local_app.sh
+```
 
-## Data location
+## Evaluation
 
-App data (SQLite DB, app token, packs) lives in `~/.prepare_offline`
-(override with `PREPARE_OFFLINE_HOME`).
+The checked-in benchmark has anchor, development, and held-out splits with
+weighted required claims and prohibited errors. Reference URLs are for human
+rubric authors only; they never enter the product or PAW specifications.
 
-## Tests
+```bash
+cd backend
+python -m eval.universal_qa.runner validate
+python -m eval.run_neural_matrix \
+  --mode topk --split anchors \
+  --output /tmp/paw-topk-anchors.json
+```
+
+Release candidates must maintain a 100% answer rate and are compared on rubric
+quality, prohibited errors, top-k lift over top-1, cold/warm latency, worker
+RSS, adapter size, and prepared-topic lift.
+
+## Verification
 
 ```bash
 cd backend
 python -m pytest -q
-python -m ruff check app tests
-python -m eval.run_travel_eval
-python -m eval.run_compiler_eval
+python -m ruff check app tests eval scripts
 
 cd ../frontend
-npm test
+npm test -- --run
 npm run build
-```
 
-The Chrome MV3 companion in `extension/` saves the current page to a chosen
-context. Hybrid/vector retrieval exists but remains eval-gated off; enable it
-only when a larger corpus demonstrates a measurable need.
+cd ../desktop/src-tauri
+cargo fmt --check
+cargo check
+```

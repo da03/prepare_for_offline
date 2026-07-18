@@ -1,0 +1,50 @@
+[
+  {
+    "question": "How did Japan's geography shape its political history?",
+    "expected": ["geography", "history", "politics"]
+  },
+  {
+    "question": "Why did inflation make tourism more expensive?",
+    "expected": ["economics", "tourism"]
+  },
+  {
+    "question": "How did colonial history shape modern African borders?",
+    "expected": ["history", "geography", "politics"]
+  },
+  {
+    "question": "How do Korean honorifics reflect social hierarchy?",
+    "expected": ["language", "culture_society"]
+  },
+  {
+    "question": "Why do coastal cities often become trade and political centers?",
+    "expected": ["geography", "economics", "politics"]
+  },
+  {
+    "question": "How did the Silk Road spread religions and goods?",
+    "expected": ["history", "culture_society", "economics"]
+  },
+  {
+    "question": "Why does currency depreciation affect international travelers?",
+    "expected": ["economics", "tourism"]
+  },
+  {
+    "question": "How does monsoon science affect travel planning in India?",
+    "expected": ["science", "tourism"]
+  },
+  {
+    "question": "How did mountain geography influence Swiss culture?",
+    "expected": ["geography", "culture_society"]
+  },
+  {
+    "question": "What should a traveler do during an earthquake?",
+    "expected": ["science", "practical", "tourism"]
+  },
+  {
+    "question": "Why do housing policies affect inequality and elections?",
+    "expected": ["economics", "politics", "culture_society"]
+  },
+  {
+    "question": "How did industrialization change family life and politics?",
+    "expected": ["history", "culture_society", "politics"]
+  }
+]

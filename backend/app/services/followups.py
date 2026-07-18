@@ -1,12 +1,10 @@
-"""Bounded conversation context for travel follow-up questions."""
+"""Bounded conversation context for universal follow-up questions."""
 
 from __future__ import annotations
 
 import re
 import sqlite3
-import os
-
-from . import paw_experts
+from . import program_registry, program_runtime
 
 
 FOLLOWUP_RE = re.compile(
@@ -37,14 +35,16 @@ def rewrite(
     if not short and not FOLLOWUP_RE.search(clean):
         return {"query": clean, "used_context": False, "previous_question": None}
     previous = rows[0]["content"]
-    raw = (
-        paw_experts.run_global(
-            "followup_rewriter",
-            f"Previous: {previous}\nFollow-up: {clean}",
-            max_tokens=64,
-        )
-        if os.environ.get("PREPARE_OFFLINE_USE_PAW_REWRITER", "0") == "1"
-        else None
-    )
+    raw = None
+    program = program_registry.active(conn, "followup")
+    if program:
+        try:
+            raw = program_runtime.run(
+                program["program_id"],
+                f"PREVIOUS: {previous}\nFOLLOW-UP: {clean}",
+                max_tokens=96,
+            ).output
+        except Exception:
+            raw = None
     query = raw.strip() if raw else f'{clean} (follow-up to: "{previous}")'
     return {"query": query, "used_context": True, "previous_question": previous}

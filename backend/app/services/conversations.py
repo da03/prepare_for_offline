@@ -16,7 +16,6 @@ def _now() -> str:
 def _conversation_dict(row: sqlite3.Row, *, message_count: int | None = None) -> dict:
     result = {
         "conversation_id": row["conversation_id"],
-        "context_id": row["context_id"],
         "title": row["title"],
         "created_at": row["created_at"],
         "updated_at": row["updated_at"],
@@ -40,15 +39,12 @@ def _message_dict(row: sqlite3.Row) -> dict[str, Any]:
         "kind": row["kind"],
         "content": row["content"],
         "payload": parse(row["payload"], {}),
-        "sources": parse(row["sources"], []),
-        "pack_id": row["pack_id"],
         "created_at": row["created_at"],
     }
 
 
 def create(
     conn: sqlite3.Connection,
-    context_id: str | None = None,
     title: str = "New conversation",
 ) -> dict:
     conversation_id = f"conv-{uuid.uuid4().hex[:12]}"
@@ -56,10 +52,10 @@ def create(
     conn.execute(
         """
         INSERT INTO conversations (
-            conversation_id, context_id, title, created_at, updated_at
-        ) VALUES (?,?,?,?,?)
+            conversation_id, title, created_at, updated_at
+        ) VALUES (?,?,?,?)
         """,
-        (conversation_id, context_id, title, now, now),
+        (conversation_id, title, now, now),
     )
     conn.commit()
     return get(conn, conversation_id)
@@ -68,13 +64,12 @@ def create(
 def ensure(
     conn: sqlite3.Connection,
     conversation_id: str | None,
-    context_id: str | None,
 ) -> dict:
     if conversation_id:
         existing = get(conn, conversation_id)
         if existing:
             return existing
-    return create(conn, context_id=context_id)
+    return create(conn)
 
 
 def get(conn: sqlite3.Connection, conversation_id: str) -> dict | None:
@@ -87,15 +82,11 @@ def get(conn: sqlite3.Connection, conversation_id: str) -> dict | None:
 def list_all(
     conn: sqlite3.Connection,
     *,
-    context_id: str | None = None,
     query: str | None = None,
     limit: int = 100,
 ) -> list[dict]:
     clauses: list[str] = []
     args: list[Any] = []
-    if context_id:
-        clauses.append("c.context_id=?")
-        args.append(context_id)
     if query:
         clauses.append(
             "(LOWER(c.title) LIKE ? OR EXISTS ("
@@ -153,17 +144,14 @@ def add_message(
     kind: str = "text",
     content: str = "",
     payload: dict | None = None,
-    sources: list | None = None,
-    pack_id: str | None = None,
 ) -> dict:
     message_id = f"msg-{uuid.uuid4().hex[:14]}"
     now = _now()
     conn.execute(
         """
         INSERT INTO messages (
-            message_id, conversation_id, role, kind, content, payload, sources,
-            pack_id, created_at
-        ) VALUES (?,?,?,?,?,?,?,?,?)
+            message_id, conversation_id, role, kind, content, payload, created_at
+        ) VALUES (?,?,?,?,?,?,?)
         """,
         (
             message_id,
@@ -172,8 +160,6 @@ def add_message(
             kind,
             content,
             json.dumps(payload or {}, ensure_ascii=False),
-            json.dumps(sources or [], ensure_ascii=False),
-            pack_id,
             now,
         ),
     )

@@ -22,7 +22,7 @@ rm -rf build dist
 pyinstaller --noconfirm --clean --onefile --name pfo-backend \
   --collect-all llama_cpp \
   --collect-submodules app \
-  --add-data "app/services/travel_pipeline_config.json:app/services" \
+  --add-data "app/services/neural_programs.json:app/services" \
   --hidden-import programasweights \
   --hidden-import programasweights.runtime_llamacpp \
   --hidden-import programasweights.cache \

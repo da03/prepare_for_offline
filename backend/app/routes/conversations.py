@@ -14,7 +14,6 @@ router = APIRouter(dependencies=[Depends(require_token)])
 
 @router.get("/api/conversations")
 def list_conversations(
-    context_id: str | None = None,
     q: str | None = None,
     limit: int = Query(default=100, ge=1, le=500),
 ) -> dict:
@@ -22,7 +21,7 @@ def list_conversations(
     try:
         return {
             "conversations": conversations.list_all(
-                conn, context_id=context_id, query=q, limit=limit
+                conn, query=q, limit=limit
             )
         }
     finally:
@@ -33,7 +32,7 @@ def list_conversations(
 def create_conversation(req: ConversationCreate) -> dict:
     conn = connect()
     try:
-        return conversations.create(conn, req.context_id, req.title)
+        return conversations.create(conn, req.title)
     finally:
         conn.close()
 

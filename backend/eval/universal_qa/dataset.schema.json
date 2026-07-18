@@ -1,0 +1,175 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://prepare-for-offline.local/schemas/universal-qa-dataset-v1.json",
+  "title": "Universal QA backward-design dataset v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "name", "split", "description", "as_of", "sources", "questions"],
+  "properties": {
+    "schema_version": {"const": "universal-qa-dataset/v1"},
+    "name": {"type": "string", "minLength": 1},
+    "split": {"enum": ["anchors", "dev", "test"]},
+    "description": {"type": "string", "minLength": 1},
+    "as_of": {"type": "string", "format": "date"},
+    "sources": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {"$ref": "#/$defs/source"}
+    },
+    "questions": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/question"}
+    }
+  },
+  "$defs": {
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["title", "publisher", "url", "as_of"],
+      "properties": {
+        "title": {"type": "string", "minLength": 1},
+        "publisher": {"type": "string", "minLength": 1},
+        "url": {"type": "string", "format": "uri", "pattern": "^https://"},
+        "as_of": {"type": "string", "format": "date"}
+      }
+    },
+    "answer_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["must_answer", "allow_refusal", "rationale"],
+      "properties": {
+        "must_answer": {"const": true},
+        "allow_refusal": {"const": false},
+        "rationale": {"type": "string", "minLength": 1}
+      }
+    },
+    "freshness": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["classification", "as_of", "expectation"],
+      "properties": {
+        "classification": {"enum": ["stable", "slow_changing", "time_sensitive"]},
+        "as_of": {"type": "string", "format": "date"},
+        "expectation": {"type": "string", "minLength": 1},
+        "max_age_days": {"type": "integer", "minimum": 1}
+      },
+      "if": {"properties": {"classification": {"const": "time_sensitive"}}},
+      "then": {"required": ["max_age_days"]}
+    },
+    "alias": {
+      "oneOf": [
+        {"type": "string", "minLength": 1},
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["all"],
+          "properties": {
+            "all": {
+              "type": "array",
+              "minItems": 1,
+              "items": {"type": "string", "minLength": 1}
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["any"],
+          "properties": {
+            "any": {
+              "type": "array",
+              "minItems": 1,
+              "items": {"type": "string", "minLength": 1}
+            }
+          }
+        }
+      ]
+    },
+    "positive_point": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "claim", "weight", "aliases", "rationale", "accepted_evidence", "references"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9._-]*$"},
+        "claim": {"type": "string", "minLength": 1},
+        "weight": {"type": "number", "exclusiveMinimum": 0},
+        "aliases": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/alias"}},
+        "rationale": {"type": "string", "minLength": 1},
+        "accepted_evidence": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+        "references": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}}
+      }
+    },
+    "negative_point": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "claim", "penalty", "aliases", "rationale", "accepted_evidence", "references"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9._-]*$"},
+        "claim": {"type": "string", "minLength": 1},
+        "penalty": {"type": "number", "exclusiveMinimum": 0, "maximum": 1},
+        "aliases": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/alias"}},
+        "rationale": {"type": "string", "minLength": 1},
+        "accepted_evidence": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+        "references": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}}
+      }
+    },
+    "rubric": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["must_include", "should_include", "must_not_include"],
+      "properties": {
+        "must_include": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/positive_point"}},
+        "should_include": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/positive_point"}},
+        "must_not_include": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/negative_point"}}
+      }
+    },
+    "follow_up": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "question", "purpose"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9._-]*$"},
+        "question": {"type": "string", "minLength": 1},
+        "purpose": {"type": "string", "minLength": 1}
+      }
+    },
+    "style": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["tone", "structure", "expectation", "max_words"],
+      "properties": {
+        "tone": {"type": "string", "minLength": 1},
+        "structure": {"type": "string", "minLength": 1},
+        "expectation": {"type": "string", "minLength": 1},
+        "max_words": {"type": "integer", "minimum": 1}
+      }
+    },
+    "question": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "question", "category", "domain", "language", "answer_policy", "references", "freshness", "rubric", "follow_ups"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9._-]*$"},
+        "question": {"type": "string", "minLength": 1},
+        "category": {"type": "string", "minLength": 1},
+        "domain": {
+          "enum": ["country_travel", "history", "language_phonetic", "science", "everyday_practical", "adversarial_staleness"]
+        },
+        "language": {"type": "string", "minLength": 1},
+        "answer_policy": {"$ref": "#/$defs/answer_policy"},
+        "references": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+        "freshness": {"$ref": "#/$defs/freshness"},
+        "rubric": {"$ref": "#/$defs/rubric"},
+        "follow_ups": {"type": "array", "items": {"$ref": "#/$defs/follow_up"}},
+        "acceptable_aliases": {
+          "type": "object",
+          "minProperties": 1,
+          "additionalProperties": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}}
+        },
+        "style": {"$ref": "#/$defs/style"},
+        "exemplar": {"type": "string", "minLength": 1}
+      }
+    }
+  }
+}

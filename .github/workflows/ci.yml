@@ -34,7 +34,8 @@ jobs:
         working-directory: backend
         run: |
           python -m pytest -q
-          python -m ruff check app tests eval
+          python -m ruff check app tests eval scripts
+          python -m eval.universal_qa.runner validate
       - name: Install and test frontend
         working-directory: frontend
         run: |
@@ -46,8 +47,9 @@ jobs:
         working-directory: desktop/src-tauri
         run: |
           target="$(rustc -Vv | sed -n 's/host: //p')"
-          mkdir -p binaries
+          mkdir -p binaries resources
           touch "binaries/pfo-backend-$target"
+          touch "resources/qwen3-0.6b-q6_k.gguf"
           chmod +x "binaries/pfo-backend-$target"
           cargo fmt --check
           cargo check

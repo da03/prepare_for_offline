@@ -1,0 +1,7 @@
+Bundled model: Qwen3-0.6B, Q6_K GGUF
+Upstream model: https://huggingface.co/Qwen/Qwen3-0.6B
+Distributed GGUF: https://huggingface.co/programasweights/Qwen3-0.6B-GGUF-Q6_K
+License: Apache License 2.0
+
+The model runs locally through llama.cpp. User questions are not sent to the
+model host.

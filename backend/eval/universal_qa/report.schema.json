@@ -1,0 +1,245 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://prepare-for-offline.local/schemas/universal-qa-report-v1.json",
+  "title": "Universal QA Benchmark Report v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "generated_at",
+    "system_name",
+    "dataset",
+    "scoring_policy",
+    "summary",
+    "categories",
+    "domains",
+    "results"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "universal-qa-report/v1"
+    },
+    "generated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "system_name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "dataset": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "split",
+        "question_count"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "universal-qa-dataset/v1"
+        },
+        "split": {
+          "enum": [
+            "anchors",
+            "dev",
+            "test"
+          ]
+        },
+        "question_count": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    },
+    "scoring_policy": {
+      "type": "object",
+      "required": [
+        "answer_presence_gate",
+        "deterministic_alias_matching",
+        "must_not_penalties",
+        "grader_hook_enabled",
+        "grader_blinded_to_system_identity",
+        "grader_credit_cap",
+        "citation_hook_enabled",
+        "confidence_calibration_enabled"
+      ],
+      "properties": {
+        "answer_presence_gate": {
+          "const": true
+        },
+        "deterministic_alias_matching": {
+          "const": true
+        },
+        "must_not_penalties": {
+          "const": true
+        },
+        "grader_hook_enabled": {
+          "type": "boolean"
+        },
+        "grader_blinded_to_system_identity": {
+          "type": "boolean"
+        },
+        "grader_credit_cap": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "citation_hook_enabled": {
+          "type": "boolean"
+        },
+        "confidence_calibration_enabled": {
+          "const": true
+        }
+      }
+    },
+    "summary": {
+      "$ref": "#/$defs/aggregate"
+    },
+    "categories": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/$defs/aggregate"
+      }
+    },
+    "domains": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/$defs/aggregate"
+      }
+    },
+    "results": {
+      "type": "array",
+      "items": {
+        "$ref": "result.schema.json"
+      }
+    }
+  },
+  "$defs": {
+    "aggregate": {
+      "type": "object",
+      "required": [
+        "question_count",
+        "answered_count",
+        "unanswered_count",
+        "refusal_count",
+        "missing_count",
+        "answer_rate",
+        "refusal_rate",
+        "mean_score",
+        "median_score",
+        "deterministic_mean_score",
+        "must_include_coverage",
+        "should_include_coverage",
+        "must_not_violation_rate",
+        "citation_correctness",
+        "citation_recall",
+        "citation_count",
+        "confidence_count",
+        "confidence_coverage",
+        "mean_confidence",
+        "brier_score",
+        "expected_calibration_error"
+      ],
+      "properties": {
+        "question_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "answered_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "unanswered_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "refusal_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "missing_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "answer_rate": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "refusal_rate": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "mean_score": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "median_score": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "deterministic_mean_score": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "must_include_coverage": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "should_include_coverage": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "must_not_violation_rate": {
+          "type": "number",
+          "minimum": 0
+        },
+        "citation_correctness": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "citation_recall": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "citation_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "confidence_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "confidence_coverage": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "mean_confidence": {
+          "type": ["number", "null"],
+          "minimum": 0,
+          "maximum": 1
+        },
+        "brier_score": {
+          "type": ["number", "null"],
+          "minimum": 0,
+          "maximum": 1
+        },
+        "expected_calibration_error": {
+          "type": ["number", "null"],
+          "minimum": 0,
+          "maximum": 1
+        }
+      }
+    }
+  }
+}

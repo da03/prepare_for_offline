@@ -1,0 +1,162 @@
+[
+  {
+    "id": "meta-01",
+    "q": "What powers the garden lamps?",
+    "a": "Their solar cells charge a battery in daylight.",
+    "point": "Says sunlight supplies the energy.",
+    "gold": "yes",
+    "reason": "Clear paraphrase."
+  },
+  {
+    "id": "meta-02",
+    "q": "What powers the garden lamps?",
+    "a": "They switch on automatically at dusk.",
+    "point": "Says sunlight supplies the energy.",
+    "gold": "no",
+    "reason": "Related behavior does not entail the source of energy."
+  },
+  {
+    "id": "meta-03",
+    "q": "Is the museum open Monday?",
+    "a": "The museum is closed every Monday.",
+    "point": "Says the museum is open on Monday.",
+    "gold": "no",
+    "reason": "Negation reverses the claim."
+  },
+  {
+    "id": "meta-04",
+    "q": "How many arches does the old bridge have?",
+    "a": "The bridge has five stone arches.",
+    "point": "Says the bridge has five arches.",
+    "gold": "yes",
+    "reason": "Exact quantity and object."
+  },
+  {
+    "id": "meta-05",
+    "q": "How many arches does the old bridge have?",
+    "a": "The bridge has four main arches and a small culvert.",
+    "point": "Says the bridge has five arches.",
+    "gold": "no",
+    "reason": "Arithmetic inference and category ambiguity must not create a hit."
+  },
+  {
+    "id": "meta-06",
+    "q": "Where did the parcel go?",
+    "a": "It was sent from Alder to Birch.",
+    "point": "Says the parcel went to Birch.",
+    "gold": "yes",
+    "reason": "Direction is explicit."
+  },
+  {
+    "id": "meta-07",
+    "q": "Where did the parcel go?",
+    "a": "It was sent from Birch to Alder.",
+    "point": "Says the parcel went to Birch.",
+    "gold": "no",
+    "reason": "Entity appears in the wrong directional role."
+  },
+  {
+    "id": "meta-08",
+    "q": "Why did the pond freeze?",
+    "a": "Overnight temperatures fell below the freezing point.",
+    "point": "Links the freezing to subzero temperature.",
+    "gold": "yes",
+    "reason": "Causal paraphrase."
+  },
+  {
+    "id": "meta-09",
+    "q": "Why did the pond freeze?",
+    "a": "The frozen pond looked smooth in the morning.",
+    "point": "Links the freezing to subzero temperature.",
+    "gold": "no",
+    "reason": "Restates the outcome without the cause."
+  },
+  {
+    "id": "meta-10",
+    "q": "Who designed the clock?",
+    "a": "It may have been designed by Ada Rowan; the archive is incomplete.",
+    "point": "Identifies Ada Rowan as the likely designer while preserving uncertainty.",
+    "gold": "yes",
+    "reason": "Appropriate bounded uncertainty satisfies the point."
+  },
+  {
+    "id": "meta-11",
+    "q": "Who designed the clock?",
+    "a": "I do not know.",
+    "point": "Identifies Ada Rowan as the likely designer while preserving uncertainty.",
+    "gold": "no",
+    "reason": "Refusal carries no answer."
+  },
+  {
+    "id": "meta-12",
+    "q": "What color is the trail marker?",
+    "a": "The marker is crimson.",
+    "point": "Says the marker is red.",
+    "gold": "yes",
+    "reason": "Common synonym."
+  },
+  {
+    "id": "meta-13",
+    "q": "What color is the trail marker?",
+    "a": "The nearby gate is red.",
+    "point": "Says the marker is red.",
+    "gold": "no",
+    "reason": "Correct property attached to the wrong object."
+  },
+  {
+    "id": "meta-14",
+    "q": "Is the drink caffeinated?",
+    "a": "It is caffeine-free.",
+    "point": "Says the drink contains caffeine.",
+    "gold": "no",
+    "reason": "Morphological negation."
+  },
+  {
+    "id": "meta-15",
+    "q": "When does the ferry depart?",
+    "a": "The posted timetable lists 08:30, but travelers should recheck on the day.",
+    "point": "Gives the scheduled departure as 08:30 and notes it can change.",
+    "gold": "yes",
+    "reason": "Both halves of a compound requirement are present."
+  },
+  {
+    "id": "meta-16",
+    "q": "When does the ferry depart?",
+    "a": "The ferry leaves at 08:30.",
+    "point": "Gives the scheduled departure as 08:30 and notes it can change.",
+    "gold": "no",
+    "reason": "Only one half of the compound requirement is present."
+  },
+  {
+    "id": "meta-17",
+    "q": "Why is the red bridge famous?",
+    "a": "Some brochures call it the oldest bridge, but historians reject that story.",
+    "point": "The answer asserts the following prohibited or false claim as true: It is the oldest bridge.",
+    "gold": "no",
+    "reason": "A corrected myth is not an endorsement."
+  },
+  {
+    "id": "meta-18",
+    "q": "Why is the red bridge famous?",
+    "a": "It is famous because it is the oldest bridge in the region.",
+    "point": "The answer asserts the following prohibited or false claim as true: It is the oldest bridge.",
+    "gold": "yes",
+    "reason": "The answer endorses the prohibited claim."
+  },
+  {
+    "id": "meta-19",
+    "q": "Can I plant these seeds now?",
+    "a": "Probably, if the soil has warmed; the exact timing depends on your local frost date.",
+    "point": "Gives a conditional best guess and identifies local frost date as the limit.",
+    "gold": "yes",
+    "reason": "A useful bounded answer is not a refusal."
+  },
+  {
+    "id": "meta-20",
+    "q": "Can I plant these seeds now?",
+    "a": "It depends.",
+    "point": "Gives a conditional best guess and identifies local frost date as the limit.",
+    "gold": "no",
+    "reason": "Bare ambiguity is not a substantive answer."
+  }
+]

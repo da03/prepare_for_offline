@@ -7,6 +7,7 @@ Packaged: PREPARE_OFFLINE_PORT=0 python run.py   (OS-assigned free port +
 
 from __future__ import annotations
 
+import multiprocessing
 import socket
 
 import uvicorn
@@ -25,14 +26,15 @@ def main() -> None:
     settings = get_settings()
     port = settings.port if settings.port else _free_port()
     settings.write_runtime(port)
-    print(f"[prepare-for-offline] data dir: {settings.home}")
-    print(f"[prepare-for-offline] app token: {settings.app_token}")
-    print(f"[prepare-for-offline] runtime:   {settings.runtime_path}")
-    print(f"[prepare-for-offline] http://{settings.host}:{port}")
+    print(f"[paw-offline] data dir: {settings.home}")
+    print(f"[paw-offline] app token: {settings.app_token}")
+    print(f"[paw-offline] runtime:   {settings.runtime_path}")
+    print(f"[paw-offline] http://{settings.host}:{port}")
     # Pass the app object directly (not an import string) so this works both in
     # dev and inside a frozen PyInstaller binary.
     uvicorn.run(fastapi_app, host=settings.host, port=port, reload=False)
 
 
 if __name__ == "__main__":
+    multiprocessing.freeze_support()
     main()

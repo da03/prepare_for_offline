@@ -1,0 +1,771 @@
+{
+  "schema_version": "universal-qa-dataset/v1",
+  "name": "Universal QA backward-design anchors",
+  "split": "anchors",
+  "description": "Eight hand-authored calibration cases that define answerability, factual coverage, bounded nuance, and prohibited conflations before model evaluation.",
+  "as_of": "2026-07-17",
+  "sources": {
+    "korean-nikl": {
+      "title": "Korean language and grammar resources",
+      "publisher": "National Institute of Korean Language",
+      "url": "https://www.korean.go.kr/front_eng/main.do",
+      "as_of": "2026-07-17"
+    },
+    "singapore-ura-land": {
+      "title": "Creating space through planning and land reclamation",
+      "publisher": "Urban Redevelopment Authority Singapore",
+      "url": "https://www.ura.gov.sg/Corporate/Planning/Long-Term-Plan-Review/Space-for-Our-Dreams/Creating-space",
+      "as_of": "2026-07-17"
+    },
+    "mbs-official": {
+      "title": "About Marina Bay Sands",
+      "publisher": "Marina Bay Sands",
+      "url": "https://www.marinabaysands.com/company-information/about.html",
+      "as_of": "2026-07-17"
+    },
+    "state-paris-peace": {
+      "title": "The Paris Peace Conference and the Treaty of Versailles",
+      "publisher": "Office of the Historian, U.S. Department of State",
+      "url": "https://history.state.gov/milestones/1914-1920/paris-peace",
+      "as_of": "2026-07-17"
+    },
+    "nasa-seasons": {
+      "title": "What Causes the Seasons?",
+      "publisher": "NASA Space Place",
+      "url": "https://spaceplace.nasa.gov/seasons/en/",
+      "as_of": "2026-07-17"
+    },
+    "nfpa-cooking": {
+      "title": "Cooking fire safety",
+      "publisher": "National Fire Protection Association",
+      "url": "https://www.nfpa.org/education-and-research/home-fire-safety/cooking",
+      "as_of": "2026-07-17"
+    },
+    "state-georgia-country": {
+      "title": "Georgia country information",
+      "publisher": "U.S. Department of State",
+      "url": "https://www.state.gov/countries-areas/georgia/",
+      "as_of": "2026-07-17"
+    },
+    "georgia-state": {
+      "title": "Georgia state government",
+      "publisher": "State of Georgia",
+      "url": "https://georgia.gov/",
+      "as_of": "2026-07-17"
+    },
+    "jr-pass-official": {
+      "title": "Japan Rail Pass official information",
+      "publisher": "Japan Railways Group",
+      "url": "https://japanrailpass.net/en/",
+      "as_of": "2026-07-17"
+    },
+    "iceland-water": {
+      "title": "Drinking water in Iceland",
+      "publisher": "Government of Iceland",
+      "url": "https://www.government.is/topics/environment-climate-and-nature-protection/water/",
+      "as_of": "2026-07-17"
+    }
+  },
+  "questions": [
+    {
+      "id": "anchor-simida",
+      "question": "I keep hearing “simida” in Korean. What does it mean?",
+      "category": "language_phonetic",
+      "domain": "language_phonetic",
+      "language": "en",
+      "answer_policy": {
+        "must_answer": true,
+        "allow_refusal": false,
+        "rationale": "The phonetic spelling is common and sufficiently identifiable; uncertainty should be bounded rather than used to refuse."
+      },
+      "references": ["korean-nikl"],
+      "freshness": {
+        "classification": "stable",
+        "as_of": "2026-07-17",
+        "expectation": "Describe the enduring grammatical function and acknowledge romanization ambiguity."
+      },
+      "rubric": {
+        "must_include": [
+          {
+            "id": "anchor-simida.m1",
+            "claim": "Identifies “simida” as a hearing or spelling of the Korean formal sentence ending 습니다.",
+            "weight": 0.25,
+            "aliases": ["formal sentence ending", "습니다", "seumnida"],
+            "rationale": "The central interpretation is a grammatical ending, not an independent lexical translation.",
+            "accepted_evidence": ["Calls it the formal-final ending 습니다, commonly romanized seumnida or heard approximately as simida."],
+            "references": ["korean-nikl"]
+          },
+          {
+            "id": "anchor-simida.m2",
+            "claim": "Explains that 습니다 and ㅂ니다 are conditioned variants attached according to the preceding stem.",
+            "weight": 0.2,
+            "aliases": [{"all": ["습니다", "ㅂ니다"]}, {"all": ["seumnida", "mnida"]}],
+            "rationale": "Both written variants are needed to explain what the listener is actually hearing.",
+            "accepted_evidence": ["Notes that 습니다 follows consonant-final stems while ㅂ니다 attaches to vowel-final stems, with normal Korean conjugation details."],
+            "references": ["korean-nikl"]
+          },
+          {
+            "id": "anchor-simida.m3",
+            "claim": "States that the ending marks a formal, polite or deferential statement.",
+            "weight": 0.2,
+            "aliases": ["formal polite", "formal and polite", "deferential speech level", "polite formal statement"],
+            "rationale": "A useful answer must explain communicative function, not merely reproduce Hangul.",
+            "accepted_evidence": ["Describes the ending as formal-polite, deferential, or used in formal declarative speech."],
+            "references": ["korean-nikl"]
+          },
+          {
+            "id": "anchor-simida.m4",
+            "claim": "Clarifies that it attaches to a verb or adjective stem and is not normally a standalone word.",
+            "weight": 0.15,
+            "aliases": ["not a standalone word", "not an independent word", "attaches to a verb stem", "grammatical ending attached"],
+            "rationale": "This prevents the frequent category error of assigning it a dictionary meaning by itself.",
+            "accepted_evidence": ["Says it is an ending on a predicate rather than an autonomous word."],
+            "references": ["korean-nikl"]
+          }
+        ],
+        "should_include": [
+          {
+            "id": "anchor-simida.s1",
+            "claim": "Warns that “simida” is an approximate phonetic spelling and that romanization may appear as seumnida, seubnida, or mnida in a full form.",
+            "weight": 0.15,
+            "aliases": ["approximate phonetic spelling", "romanized seumnida", "romanization varies", "heard as simida"],
+            "rationale": "The user's Latin spelling suppresses sounds and morpheme boundaries, so overclaiming exact spelling would mislead.",
+            "accepted_evidence": ["Explicitly distinguishes what may be heard from a standard transliteration."],
+            "references": ["korean-nikl"]
+          },
+          {
+            "id": "anchor-simida.s2",
+            "claim": "Gives a short full-form example such as 감사합니다 and explains that the whole expression, not the ending alone, conveys thanks.",
+            "weight": 0.05,
+            "aliases": ["감사합니다", "gamsahamnida", "whole expression"],
+            "rationale": "An example resolves why travelers often associate the sound with thanking.",
+            "accepted_evidence": ["Uses 감사합니다 while separating 감사하다 from the final ending."],
+            "references": ["korean-nikl"]
+          }
+        ],
+        "must_not_include": [
+          {
+            "id": "anchor-simida.n1",
+            "claim": "Treats “simida” as a standalone Korean word whose meaning is “thank you.”",
+            "penalty": 0.8,
+            "aliases": ["simida means thank you", "word for thank you", "standalone word meaning thank you"],
+            "rationale": "Thanking comes from the full expression 감사합니다; the ending itself supplies grammar and register.",
+            "accepted_evidence": ["Penalize an unqualified one-to-one translation of simida as thank you."],
+            "references": ["korean-nikl"]
+          },
+          {
+            "id": "anchor-simida.n2",
+            "claim": "Claims that “simida” is the exact standard romanization in every context.",
+            "penalty": 0.35,
+            "aliases": ["exact standard romanization", "always spelled simida"],
+            "rationale": "The user's spelling is an auditory approximation and the surface ending varies.",
+            "accepted_evidence": ["Penalize categorical claims that erase 습니다/ㅂ니다 and romanization variation."],
+            "references": ["korean-nikl"]
+          }
+        ]
+      },
+      "follow_ups": [
+        {
+          "id": "anchor-simida-f1",
+          "question": "Can you show how 습니다 and ㅂ니다 attach to two common verbs?",
+          "purpose": "Tests whether the system can turn the grammatical explanation into bounded examples."
+        }
+      ],
+      "acceptable_aliases": {
+        "습니다": ["seumnida", "seubnida"],
+        "ㅂ니다": ["mnida", "-ㅂ니다"],
+        "formal polite": ["deferential", "formal-polite"]
+      },
+      "style": {
+        "tone": "Friendly and corrective without mocking the phonetic spelling.",
+        "structure": "Lead with the likely identification, then explain form, function, and one example.",
+        "expectation": "State the likely interpretation confidently while preserving the romanization caveat.",
+        "max_words": 180
+      },
+      "exemplar": "“Simida” is probably what you are hearing as 습니다 (often romanized seumnida), or its vowel-stem variant ㅂ니다. It is not a standalone word: it attaches to a verb or adjective stem to make a formal, polite/deferential statement. For example, 감사합니다 is the whole expression commonly translated as “thank you”; the ending alone does not mean “thank you.” The spelling “simida” is only an approximate rendering of the sound, so romanizations vary."
+    },
+    {
+      "id": "anchor-singapore-marina-bay",
+      "question": "At Singapore’s Marina Bay, is the boat-shaped thing reclaimed land, and what building is it?",
+      "category": "country_city_overview",
+      "domain": "country_travel",
+      "language": "en",
+      "answer_policy": {
+        "must_answer": true,
+        "allow_refusal": false,
+        "rationale": "The landmark and the bay's land-reclamation history are well documented and can be distinguished directly."
+      },
+      "references": ["singapore-ura-land", "mbs-official"],
+      "freshness": {
+        "classification": "stable",
+        "as_of": "2026-07-17",
+        "expectation": "Separate the physical landmark from the reclaimed terrain on which much of the district was developed."
+      },
+      "rubric": {
+        "must_include": [
+          {
+            "id": "anchor-singapore-marina-bay.m1",
+            "claim": "Explains that substantial parts of the Marina Bay district were created or expanded through land reclamation.",
+            "weight": 0.25,
+            "aliases": ["Marina Bay district was reclaimed", "built on reclaimed land", "land reclamation expanded Marina Bay"],
+            "rationale": "The user's reclaimed-land intuition applies to the district, not to the visible rooftop object.",
+            "accepted_evidence": ["States that reclamation created or enlarged land around Marina Bay without claiming every feature is fill."],
+            "references": ["singapore-ura-land"]
+          },
+          {
+            "id": "anchor-singapore-marina-bay.m2",
+            "claim": "Identifies the landmark as Marina Bay Sands.",
+            "weight": 0.2,
+            "aliases": ["Marina Bay Sands", "MBS resort"],
+            "rationale": "The named-place identification is the core visual answer.",
+            "accepted_evidence": ["Names Marina Bay Sands, ideally as an integrated resort and hotel complex."],
+            "references": ["mbs-official"]
+          },
+          {
+            "id": "anchor-singapore-marina-bay.m3",
+            "claim": "Describes Marina Bay Sands as three towers connected across the top by the Sands SkyPark.",
+            "weight": 0.3,
+            "aliases": [{"all": ["three towers", "SkyPark"]}, {"all": ["three hotel towers", "rooftop park"]}],
+            "rationale": "These structural details disambiguate the landmark from nearby buildings.",
+            "accepted_evidence": ["Says three hotel towers are linked by the rooftop Sands SkyPark."],
+            "references": ["mbs-official"]
+          },
+          {
+            "id": "anchor-singapore-marina-bay.m4",
+            "claim": "Clarifies that the boat-like silhouette is an architectural resemblance, not a literal boat.",
+            "weight": 0.1,
+            "aliases": ["not a literal boat", "boat-like SkyPark", "resembles a ship"],
+            "rationale": "The visual shorthand is useful only if it is not reified as an object floating in the bay.",
+            "accepted_evidence": ["Calls the top boat-shaped or ship-like while explicitly identifying it as the SkyPark."],
+            "references": ["mbs-official"]
+          }
+        ],
+        "should_include": [
+          {
+            "id": "anchor-singapore-marina-bay.s1",
+            "claim": "Explicitly distinguishes reclaimed ground from the Marina Bay Sands structure standing on that ground.",
+            "weight": 0.15,
+            "aliases": ["reclaimed ground is not the building", "district and building are different", "sits on reclaimed land"],
+            "rationale": "A direct contrast resolves the exact conflation embedded in the question.",
+            "accepted_evidence": ["Uses one sentence to contrast land formation with the later building."],
+            "references": ["singapore-ura-land", "mbs-official"]
+          }
+        ],
+        "must_not_include": [
+          {
+            "id": "anchor-singapore-marina-bay.n1",
+            "claim": "Conflates reclaimed land with Marina Bay Sands by saying the building or rooftop SkyPark itself is reclaimed land.",
+            "penalty": 0.9,
+            "aliases": ["Marina Bay Sands is reclaimed land", "SkyPark is reclaimed land", "boat-shaped building is reclaimed land"],
+            "rationale": "Land reclamation creates terrain; it does not describe the identity of the resort structure.",
+            "accepted_evidence": ["Penalize any assertion that the visible building or roof is itself reclaimed land."],
+            "references": ["singapore-ura-land", "mbs-official"]
+          },
+          {
+            "id": "anchor-singapore-marina-bay.n2",
+            "claim": "Identifies the rooftop form as an actual boat.",
+            "penalty": 0.45,
+            "aliases": ["it is a boat", "actual ship on the towers", "boat parked on top"],
+            "rationale": "The form is the Sands SkyPark, not a marine vessel.",
+            "accepted_evidence": ["Penalize literal-boat identification rather than harmless use of boat-shaped."],
+            "references": ["mbs-official"]
+          }
+        ]
+      },
+      "follow_ups": [
+        {
+          "id": "anchor-singapore-f1",
+          "question": "Which parts of central Singapore were formed through reclamation?",
+          "purpose": "Tests a deeper geographic explanation without confusing structures and terrain."
+        }
+      ],
+      "acceptable_aliases": {
+        "Marina Bay Sands": ["MBS", "Marina Bay Sands integrated resort"],
+        "Sands SkyPark": ["SkyPark", "rooftop park"],
+        "land reclamation": ["reclaimed land", "land fill"]
+      },
+      "style": {
+        "tone": "Direct, visually grounded, and careful about the user's two-part question.",
+        "structure": "Answer no to the conflation, identify the landmark, then explain the reclamation context.",
+        "expectation": "Make the building-versus-ground distinction explicit.",
+        "max_words": 170
+      },
+      "exemplar": "The boat-shaped feature is not reclaimed land or a real boat. It is the Sands SkyPark spanning the tops of Marina Bay Sands’ three hotel towers. Much of the wider Marina Bay district was created or expanded on reclaimed land, so Marina Bay Sands stands in a reclaimed-land area, but the resort and its rooftop SkyPark are buildings, not the reclaimed land itself."
+    },
+    {
+      "id": "anchor-versailles-war",
+      "question": "Did the Treaty of Versailles directly start World War II?",
+      "category": "world_history",
+      "domain": "history",
+      "language": "en",
+      "answer_policy": {
+        "must_answer": true,
+        "allow_refusal": false,
+        "rationale": "The causal relationship is contestable in degree but supports a clear, nuanced historical answer."
+      },
+      "references": ["state-paris-peace"],
+      "freshness": {
+        "classification": "stable",
+        "as_of": "2026-07-17",
+        "expectation": "Distinguish contributing conditions from the later proximate outbreak."
+      },
+      "rubric": {
+        "must_include": [
+          {
+            "id": "anchor-versailles-war.m1",
+            "claim": "Says the treaty was a contributing factor rather than the single direct cause of World War II.",
+            "weight": 0.45,
+            "aliases": ["contributing factor", "not the sole cause", "not a single direct cause"],
+            "rationale": "The question invites an overly monocausal account.",
+            "accepted_evidence": ["Explains that the settlement helped create grievances but did not mechanically trigger war."],
+            "references": ["state-paris-peace"]
+          },
+          {
+            "id": "anchor-versailles-war.m2",
+            "claim": "Connects punitive terms, reparations, territorial losses, or German resentment to later political exploitation.",
+            "weight": 0.3,
+            "aliases": ["German resentment", "reparations", "territorial losses", "punitive terms"],
+            "rationale": "The pathway from settlement to political grievance must be named.",
+            "accepted_evidence": ["Mentions at least one major term and how extremists, including Nazis, exploited resentment."],
+            "references": ["state-paris-peace"]
+          }
+        ],
+        "should_include": [
+          {
+            "id": "anchor-versailles-war.s1",
+            "claim": "Names additional causes such as the Great Depression, Nazi expansionism, appeasement, and the invasion of Poland.",
+            "weight": 0.25,
+            "aliases": ["Great Depression", "Nazi expansionism", "invasion of Poland", "appeasement"],
+            "rationale": "Multiple later forces explain why grievance became another world war.",
+            "accepted_evidence": ["Lists one or more intervening causes and identifies the 1939 invasion of Poland as the proximate European trigger."],
+            "references": ["state-paris-peace"]
+          }
+        ],
+        "must_not_include": [
+          {
+            "id": "anchor-versailles-war.n1",
+            "claim": "Claims the treaty alone inevitably or immediately caused World War II.",
+            "penalty": 0.75,
+            "aliases": ["treaty alone caused World War II", "immediately started World War II", "made World War II inevitable"],
+            "rationale": "This collapses two decades of political and economic contingencies into determinism.",
+            "accepted_evidence": ["Penalize monocausal or immediate-trigger language."],
+            "references": ["state-paris-peace"]
+          }
+        ]
+      },
+      "follow_ups": [],
+      "acceptable_aliases": {
+        "Treaty of Versailles": ["Versailles settlement", "1919 peace treaty"],
+        "World War II": ["Second World War", "WWII"]
+      },
+      "style": {
+        "tone": "Nuanced and accessible.",
+        "structure": "Give a qualified no, explain the contribution, then name intervening causes.",
+        "expectation": "Avoid both absolving the treaty of influence and treating it as destiny.",
+        "max_words": 180
+      },
+      "exemplar": "Not directly or by itself. The Treaty of Versailles imposed reparations and territorial and political losses that fueled resentment in Germany, which the Nazis later exploited. But World War II also depended on the Great Depression, Nazi expansionism, failed deterrence and appeasement, and specific decisions culminating in Germany’s 1939 invasion of Poland. Versailles was an important contributing condition, not a single automatic trigger."
+    },
+    {
+      "id": "anchor-earth-seasons",
+      "question": "Are summers warmer because Earth is closer to the Sun?",
+      "category": "science_common_knowledge",
+      "domain": "science",
+      "language": "en",
+      "answer_policy": {
+        "must_answer": true,
+        "allow_refusal": false,
+        "rationale": "This is stable introductory science with a well-defined misconception to correct."
+      },
+      "references": ["nasa-seasons"],
+      "freshness": {
+        "classification": "stable",
+        "as_of": "2026-07-17",
+        "expectation": "Explain axial tilt and hemispheric opposition."
+      },
+      "rubric": {
+        "must_include": [
+          {
+            "id": "anchor-earth-seasons.m1",
+            "claim": "Attributes seasons primarily to Earth’s roughly 23.5-degree axial tilt.",
+            "weight": 0.45,
+            "aliases": ["23.5 degree axial tilt", "Earth's axial tilt", "tilted axis"],
+            "rationale": "Axial tilt is the governing mechanism.",
+            "accepted_evidence": ["Names axial tilt, with or without the approximate angle."],
+            "references": ["nasa-seasons"]
+          },
+          {
+            "id": "anchor-earth-seasons.m2",
+            "claim": "Explains that a hemisphere tilted toward the Sun receives more direct sunlight and longer days.",
+            "weight": 0.35,
+            "aliases": [{"all": ["more direct sunlight", "longer days"]}, "higher sun angle and longer daylight"],
+            "rationale": "The mechanism should connect tilt to surface heating.",
+            "accepted_evidence": ["Mentions both light angle or concentration and day length."],
+            "references": ["nasa-seasons"]
+          }
+        ],
+        "should_include": [
+          {
+            "id": "anchor-earth-seasons.s1",
+            "claim": "Notes that opposite hemispheres have opposite seasons, which distance alone could not explain.",
+            "weight": 0.2,
+            "aliases": ["opposite hemispheres have opposite seasons", "summer in one hemisphere and winter in the other"],
+            "rationale": "The hemispheric contrast is an intuitive falsification of the distance misconception.",
+            "accepted_evidence": ["Uses Northern and Southern Hemisphere season opposition as evidence."],
+            "references": ["nasa-seasons"]
+          }
+        ],
+        "must_not_include": [
+          {
+            "id": "anchor-earth-seasons.n1",
+            "claim": "Says Earth-Sun distance is the primary cause of ordinary seasons.",
+            "penalty": 0.85,
+            "aliases": ["closer to the Sun causes summer", "distance from the Sun causes the seasons", "farther away causes winter"],
+            "rationale": "Earth is actually near perihelion during Northern Hemisphere winter; distance does not explain opposite seasons.",
+            "accepted_evidence": ["Penalize presenting orbital distance as the main seasonal mechanism."],
+            "references": ["nasa-seasons"]
+          }
+        ]
+      },
+      "follow_ups": [],
+      "acceptable_aliases": {
+        "axial tilt": ["tilted axis", "obliquity"],
+        "direct sunlight": ["higher Sun angle", "more concentrated sunlight"]
+      },
+      "style": {
+        "tone": "Clear and misconception-focused.",
+        "structure": "Answer no, give the tilt mechanism, then use hemispheres as a check.",
+        "expectation": "Avoid unnecessary orbital detail unless it reinforces the correction.",
+        "max_words": 130
+      },
+      "exemplar": "No. Seasons are driven mainly by Earth’s roughly 23.5° axial tilt. When a hemisphere tilts toward the Sun, sunlight arrives more directly and days are longer, so it warms; the other hemisphere gets lower-angle light and shorter days. That is why the hemispheres have opposite seasons at the same Earth-Sun distance."
+    },
+    {
+      "id": "anchor-grease-fire",
+      "question": "A pan of cooking oil catches fire. What should I do right now?",
+      "category": "everyday_practical",
+      "domain": "everyday_practical",
+      "language": "en",
+      "answer_policy": {
+        "must_answer": true,
+        "allow_refusal": false,
+        "rationale": "The user needs concise, established safety steps; refusing would increase risk."
+      },
+      "references": ["nfpa-cooking"],
+      "freshness": {
+        "classification": "stable",
+        "as_of": "2026-07-17",
+        "expectation": "Prioritize life safety and avoid actions that spread burning oil."
+      },
+      "rubric": {
+        "must_include": [
+          {
+            "id": "anchor-grease-fire.m1",
+            "claim": "Tells the user to turn off the heat if this can be done safely and not move the pan.",
+            "weight": 0.3,
+            "aliases": [{"all": ["turn off the heat", "do not move the pan"]}, {"all": ["shut off the burner", "leave the pan"]}],
+            "rationale": "Removing heat helps while moving oil can spill and spread flame.",
+            "accepted_evidence": ["Includes both a safety condition for reaching controls and an instruction to leave the pan in place."],
+            "references": ["nfpa-cooking"]
+          },
+          {
+            "id": "anchor-grease-fire.m2",
+            "claim": "Says to smother the fire with a metal lid or baking sheet, or use an appropriate Class K extinguisher.",
+            "weight": 0.35,
+            "aliases": ["slide a metal lid", "cover with a baking sheet", "Class K extinguisher"],
+            "rationale": "Excluding oxygen is an appropriate response to a small contained pan fire.",
+            "accepted_evidence": ["Recommends a metal cover and optionally identifies a suitable extinguisher."],
+            "references": ["nfpa-cooking"]
+          },
+          {
+            "id": "anchor-grease-fire.m3",
+            "claim": "Directs evacuation and an emergency call if the fire is not immediately controlled or it feels unsafe.",
+            "weight": 0.25,
+            "aliases": ["get out and call emergency services", "evacuate", "call the fire department"],
+            "rationale": "A growing fire is beyond improvised household control.",
+            "accepted_evidence": ["Sets a clear boundary: leave, close the door if possible, and call the local emergency number."],
+            "references": ["nfpa-cooking"]
+          }
+        ],
+        "should_include": [
+          {
+            "id": "anchor-grease-fire.s1",
+            "claim": "Advises leaving the cover in place until the pan is fully cool.",
+            "weight": 0.1,
+            "aliases": ["leave it covered until cool", "do not uncover until completely cooled"],
+            "rationale": "Early uncovering can reintroduce oxygen and reignite oil.",
+            "accepted_evidence": ["Says to wait for complete cooling before removing the lid."],
+            "references": ["nfpa-cooking"]
+          }
+        ],
+        "must_not_include": [
+          {
+            "id": "anchor-grease-fire.n1",
+            "claim": "Tells the user to pour water on burning oil.",
+            "penalty": 1.0,
+            "aliases": ["pour water on it", "use water on the oil fire", "douse it with water"],
+            "rationale": "Water can explosively spread burning grease.",
+            "accepted_evidence": ["Penalize any affirmative recommendation to use water."],
+            "references": ["nfpa-cooking"]
+          },
+          {
+            "id": "anchor-grease-fire.n2",
+            "claim": "Tells the user to carry the burning pan outside.",
+            "penalty": 0.85,
+            "aliases": ["carry the pan outside", "take the burning pan to the sink", "move the flaming pan"],
+            "rationale": "Carrying it risks spilling burning oil and blocking escape.",
+            "accepted_evidence": ["Penalize movement of the burning pan."],
+            "references": ["nfpa-cooking"]
+          }
+        ]
+      },
+      "follow_ups": [],
+      "acceptable_aliases": {
+        "metal lid": ["baking sheet", "sheet pan"],
+        "emergency services": ["fire department", "local emergency number"]
+      },
+      "style": {
+        "tone": "Urgent, calm, and action-first.",
+        "structure": "Give immediate steps in order, followed by two explicit prohibitions.",
+        "expectation": "Use short imperative sentences and prioritize evacuation over firefighting.",
+        "max_words": 140
+      },
+      "exemplar": "If you can reach the control safely, turn off the heat and do not move the pan. Slide a metal lid or baking sheet over it to smother the flames; use a Class K extinguisher only if one is available and you know how. Leave it covered until fully cool. Never use water or carry the pan. If it is not controlled immediately or you feel unsafe, get everyone out, close the door behind you, and call emergency services."
+    },
+    {
+      "id": "anchor-georgia-ambiguity",
+      "question": "What is the capital of Georgia?",
+      "category": "ambiguous_wording",
+      "domain": "country_travel",
+      "language": "en",
+      "answer_policy": {
+        "must_answer": true,
+        "allow_refusal": false,
+        "rationale": "Both common interpretations have concise factual answers, so ambiguity should produce a bounded answer rather than refusal."
+      },
+      "references": ["state-georgia-country", "georgia-state"],
+      "freshness": {
+        "classification": "stable",
+        "as_of": "2026-07-17",
+        "expectation": "Surface both likely referents and invite clarification."
+      },
+      "rubric": {
+        "must_include": [
+          {
+            "id": "anchor-georgia-ambiguity.m1",
+            "claim": "States that Tbilisi is the capital of the country Georgia.",
+            "weight": 0.4,
+            "aliases": [{"all": ["Tbilisi", "country"]}, "Georgia the country: Tbilisi"],
+            "rationale": "The sovereign state is one standard referent.",
+            "accepted_evidence": ["Correctly pairs Tbilisi with the country in the Caucasus."],
+            "references": ["state-georgia-country"]
+          },
+          {
+            "id": "anchor-georgia-ambiguity.m2",
+            "claim": "States that Atlanta is the capital of the U.S. state of Georgia.",
+            "weight": 0.4,
+            "aliases": [{"all": ["Atlanta", "U.S. state"]}, "Georgia the state: Atlanta"],
+            "rationale": "The U.S. state is the other dominant English referent.",
+            "accepted_evidence": ["Correctly pairs Atlanta with the state."],
+            "references": ["georgia-state"]
+          }
+        ],
+        "should_include": [
+          {
+            "id": "anchor-georgia-ambiguity.s1",
+            "claim": "Briefly asks or signals which Georgia the user means.",
+            "weight": 0.2,
+            "aliases": ["which Georgia", "if you mean the country", "if you mean the U.S. state"],
+            "rationale": "A bounded clarification supports the next turn without withholding useful information.",
+            "accepted_evidence": ["Provides both answers and offers to continue for the intended place."],
+            "references": ["state-georgia-country", "georgia-state"]
+          }
+        ],
+        "must_not_include": [
+          {
+            "id": "anchor-georgia-ambiguity.n1",
+            "claim": "Presents only one capital as universally correct while ignoring the obvious ambiguity.",
+            "penalty": 0.55,
+            "aliases": ["the capital of Georgia is only Atlanta", "the capital of Georgia is only Tbilisi", "there is no ambiguity"],
+            "rationale": "An unqualified single answer can be wrong for half the likely intents.",
+            "accepted_evidence": ["Penalize explicit denial of the alternate common referent, not a merely terse correct pairing."],
+            "references": ["state-georgia-country", "georgia-state"]
+          }
+        ]
+      },
+      "follow_ups": [
+        {
+          "id": "anchor-georgia-f1",
+          "question": "I mean the country—what language is spoken there?",
+          "purpose": "Tests context resolution after the ambiguity is bounded."
+        }
+      ],
+      "acceptable_aliases": {
+        "Tbilisi": ["თბილისი"],
+        "United States": ["U.S.", "US"]
+      },
+      "style": {
+        "tone": "Brief and helpful.",
+        "structure": "Give both interpretations in parallel clauses.",
+        "expectation": "Do not force a clarification before supplying either safe answer.",
+        "max_words": 70
+      },
+      "exemplar": "If you mean Georgia the country, its capital is Tbilisi. If you mean the U.S. state of Georgia, its capital is Atlanta. Which one are you asking about?"
+    },
+    {
+      "id": "anchor-jr-pass-price",
+      "question": "Is a 7-day Japan Rail Pass still ¥29,650?",
+      "category": "current_low_stakes",
+      "domain": "adversarial_staleness",
+      "language": "en",
+      "answer_policy": {
+        "must_answer": true,
+        "allow_refusal": false,
+        "rationale": "The old figure can be corrected from an official current source while warning that fares can change."
+      },
+      "references": ["jr-pass-official"],
+      "freshness": {
+        "classification": "time_sensitive",
+        "as_of": "2026-07-17",
+        "max_age_days": 30,
+        "expectation": "Reject the obsolete price and direct the traveler to the dated official fare table."
+      },
+      "rubric": {
+        "must_include": [
+          {
+            "id": "anchor-jr-pass-price.m1",
+            "claim": "Says ¥29,650 is an outdated ordinary-car 7-day Japan Rail Pass price.",
+            "weight": 0.4,
+            "aliases": ["¥29,650 is outdated", "29650 was the old price", "no longer 29,650 yen"],
+            "rationale": "The question embeds a stale pre-October-2023 figure.",
+            "accepted_evidence": ["Clearly rejects the quoted amount rather than repeating it as current."],
+            "references": ["jr-pass-official"]
+          },
+          {
+            "id": "anchor-jr-pass-price.m2",
+            "claim": "Gives the ordinary 7-day adult pass price as ¥50,000 as of the benchmark date.",
+            "weight": 0.4,
+            "aliases": ["¥50,000", "50,000 yen"],
+            "rationale": "A direct replacement value makes the correction actionable.",
+            "accepted_evidence": ["States the adult ordinary-car nationwide pass amount and dates it."],
+            "references": ["jr-pass-official"]
+          }
+        ],
+        "should_include": [
+          {
+            "id": "anchor-jr-pass-price.s1",
+            "claim": "Advises checking the official Japan Rail Pass site before purchase because prices and conditions can change.",
+            "weight": 0.2,
+            "aliases": ["check the official Japan Rail Pass site", "fares can change", "verify before purchase"],
+            "rationale": "Travel prices are time-sensitive even when a current answer is supplied.",
+            "accepted_evidence": ["Links the time caveat to an official recheck rather than using it to refuse."],
+            "references": ["jr-pass-official"]
+          }
+        ],
+        "must_not_include": [
+          {
+            "id": "anchor-jr-pass-price.n1",
+            "claim": "Affirms that the current 7-day adult ordinary pass costs ¥29,650.",
+            "penalty": 0.9,
+            "aliases": ["current price is ¥29,650", "still costs 29,650 yen", "yes it is 29,650"],
+            "rationale": "This is the stale value the case is designed to catch.",
+            "accepted_evidence": ["Penalize endorsement of the old figure as current."],
+            "references": ["jr-pass-official"]
+          }
+        ]
+      },
+      "follow_ups": [
+        {
+          "id": "anchor-jr-pass-f1",
+          "question": "How can I compare the pass with point-to-point tickets for my route?",
+          "purpose": "Tests useful planning after a current-price correction."
+        }
+      ],
+      "acceptable_aliases": {
+        "Japan Rail Pass": ["JR Pass", "nationwide rail pass"],
+        "¥50,000": ["50,000 yen", "JPY 50,000"]
+      },
+      "style": {
+        "tone": "Decisive but date-aware.",
+        "structure": "Reject the old amount, state the dated current amount, and give a verification step.",
+        "expectation": "Do not hide behind possible future changes.",
+        "max_words": 100
+      },
+      "exemplar": "No. ¥29,650 is an old price. As of July 2026, the official adult price for a 7-day ordinary-car Japan Rail Pass is ¥50,000. Fares and purchase conditions can change, so check the official Japan Rail Pass site again before buying."
+    },
+    {
+      "id": "anchor-iceland-tap-water",
+      "question": "Can a visitor normally drink cold tap water in Iceland?",
+      "category": "travel",
+      "domain": "country_travel",
+      "language": "en",
+      "answer_policy": {
+        "must_answer": true,
+        "allow_refusal": false,
+        "rationale": "The general travel guidance is stable and can include a sensible local exception."
+      },
+      "references": ["iceland-water"],
+      "freshness": {
+        "classification": "slow_changing",
+        "as_of": "2026-07-17",
+        "expectation": "Give the normal nationwide answer while deferring to any site-specific notice."
+      },
+      "rubric": {
+        "must_include": [
+          {
+            "id": "anchor-iceland-tap-water.m1",
+            "claim": "Says cold tap water in Iceland is generally safe and commonly drunk.",
+            "weight": 0.55,
+            "aliases": ["cold tap water is safe to drink", "generally safe and drinkable", "potable cold water"],
+            "rationale": "This is the direct practical answer travelers need.",
+            "accepted_evidence": ["Answers yes for normal municipal or properly maintained supplies."],
+            "references": ["iceland-water"]
+          },
+          {
+            "id": "anchor-iceland-tap-water.m2",
+            "claim": "Recommends using the cold tap for drinking rather than assuming sulfur-smelling hot water is unsafe cold water.",
+            "weight": 0.25,
+            "aliases": ["use the cold tap", "hot water can smell of sulfur", "geothermal hot water smell"],
+            "rationale": "Visitors often generalize the odor of geothermal hot water to the cold supply.",
+            "accepted_evidence": ["Distinguishes cold drinking water from hot geothermal water that may smell sulfurous."],
+            "references": ["iceland-water"]
+          }
+        ],
+        "should_include": [
+          {
+            "id": "anchor-iceland-tap-water.s1",
+            "claim": "Says to follow a posted local advisory or ask the accommodation if a private supply is in question.",
+            "weight": 0.2,
+            "aliases": ["follow any local advisory", "ask your accommodation", "private water supply"],
+            "rationale": "A bounded exception preserves safety without undermining the useful general answer.",
+            "accepted_evidence": ["Mentions local notices, unusual discoloration, or a private well as reasons to check."],
+            "references": ["iceland-water"]
+          }
+        ],
+        "must_not_include": [
+          {
+            "id": "anchor-iceland-tap-water.n1",
+            "claim": "Says visitors must rely on bottled water throughout Iceland.",
+            "penalty": 0.7,
+            "aliases": ["must drink bottled water", "tap water is unsafe throughout Iceland", "never drink Icelandic tap water"],
+            "rationale": "This contradicts normal water quality and encourages unnecessary bottled-water use.",
+            "accepted_evidence": ["Penalize blanket claims that Icelandic tap water is generally unsafe."],
+            "references": ["iceland-water"]
+          }
+        ]
+      },
+      "follow_ups": [],
+      "acceptable_aliases": {
+        "safe to drink": ["potable", "drinkable"],
+        "sulfur": ["sulphur", "sulfurous"]
+      },
+      "style": {
+        "tone": "Reassuring with a bounded exception.",
+        "structure": "Lead with yes, distinguish cold and hot water, then mention local notices.",
+        "expectation": "Avoid turning a rare local issue into a nationwide warning.",
+        "max_words": 110
+      },
+      "exemplar": "Yes. Cold tap water in Iceland is generally safe and commonly drunk; fill your bottle from the cold tap. Hot geothermal water can have a sulfur smell, which does not mean the cold supply is unsafe. Follow any posted local advisory, and ask your accommodation if it uses a private supply or the water looks unusual."
+    }
+  ]
+}

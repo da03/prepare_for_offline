@@ -15,6 +15,9 @@ frontend/dist/
 desktop/src-tauri/target/
 desktop/src-tauri/binaries/
 desktop/src-tauri/gen/
+desktop/src-tauri/resources/*.gguf
+desktop/src-tauri/resources/paw-programs/*
+!desktop/src-tauri/resources/paw-programs/README.md
 
 # PyInstaller artifacts
 backend/build/

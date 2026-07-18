@@ -1,0 +1,275 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://prepare-for-offline.local/schemas/universal-qa-result-v1.json",
+  "title": "Universal QA Question Result v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "question_id",
+    "category",
+    "domain",
+    "answer_present",
+    "refusal_detected",
+    "answer_presence_reason",
+    "status",
+    "score",
+    "deterministic_score",
+    "points_possible",
+    "points_earned",
+    "deterministic_points_earned",
+    "penalty_applied",
+    "grader_adjustment",
+    "must_include",
+    "should_include",
+    "must_not_include",
+    "point_results",
+    "grader_errors",
+    "citations",
+    "confidence"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "universal-qa-result/v1"
+    },
+    "question_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "category": {
+      "type": "string",
+      "minLength": 1
+    },
+    "domain": {
+      "type": "string",
+      "minLength": 1
+    },
+    "answer_present": {
+      "type": "boolean"
+    },
+    "refusal_detected": {
+      "type": "boolean"
+    },
+    "answer_presence_reason": {
+      "type": ["string", "null"],
+      "enum": [
+        null,
+        "missing",
+        "explicit_refusal",
+        "refusal_without_substantive_answer"
+      ]
+    },
+    "status": {
+      "enum": [
+        "scored",
+        "missing_or_refusal"
+      ]
+    },
+    "score": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "deterministic_score": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "points_possible": {
+      "type": "number",
+      "minimum": 0
+    },
+    "points_earned": {
+      "type": "number",
+      "minimum": 0
+    },
+    "deterministic_points_earned": {
+      "type": "number",
+      "minimum": 0
+    },
+    "penalty_applied": {
+      "type": "number",
+      "minimum": 0
+    },
+    "grader_adjustment": {
+      "type": "number"
+    },
+    "must_include": {
+      "$ref": "#/$defs/coverage"
+    },
+    "should_include": {
+      "$ref": "#/$defs/coverage"
+    },
+    "must_not_include": {
+      "type": "object",
+      "required": [
+        "violations",
+        "penalty"
+      ],
+      "properties": {
+        "violations": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "deterministic_violations": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "penalty": {
+          "type": "number",
+          "minimum": 0
+        }
+      }
+    },
+    "point_results": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "point_id",
+          "tier",
+          "claim",
+          "weight",
+          "hit",
+          "match_method",
+          "matched_alias",
+          "grader_hit"
+        ],
+        "properties": {
+          "point_id": {
+            "type": "string"
+          },
+          "tier": {
+            "enum": [
+              "must_include",
+              "should_include",
+              "must_not_include"
+            ]
+          },
+          "claim": {
+            "type": "string"
+          },
+          "weight": {
+            "type": "number",
+            "minimum": 0
+          },
+          "hit": {
+            "type": "boolean"
+          },
+          "match_method": {
+            "enum": [
+              "alias",
+              "grader",
+              "none",
+              "not_evaluated"
+            ]
+          },
+          "matched_alias": {},
+          "grader_hit": {
+            "type": [
+              "boolean",
+              "null"
+            ]
+          }
+        }
+      }
+    },
+    "grader_errors": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "citations": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "expected_source_ids",
+        "provided_count",
+        "correct_count",
+        "correctness",
+        "recall",
+        "hook_enabled",
+        "details",
+        "errors"
+      ],
+      "properties": {
+        "expected_source_ids": {
+          "type": "array",
+          "items": {"type": "string"}
+        },
+        "provided_count": {"type": "integer", "minimum": 0},
+        "correct_count": {"type": "integer", "minimum": 0},
+        "correctness": {"type": "number", "minimum": 0, "maximum": 1},
+        "recall": {"type": "number", "minimum": 0, "maximum": 1},
+        "hook_enabled": {"type": "boolean"},
+        "details": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "source_id",
+              "declared_for_case",
+              "known_source",
+              "hook_supported",
+              "correct"
+            ],
+            "properties": {
+              "source_id": {"type": "string"},
+              "declared_for_case": {"type": "boolean"},
+              "known_source": {"type": "boolean"},
+              "hook_supported": {"type": ["boolean", "null"]},
+              "correct": {"type": "boolean"}
+            }
+          }
+        },
+        "errors": {
+          "type": "array",
+          "items": {"type": "string"}
+        }
+      }
+    },
+    "confidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "reported",
+        "target",
+        "absolute_error",
+        "brier_score"
+      ],
+      "properties": {
+        "reported": {"type": ["number", "null"], "minimum": 0, "maximum": 1},
+        "target": {"type": "number", "minimum": 0, "maximum": 1},
+        "absolute_error": {"type": ["number", "null"], "minimum": 0, "maximum": 1},
+        "brier_score": {"type": ["number", "null"], "minimum": 0, "maximum": 1}
+      }
+    }
+  },
+  "$defs": {
+    "coverage": {
+      "type": "object",
+      "required": [
+        "earned",
+        "possible",
+        "coverage"
+      ],
+      "properties": {
+        "earned": {
+          "type": "number",
+          "minimum": 0
+        },
+        "possible": {
+          "type": "number",
+          "minimum": 0
+        },
+        "coverage": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        }
+      }
+    }
+  }
+}

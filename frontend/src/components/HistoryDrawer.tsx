@@ -64,7 +64,7 @@ export function HistoryDrawer({
   return (
     <SurfaceDialog
       title="History"
-      description="Pick up a previous trip conversation."
+      description="Pick up any previous conversation."
       variant="drawer"
       onClose={onClose}
     >
