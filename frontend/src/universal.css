@@ -254,7 +254,7 @@ textarea:disabled {
   overscroll-behavior: contain;
 }
 
-.starter-state {
+.empty-state {
   display: flex;
   width: min(620px, calc(100% - 32px));
   min-height: 100%;
@@ -282,7 +282,7 @@ textarea:disabled {
   height: 38px;
 }
 
-.starter-state h1,
+.empty-state h1,
 .prepare-title h1 {
   margin: 0;
   font-size: clamp(27px, 5vw, 38px);
@@ -290,37 +290,11 @@ textarea:disabled {
   letter-spacing: -0.04em;
 }
 
-.starter-state > p,
+.empty-state > p,
 .prepare-title > p {
   margin: 12px 0 0;
   color: var(--muted);
   font-size: 15px;
-}
-
-.starter-list {
-  display: grid;
-  width: min(520px, 100%);
-  gap: 9px;
-  margin-top: 30px;
-}
-
-.starter-list button {
-  display: flex;
-  min-height: 52px;
-  align-items: center;
-  justify-content: space-between;
-  gap: 14px;
-  padding: 10px 14px 10px 17px;
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  background: var(--surface);
-  color: var(--text);
-  text-align: left;
-}
-
-.starter-list button:hover {
-  border-color: var(--accent);
-  transform: translateY(-1px);
 }
 
 .answer-feed {
@@ -331,6 +305,20 @@ textarea:disabled {
 
 .answer-turn + .answer-turn {
   margin-top: 24px;
+}
+
+.answer-turn--follow-up {
+  margin-left: 28px;
+  padding-left: 14px;
+  border-left: 2px solid var(--border);
+}
+
+.turn-kind {
+  display: block;
+  margin: 0 0 5px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 700;
 }
 
 .question-bubble {
@@ -369,6 +357,10 @@ textarea:disabled {
   height: 22px;
 }
 
+.answer-card__body {
+  min-width: 0;
+}
+
 .answer-copy {
   margin: 2px 0 0;
   font-size: 15px;
@@ -394,27 +386,73 @@ textarea:disabled {
   animation: pulse 1.2s ease-in-out infinite;
 }
 
-.topic-divider {
+.answer-actions {
   display: flex;
-  align-items: center;
-  gap: 12px;
-  margin: 28px 0;
-  color: var(--muted);
-  font-size: 12px;
+  margin-top: 12px;
 }
 
-.topic-divider::before,
-.topic-divider::after {
-  height: 1px;
-  flex: 1;
-  background: var(--border);
-  content: "";
+.follow-up-button {
+  display: inline-flex;
+  min-height: 40px;
+  align-items: center;
+  gap: 7px;
+  padding: 0 10px;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.follow-up-button:hover:not(:disabled) {
+  background: var(--soft);
+  color: var(--text);
 }
 
 .ask-composer-region {
   flex: 0 0 auto;
   padding: 8px 14px 14px;
   background: linear-gradient(transparent, var(--bg) 24%);
+}
+
+.follow-up-context {
+  display: flex;
+  width: min(760px, 100%);
+  min-height: 48px;
+  margin: 0 auto 6px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 5px 5px 5px 13px;
+  border: 1px solid var(--border);
+  border-radius: 13px;
+  background: var(--surface);
+  box-shadow: 0 6px 18px rgb(24 42 75 / 7%);
+}
+
+.follow-up-context > div {
+  min-width: 0;
+}
+
+.follow-up-context span,
+.follow-up-context strong {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.follow-up-context span {
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.follow-up-context strong {
+  font-size: 13px;
 }
 
 .question-composer {
@@ -451,17 +489,6 @@ textarea:disabled {
   border-radius: 13px;
   background: var(--accent);
   color: var(--on-accent);
-}
-
-.new-topic-button {
-  display: block;
-  min-height: 34px;
-  margin: 0 auto 5px;
-  padding: 0 12px;
-  border: 0;
-  background: transparent;
-  color: var(--muted);
-  font-size: 12px;
 }
 
 .prepare-page {
@@ -537,9 +564,18 @@ textarea:disabled {
 .enrichment-progress progress {
   width: 100%;
   height: 8px;
-  margin: 16px 0 12px;
+  margin: 16px 0 6px;
   border: 0;
   accent-color: var(--accent);
+}
+
+.enrichment-progress__details {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+  color: var(--muted);
+  font-size: 12px;
 }
 
 .section-title {
@@ -734,6 +770,11 @@ textarea:disabled {
 
   .prepare-content {
     padding-top: 36px;
+  }
+
+  .answer-turn--follow-up {
+    margin-left: 12px;
+    padding-left: 9px;
   }
 }
 

@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import os
+import re
 import sqlite3
 from collections.abc import Iterator
 
@@ -10,6 +11,19 @@ from . import program_registry, program_runtime
 
 MAX_SPECIALISTS = 3
 MAX_CANDIDATE_CHARS = 1200
+
+
+def _explicit_topic_mention(topic: str, question: str) -> bool:
+    normalized_topic = " ".join(topic.casefold().split())
+    normalized_question = " ".join(question.casefold().split())
+    if not normalized_topic:
+        return False
+    return bool(
+        re.search(
+            rf"(?<!\w){re.escape(normalized_topic)}(?!\w)",
+            normalized_question,
+        )
+    )
 
 
 def _run(program: dict, text: str, *, max_tokens: int = 320) -> dict:
@@ -36,8 +50,19 @@ def _matching_prepared(
     prepared_labels = []
     matcher_results = []
     matcher = program_registry.active(conn, "prepared_matcher")
-    if matcher:
-        for program in program_registry.prepared_for_router(conn):
+    for program in program_registry.prepared_for_router(conn):
+        if _explicit_topic_mention(program["topic"], question):
+            matcher_results.append(
+                {
+                    "program_key": program["program_key"],
+                    "output": "YES (explicit topic mention)",
+                    "elapsed_ms": 0.0,
+                    "peak_rss_mb": 0.0,
+                }
+            )
+            prepared_labels.append(program["program_key"])
+            continue
+        if matcher:
             match = _run(
                 matcher,
                 f"TOPIC: {program['topic']}\nQUESTION: {question}",

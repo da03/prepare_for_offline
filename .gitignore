@@ -28,4 +28,5 @@ backend/*.spec
 *.db
 *.db-wal
 *.db-shm
+question-candidates*.json
 .DS_Store

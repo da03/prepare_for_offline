@@ -1,50 +1,51 @@
-"""Bounded conversation context for universal follow-up questions."""
+"""Explicit, bounded context for answer-anchored follow-up questions."""
 
 from __future__ import annotations
 
-import re
-import sqlite3
-from . import program_registry, program_runtime
+MAX_PREVIOUS_QUESTION_CHARS = 1_200
+MAX_PREVIOUS_ANSWER_CHARS = 1_800
 
 
-FOLLOWUP_RE = re.compile(
-    r"^(what about|how about|and |also |then |there|that|it|they|on |for |is it|can i)",
-    re.IGNORECASE,
-)
+def _clean(value: str) -> str:
+    return " ".join(value.strip().split())
+
+
+def _clip(value: str, limit: int) -> str:
+    clean = _clean(value)
+    if len(clean) <= limit:
+        return clean
+    return f"{clean[: limit - 1].rstrip()}…"
+
+
+def standalone(text: str) -> dict:
+    return {
+        "query": _clean(text),
+        "used_context": False,
+        "previous_question": None,
+        "previous_answer": None,
+        "strategy": "standalone",
+    }
 
 
 def rewrite(
-    conn: sqlite3.Connection,
-    conversation_id: str | None,
     text: str,
     *,
-    new_topic: bool = False,
-    max_prior_turns: int = 3,
+    previous_question: str,
+    previous_answer: str,
 ) -> dict:
-    clean = " ".join(text.strip().split())
-    if new_topic or not conversation_id:
-        return {"query": clean, "used_context": False, "previous_question": None}
-    rows = conn.execute(
-        "SELECT content FROM messages WHERE conversation_id=? AND role='user' "
-        "ORDER BY created_at DESC LIMIT ?",
-        (conversation_id, max_prior_turns),
-    ).fetchall()
-    if not rows:
-        return {"query": clean, "used_context": False, "previous_question": None}
-    short = len(clean.split()) <= 8
-    if not short and not FOLLOWUP_RE.search(clean):
-        return {"query": clean, "used_context": False, "previous_question": None}
-    previous = rows[0]["content"]
-    raw = None
-    program = program_registry.active(conn, "followup")
-    if program:
-        try:
-            raw = program_runtime.run(
-                program["program_id"],
-                f"PREVIOUS: {previous}\nFOLLOW-UP: {clean}",
-                max_tokens=96,
-            ).output
-        except Exception:
-            raw = None
-    query = raw.strip() if raw else f'{clean} (follow-up to: "{previous}")'
-    return {"query": query, "used_context": True, "previous_question": previous}
+    clean = _clean(text)
+    question = _clip(previous_question, MAX_PREVIOUS_QUESTION_CHARS)
+    answer = _clip(previous_answer, MAX_PREVIOUS_ANSWER_CHARS)
+    query = (
+        "Use the immediate context below to answer only the follow-up.\n"
+        f"PREVIOUS_QUESTION: {question}\n"
+        f"PREVIOUS_ANSWER: {answer}\n"
+        f"FOLLOW_UP: {clean}"
+    )
+    return {
+        "query": query,
+        "used_context": True,
+        "previous_question": question,
+        "previous_answer": answer,
+        "strategy": "structured_context",
+    }

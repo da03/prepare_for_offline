@@ -21,19 +21,31 @@ from ..services import (
 router = APIRouter(dependencies=[Depends(require_token)])
 
 
-def _session(req: AskRequest) -> tuple[dict, dict]:
+def _session(req: AskRequest) -> tuple[dict, dict, dict]:
     conn = connect()
     try:
         program_registry.ensure_builtins(conn)
-        conversation = conversations.ensure(conn, req.conversation_id)
-        rewritten = followups.rewrite(
-            conn,
-            conversation["conversation_id"],
-            req.text,
-            new_topic=req.new_topic,
-            max_prior_turns=3,
-        )
-        conversations.add_message(
+        anchor = None
+        if req.reply_to_message_id:
+            anchor = conversations.answer_context(
+                conn, req.reply_to_message_id
+            )
+            if not anchor:
+                raise HTTPException(
+                    status_code=404, detail="Previous answer not found"
+                )
+            conversation = conversations.get(
+                conn, anchor["conversation_id"]
+            )
+            rewritten = followups.rewrite(
+                req.text,
+                previous_question=anchor["question"],
+                previous_answer=anchor["answer"],
+            )
+        else:
+            conversation = conversations.create(conn)
+            rewritten = followups.standalone(req.text)
+        user_message = conversations.add_message(
             conn,
             conversation["conversation_id"],
             role="user",
@@ -43,17 +55,23 @@ def _session(req: AskRequest) -> tuple[dict, dict]:
                 "standalone_query": rewritten["query"],
                 "used_context": rewritten["used_context"],
                 "previous_question": rewritten["previous_question"],
+                "reply_to_message_id": req.reply_to_message_id,
+                "context_strategy": rewritten["strategy"],
             },
         )
-        return conversation, rewritten
+        return conversation, rewritten, user_message
     finally:
         conn.close()
 
 
 def _events(req: AskRequest, session=None) -> Iterator[dict]:
-    conversation, rewritten = session or _session(req)
+    conversation, rewritten, user_message = session or _session(req)
     if rewritten["used_context"]:
-        yield {"type": "context", "used_context": True}
+        yield {
+            "type": "context",
+            "used_context": True,
+            "strategy": rewritten["strategy"],
+        }
 
     conn = connect()
     final = None
@@ -72,7 +90,9 @@ def _events(req: AskRequest, session=None) -> Iterator[dict]:
                         "program_labels": event.get("program_labels", []),
                         "refined": event.get("refined", False),
                         "used_context": rewritten["used_context"],
-                        "new_topic": req.new_topic,
+                        "question_message_id": user_message["message_id"],
+                        "reply_to_message_id": req.reply_to_message_id,
+                        "context_strategy": rewritten["strategy"],
                         "trace": event.get("trace", {}),
                     },
                 )

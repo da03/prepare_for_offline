@@ -14,7 +14,7 @@ use tauri_plugin_shell::{
     ShellExt,
 };
 
-const TRAY_ICON: tauri::image::Image<'_> = tauri::include_image!("icons/tray-template@2x.png");
+const TRAY_ICON: tauri::image::Image<'_> = tauri::include_image!("icons/tray-template.png");
 
 #[derive(Deserialize)]
 struct Runtime {

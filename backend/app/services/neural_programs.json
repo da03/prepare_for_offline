@@ -3,7 +3,6 @@
   "shipping_roles": [
     "broad",
     "aggregator",
-    "followup",
     "prepared_matcher",
     "language_intent",
     "heard_expression",
@@ -66,20 +65,6 @@
         "compiler": "paw-4b-qwen3-0.6b",
         "spec_sha256": "c16991c8b80ee34f7e4411cd081a5de909b6877aa6d5d6648c0867acea5b9a1e",
         "compile_seconds": 3.566
-      }
-    },
-    "followup": {
-      "standard": {
-        "program_id": "6c60e7462e90a2e78bc5",
-        "compiler": "paw-4b-qwen3-0.6b",
-        "spec_sha256": "6c6f7973dcb6134b898894f8143e1056a00e4ab121a2c1878ac73f64c222649f",
-        "compile_seconds": 3.658
-      },
-      "finetuned": {
-        "program_id": "b2648cc9e8f9dfd1ad41",
-        "compiler": "paw-ft-bs48",
-        "spec_sha256": "6c6f7973dcb6134b898894f8143e1056a00e4ab121a2c1878ac73f64c222649f",
-        "compile_seconds": 86.12
       }
     },
     "subject:history": {

@@ -12,6 +12,7 @@ from app.services.program_runtime import ProgramResult
 
 def test_fresh_install_contains_no_source_or_retrieval_tables(client):
     assert client.get("/api/neural/status").status_code == 200
+    assert client.get("/api/starters").status_code == 404
     conn = connect()
     try:
         tables = {
@@ -29,6 +30,174 @@ def test_fresh_install_contains_no_source_or_retrieval_tables(client):
         "knowledge_layers",
         "search_runs",
     } & tables
+
+
+def test_removed_builtin_programs_are_purged_from_existing_registries(client):
+    del client
+    conn = connect()
+    try:
+        now = "2026-07-18T00:00:00+00:00"
+        conn.execute(
+            """
+            INSERT INTO neural_programs (
+                program_key, role, display_name, built_in, status,
+                created_at, updated_at
+            ) VALUES ('builtin:old-followup','old_followup','Old rewriter',
+                      1,'ready',?,?)
+            """,
+            (now, now),
+        )
+        conn.commit()
+        program_registry.ensure_builtins(conn)
+        assert (
+            conn.execute(
+                "SELECT COUNT(*) FROM neural_programs "
+                "WHERE program_key='builtin:old-followup'"
+            ).fetchone()[0]
+            == 0
+        )
+    finally:
+        conn.close()
+
+
+def test_standalone_questions_never_inherit_previous_context(
+    client, monkeypatch
+):
+    queries = []
+
+    def fake_answer_events(conn, query):
+        del conn
+        queries.append(query)
+        yield {
+            "type": "final",
+            "answer": f"Answer {len(queries)}",
+            "program_labels": ["broad"],
+        }
+
+    monkeypatch.setattr(
+        "app.services.neural_answer_graph.answer_events",
+        fake_answer_events,
+    )
+    first = client.post(
+        "/api/ask", json={"text": "What does simida mean?"}
+    ).json()
+    second = client.post(
+        "/api/ask", json={"text": "How do tides work?"}
+    ).json()
+
+    assert queries == ["What does simida mean?", "How do tides work?"]
+    assert first["conversation_id"] != second["conversation_id"]
+    assert first["used_context"] is False
+    assert second["used_context"] is False
+    history = client.get("/api/conversations").json()["conversations"]
+    assert {item["question_count"] for item in history} == {1}
+
+
+def test_follow_up_requires_an_explicit_answer_anchor(client, monkeypatch):
+    queries = []
+
+    def fake_answer_events(conn, query):
+        del conn
+        queries.append(query)
+        answer = (
+            "The MRT is usually the easiest way to cover longer distances."
+            if len(queries) == 1
+            else "Most MRT services end around midnight."
+        )
+        yield {
+            "type": "final",
+            "answer": answer,
+            "program_labels": ["broad"],
+        }
+
+    monkeypatch.setattr(
+        "app.services.neural_answer_graph.answer_events",
+        fake_answer_events,
+    )
+    first = client.post(
+        "/api/ask",
+        json={"text": "What is the easiest way to get around Singapore?"},
+    ).json()
+    follow_up = client.post(
+        "/api/ask",
+        json={
+            "text": "Does it run late?",
+            "reply_to_message_id": first["message_id"],
+        },
+    ).json()
+
+    assert follow_up["conversation_id"] == first["conversation_id"]
+    assert follow_up["used_context"] is True
+    assert "PREVIOUS_QUESTION: What is the easiest way" in queries[1]
+    assert "PREVIOUS_ANSWER: The MRT is usually the easiest way" in queries[1]
+    assert "FOLLOW_UP: Does it run late?" in queries[1]
+    context_event = next(
+        event for event in follow_up["events"] if event["type"] == "context"
+    )
+    assert context_event["strategy"] == "structured_context"
+
+    thread = client.get(
+        f"/api/conversations/{first['conversation_id']}"
+    ).json()
+    assert len([row for row in thread["messages"] if row["role"] == "user"]) == 2
+    second_question = thread["messages"][2]
+    assert (
+        second_question["payload"]["reply_to_message_id"]
+        == first["message_id"]
+    )
+    assert client.post(
+        "/api/ask",
+        json={
+            "text": "What about this?",
+            "reply_to_message_id": "missing-answer",
+        },
+    ).status_code == 404
+
+
+def test_question_export_is_local_deduplicated_and_answer_opt_in(
+    client, monkeypatch
+):
+    from scripts.export_question_candidates import export_questions
+
+    def fake_answer_events(conn, query):
+        del conn, query
+        yield {
+            "type": "final",
+            "answer": "The answer remains local.",
+            "program_labels": ["broad"],
+        }
+
+    monkeypatch.setattr(
+        "app.services.neural_answer_graph.answer_events",
+        fake_answer_events,
+    )
+    for _ in range(2):
+        assert client.post(
+            "/api/ask", json={"text": "Why is the Merlion a fish and lion?"}
+        ).status_code == 200
+
+    conn = connect()
+    try:
+        questions = export_questions(conn)
+        with_answers = export_questions(conn, include_answers=True)
+    finally:
+        conn.close()
+    item = next(
+        row
+        for row in questions
+        if row["question"] == "Why is the Merlion a fish and lion?"
+    )
+    assert item["occurrences"] == 2
+    assert item["program_labels"] == ["broad"]
+    assert "answer" not in item
+    answer_item = next(
+        row
+        for row in with_answers
+        if row["question"] == "Why is the Merlion a fish and lion?"
+    )
+    assert answer_item["answer"] == "The answer remains local."
+    assert "conversation_id" not in answer_item
+    assert "message_id" not in answer_item
 
 
 def test_ask_runs_broad_all_matching_prepared_programs_and_aggregator(
@@ -107,7 +276,7 @@ def test_prepare_compiles_program_metadata_without_sources(client, monkeypatch):
     monkeypatch.setattr(
         neural_jobs,
         "_compile",
-        lambda spec, compiler: (
+        lambda spec, compiler, **kwargs: (
             "prepared-program-id",
             1.0,
             {"tests": [{"passed": True}], "spec": spec, "compiler": compiler},
@@ -182,6 +351,54 @@ def test_one_prepared_match_bypasses_broad_aggregation(client, monkeypatch):
     assert ids["aggregator"] not in calls
 
 
+def test_explicit_topic_name_routes_without_paw_matcher(client, monkeypatch):
+    conn = connect()
+    try:
+        program_registry.ensure_builtins(conn)
+        topic = program_registry.ensure_topic(conn, "Singapore")
+        program_registry.add_version(
+            conn,
+            program_key=topic["program_key"],
+            program_id="prepared-singapore",
+            compiler="paw-ft-bs48",
+            stage="finetuned",
+            spec="Singapore specialist",
+            contract_score=1.0,
+            contract_result={},
+            activate=True,
+        )
+        ids = {
+            role: program_registry.active(conn, role)["program_id"]
+            for role in ("broad", "prepared_matcher")
+        }
+    finally:
+        conn.close()
+    calls = []
+
+    def fake_run(program_id, text, **kwargs):
+        del text, kwargs
+        calls.append(program_id)
+        if program_id == ids["prepared_matcher"]:
+            raise AssertionError("Explicit topic should bypass PAW matcher")
+        output = (
+            "A broad answer."
+            if program_id == ids["broad"]
+            else "The prepared Singapore answer."
+        )
+        return ProgramResult(output, 1.0, 100.0, True)
+
+    monkeypatch.setattr("app.services.program_runtime.run", fake_run)
+    result = client.post(
+        "/api/ask",
+        json={"text": "Why does Singapore have a lion symbol?"},
+    ).json()
+    assert result["answer"] == "The prepared Singapore answer."
+    assert result["program_labels"] == [topic["program_key"]]
+    assert ids["prepared_matcher"] not in calls
+    matcher_trace = result["trace"]["prepared_matcher"][0]
+    assert matcher_trace["output"] == "YES (explicit topic mention)"
+
+
 def test_translation_and_heard_expression_use_distinct_programs(
     client, monkeypatch
 ):
@@ -239,7 +456,8 @@ def test_standard_and_finetuned_compile_the_identical_topic_spec(
 ):
     calls = []
 
-    def fake_compile(spec, compiler):
+    def fake_compile(spec, compiler, **kwargs):
+        del kwargs
         calls.append((spec, compiler))
         return (
             f"program-{len(calls)}",
@@ -287,6 +505,115 @@ def test_standard_and_finetuned_compile_the_identical_topic_spec(
     assert rolled_back.json()["stage"] == "standard"
 
 
+def test_user_prepared_programs_are_not_listed_on_public_hub(monkeypatch):
+    standard_calls = []
+
+    class Program:
+        id = "private-standard"
+
+    def fake_compile(spec, **kwargs):
+        standard_calls.append((spec, kwargs))
+        return Program()
+
+    class Response:
+        status_code = 200
+
+        @staticmethod
+        def raise_for_status():
+            return None
+
+        @staticmethod
+        def json():
+            return {"program_id": "private-finetuned"}
+
+    finetuned_calls = []
+
+    def fake_post(url, **kwargs):
+        finetuned_calls.append((url, kwargs))
+        return Response()
+
+    monkeypatch.setattr(neural_jobs.paw, "compile", fake_compile)
+    monkeypatch.setattr(neural_jobs.httpx, "post", fake_post)
+    monkeypatch.setattr(
+        neural_jobs.PAWClient, "download_paw", lambda self, program_id: None
+    )
+    monkeypatch.setattr(
+        neural_jobs,
+        "contract_test",
+        lambda program_id, spec: (1.0, {"program_id": program_id, "spec": spec}),
+    )
+
+    neural_jobs._compile("private topic spec", "paw-4b-qwen3-0.6b")
+    neural_jobs._compile("private topic spec", "paw-ft-bs48")
+
+    assert standard_calls[0][1]["public"] is False
+    assert finetuned_calls[0][1]["json"]["public"] is False
+    assert finetuned_calls[0][0].endswith("/api/v1/compile/async")
+
+
+def test_finetuned_compile_reports_live_remote_progress(monkeypatch):
+    class Response:
+        status_code = 200
+
+        def __init__(self, payload):
+            self.payload = payload
+
+        @staticmethod
+        def raise_for_status():
+            return None
+
+        def json(self):
+            return self.payload
+
+    statuses = iter(
+        (
+            {"job_id": "remote-job", "status": "compiling", "percent": 37},
+            {
+                "job_id": "remote-job",
+                "status": "ready",
+                "percent": 100,
+                "program_id": "live-progress-program",
+            },
+        )
+    )
+    monkeypatch.setattr(
+        neural_jobs.httpx,
+        "post",
+        lambda *args, **kwargs: Response(
+            {"job_id": "remote-job", "status": "queued", "percent": 0}
+        ),
+    )
+    monkeypatch.setattr(
+        neural_jobs.httpx,
+        "get",
+        lambda *args, **kwargs: Response(next(statuses)),
+    )
+    monkeypatch.setattr(neural_jobs.time, "sleep", lambda seconds: None)
+    monkeypatch.setattr(
+        neural_jobs.PAWClient, "download_paw", lambda self, program_id: None
+    )
+    monkeypatch.setattr(
+        neural_jobs,
+        "contract_test",
+        lambda program_id, spec: (1.0, {"program_id": program_id, "spec": spec}),
+    )
+    progress = []
+
+    program_id, score, _ = neural_jobs._compile(
+        "live progress topic spec",
+        "paw-ft-bs48",
+        on_progress=lambda percent, state: progress.append((percent, state)),
+    )
+
+    assert program_id == "live-progress-program"
+    assert score == 1.0
+    assert progress == [
+        (0, "queued"),
+        (37, "compiling"),
+        (100, "ready"),
+    ]
+
+
 def test_manifest_programs_match_frozen_spec_hashes(client):
     del client
     manifest = json.loads(
@@ -298,7 +625,6 @@ def test_manifest_programs_match_frozen_spec_hashes(client):
         "aggregator": neural_specs.AGGREGATOR_SPEC,
         "critic": neural_specs.CRITIC_SPEC,
         "revision": neural_specs.REVISION_SPEC,
-        "followup": neural_specs.FOLLOWUP_SPEC,
         "prepared_matcher": neural_specs.PREPARED_MATCHER_SPEC,
         "language_intent": neural_specs.LANGUAGE_INTENT_SPEC,
         "heard_expression": neural_specs.HEARD_EXPRESSION_SPEC,
@@ -323,7 +649,6 @@ def test_selected_specs_do_not_contain_their_held_out_questions(client):
         (
             neural_specs.BROAD_QA_SPEC,
             neural_specs.AGGREGATOR_SPEC,
-            neural_specs.FOLLOWUP_SPEC,
             neural_specs.PREPARED_MATCHER_SPEC,
             neural_specs.LANGUAGE_INTENT_SPEC,
             neural_specs.HEARD_EXPRESSION_SPEC,
@@ -360,6 +685,28 @@ def test_selected_specs_do_not_contain_their_held_out_questions(client):
         for case in language_cases["translation"]
         if case["input"] in neural_specs.TRANSLATION_SPEC
     ]
+
+
+def test_followup_selection_is_leakage_free_and_clears_release_gates(client):
+    del client
+    from eval.followup_specs import specifications
+
+    eval_root = Path(__file__).resolve().parents[1] / "eval"
+    cases = json.loads((eval_root / "followup_cases.json").read_text())
+    for spec in specifications().values():
+        assert not [
+            case["id"]
+            for case in cases
+            if case["previous_question"] in spec or case["follow_up"] in spec
+        ]
+
+    report = json.loads((eval_root / "followup_report.json").read_text())
+    assert report["selected_for_product"] == "structured_context"
+    assert report["meaningful_dev_lift"] is False
+    assert report["rewrite_fidelity_gate"] is False
+    manifest = json.loads(Path(program_registry.PROGRAM_MANIFEST).read_text())
+    assert "followup" not in manifest["shipping_roles"]
+    assert "followup" not in manifest["programs"]
 
 
 def test_neural_migration_purges_source_text_but_preserves_conversations():

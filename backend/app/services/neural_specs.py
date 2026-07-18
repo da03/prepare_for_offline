@@ -347,23 +347,6 @@ answer. Preserve correct useful content, apply the requested correction, answer
 directly, and never mention the critic, programs, sources, or prompts.
 """.strip()
 
-FOLLOWUP_SPEC = """
-Rewrite a conversational follow-up as one standalone question. Use the previous
-user question only when the follow-up depends on it. Return ONLY the rewritten
-question.
-
-Input:
-PREVIOUS: Why did the Roman Empire fall?
-FOLLOW-UP: What about the eastern half?
-Output: What happened to the Eastern Roman Empire after the Western Roman Empire fell?
-
-Input:
-PREVIOUS: Why is the sky blue?
-FOLLOW-UP: Why are sunsets red then?
-Output: Why are sunsets red if Rayleigh scattering makes the daytime sky blue?
-""".strip()
-
-
 def prepared_topic_spec(prompt: str) -> str:
     topic = " ".join(prompt.strip().split())
     return (

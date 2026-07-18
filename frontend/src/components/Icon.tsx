@@ -4,7 +4,7 @@ export type IconName =
   | "check"
   | "close"
   | "history"
-  | "new-chat"
+  | "reply"
   | "search"
   | "send"
   | "trash";
@@ -24,11 +24,10 @@ const paths: Record<IconName, ReactNode> = {
       <path d="M12 7v5l3 2" />
     </>
   ),
-  "new-chat": (
+  reply: (
     <>
-      <path d="M20 11a8 8 0 1 1-3-6.2" />
-      <path d="M14 4h6v6" />
-      <path d="m20 4-6 6" />
+      <path d="m9 7-5 5 5 5" />
+      <path d="M4 12h9a7 7 0 0 1 7 7" />
     </>
   ),
   search: (

@@ -1,5 +1,5 @@
 {
-  "schema_version": 4,
+  "schema_version": 6,
   "generated_at": "2026-07-18",
   "selection_status": "selected",
   "methodology_correction": {
@@ -13,7 +13,7 @@
   "selected_graph": {
     "prepared_topics": {
       "matcher_program_id": "78f255318b58dd9e5961",
-      "policy": "evaluate every prepared topic; one match answers directly; multiple matches aggregate all matches"
+      "policy": "explicit topic-name mentions match deterministically; otherwise evaluate every prepared topic with PAW; one match answers directly and multiple matches aggregate all matches"
     },
     "language_tasks": {
       "intent_program_id": "276770e58bd2ef2efb82",
@@ -29,14 +29,21 @@
     "multiple_prepared_matches": {
       "aggregator_program_id": "51cdb1382fdeda45d009"
     },
-    "followup_program_id": "b2648cc9e8f9dfd1ad41",
+    "followups": {
+      "policy": "standalone by default; context is used only when the user explicitly replies to an answer",
+      "strategy": "pass one bounded previous question-answer pair directly to the selected answer graph",
+      "paw_rewriter": false
+    },
     "rejected": [
       "fact-heavy broad examples",
       "behavior examples in the broad spec",
       "generic built-in subject fan-out",
       "critic/revision composition",
       "broad plus one prepared specialist aggregation",
-      "user-visible Standard prepared programs"
+      "user-visible Standard prepared programs",
+      "implicit short-question follow-up detection",
+      "question-only PAW follow-up rewriting",
+      "answer-aware PAW follow-up rewriting"
     ]
   },
   "quality_results": {
@@ -88,12 +95,32 @@
       "prepared_finetuned_score": 0.533,
       "broad_plus_prepared_aggregated_score": 0.467,
       "decision": "wait for finetuning and use one matched prepared specialist directly"
+    },
+    "bounded_followups": {
+      "cases": 16,
+      "structured_context_development_score": 0.667,
+      "structured_context_held_out_score": 0.479,
+      "legacy_question_only_paw_development_score": 0.646,
+      "legacy_question_only_paw_held_out_score": 0.5,
+      "best_answer_aware_paw_development_score": 0.708,
+      "best_answer_aware_paw_held_out_score": 0.5,
+      "best_answer_aware_paw_development_rewrite_fidelity": 0.792,
+      "best_answer_aware_paw_held_out_rewrite_fidelity": 0.771,
+      "decision": "use bounded structured context; the PAW candidate's small answer-score difference did not clear the 0.05 development-lift or 0.90 rewrite-fidelity gates and it adds another model invocation"
+    },
+    "observed_country_preparation": {
+      "development_cases": 2,
+      "korea_icml_gangnam_style": "prepared matcher returned YES and the finetuned specialist ran, but both broad and prepared answers lacked the well-known Psy song and satire facts",
+      "singapore_merlion": "prepared matcher incorrectly returned NO despite an explicit Singapore mention; the finetuned specialist also remained factually incomplete when run directly",
+      "decision": "country preparation does not guarantee factual lift; preserve these as development candidates, route explicit topic names deterministically, and do not describe Ready as factual validation"
     }
   },
   "compiler_findings": {
     "sdk_timeout_seconds": 120,
     "finetuned_expected_seconds": "120-300",
-    "resolution": "use a 600-second timeout and retry 502/504 to retrieve exact-spec cached jobs",
+    "sdk_exposes_live_progress": false,
+    "api_async_progress_endpoint": "/api/v1/compile/async",
+    "resolution": "submit finetunes asynchronously and poll live remote percent instead of displaying fixed local stage percentages",
     "exact_spec_pairing_enforced": true
   },
   "release_gates": {
@@ -101,6 +128,8 @@
     "no_source_runtime": true,
     "held_out_prompt_leakage": false,
     "multiple_prepared_matches_not_collapsed_to_top1": true,
+    "standalone_questions_never_inherit_context": true,
+    "followups_require_explicit_answer_anchor": true,
     "isolated_worker_memory_bounded": true,
     "finetuned_pairs_evaluated": true
   }

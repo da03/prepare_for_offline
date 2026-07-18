@@ -11,14 +11,6 @@ from ..services import neural_jobs, program_registry
 
 router = APIRouter(dependencies=[Depends(require_token)])
 
-STARTERS = [
-    "What does simida mean?",
-    "How did geography shape Japan's political history?",
-    "Did the Treaty of Versailles directly start World War II?",
-    "Why are sunsets red?",
-]
-
-
 class PrepareProgramRequest(BaseModel):
     prompt: str = Field(min_length=3, max_length=1200)
 
@@ -97,13 +89,3 @@ def cancel_job(job_id: str) -> dict:
     if not neural_jobs.cancel(job_id):
         raise HTTPException(status_code=409, detail="Job cannot be cancelled")
     return {"cancelled": True}
-
-
-@router.get("/api/starters")
-def starters() -> dict:
-    return {
-        "starters": [
-            {"id": f"starter-{index}", "text": question}
-            for index, question in enumerate(STARTERS, start=1)
-        ]
-    }

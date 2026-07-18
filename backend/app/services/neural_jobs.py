@@ -6,6 +6,7 @@ import sqlite3
 import threading
 import time
 import uuid
+from collections.abc import Callable
 from datetime import datetime, timezone
 
 import httpx
@@ -18,6 +19,10 @@ from . import neural_specs, program_registry, program_runtime
 
 _threads: dict[str, threading.Thread] = {}
 _lock = threading.Lock()
+_TRANSIENT_STATUS_CODES = {502, 503, 504}
+_FINETUNE_TIMEOUT_SECONDS = 600.0
+
+ProgressCallback = Callable[[float | None, str], None]
 
 
 def _now() -> str:
@@ -75,25 +80,63 @@ def start(prompt: str) -> dict:
     return get(job_id)
 
 
-def _compile(spec: str, compiler: str) -> tuple[str, float, dict]:
+def _compile(
+    spec: str,
+    compiler: str,
+    *,
+    on_progress: ProgressCallback | None = None,
+) -> tuple[str, float, dict]:
     if compiler == "paw-ft-bs48":
         client = PAWClient()
         program_id = None
         for attempt in range(3):
             response = httpx.post(
-                f"{client._api_url}/api/v1/compile",
-                json={"spec": spec, "public": True, "compiler": compiler},
+                f"{client._api_url}/api/v1/compile/async",
+                json={"spec": spec, "public": False, "compiler": compiler},
                 headers=client._headers(),
-                timeout=600.0,
+                timeout=30.0,
             )
-            if response.status_code in {502, 504} and attempt < 2:
+            if (
+                response.status_code in _TRANSIENT_STATUS_CODES
+                and attempt < 2
+            ):
                 time.sleep(5)
                 continue
             response.raise_for_status()
-            program_id = response.json().get("program_id")
+            status = response.json()
+            program_id = status.get("program_id")
             break
+        if not program_id:
+            remote_job_id = status.get("job_id")
+            if not remote_job_id:
+                raise RuntimeError("PAW compiler returned no job ID")
+            deadline = time.monotonic() + _FINETUNE_TIMEOUT_SECONDS
+            while time.monotonic() < deadline:
+                state = str(status.get("status") or "queued")
+                if on_progress:
+                    on_progress(status.get("percent"), state)
+                if state == "ready":
+                    program_id = status.get("program_id")
+                    break
+                if state in {"failed", "cancelled"}:
+                    raise RuntimeError(
+                        status.get("error")
+                        or f"PAW finetune job ended with status {state}"
+                    )
+                time.sleep(1)
+                response = httpx.get(
+                    f"{client._api_url}/api/v1/compile/{remote_job_id}",
+                    headers=client._headers(),
+                    timeout=15.0,
+                )
+                if response.status_code in _TRANSIENT_STATUS_CODES:
+                    continue
+                response.raise_for_status()
+                status = response.json()
+            else:
+                raise TimeoutError("PAW finetune job timed out after 10 minutes")
     else:
-        program = paw.compile(spec, compiler=compiler)
+        program = paw.compile(spec, compiler=compiler, public=False)
         program_id = getattr(program, "id", None) or getattr(
             program, "program_id", None
         )
@@ -150,7 +193,7 @@ def _run_standard(job_id: str) -> None:
         if not row:
             return
         spec = neural_specs.prepared_topic_spec(row["topic_prompt"])
-        _update(conn, job_id, "compiling_standard", 10, "Compiling topic program")
+        _update(conn, job_id, "compiling_standard", 10, "Building initial program")
         if _cancelled(conn, job_id):
             _update(conn, job_id, "cancelled", 0, "Cancelled")
             return
@@ -179,13 +222,7 @@ def _run_standard(job_id: str) -> None:
             (_now(), row["program_key"]),
         )
         conn.commit()
-        _update(
-            conn,
-            job_id,
-            "compiling_finetuned",
-            50,
-            "Finetuning topic program",
-        )
+        _update(conn, job_id, "compiling_finetuned", 0, "Improving final program")
         if _cancelled(conn, job_id):
             _update(conn, job_id, "cancelled", 0, "Cancelled")
             return
@@ -224,7 +261,33 @@ def _run_finetuned(job_id: str, spec: str, standard_score: float) -> None:
         if not row or _cancelled(conn, job_id):
             return
         settings = get_settings()
-        program_id, score, result = _compile(spec, settings.compiler_final)
+
+        def report_progress(percent: float | None, state: str) -> None:
+            if _cancelled(conn, job_id):
+                return
+            progress = (
+                max(0, min(99, round(float(percent))))
+                if isinstance(percent, (int, float))
+                else 0
+            )
+            message = (
+                "Waiting for finetune compiler"
+                if state == "queued"
+                else "Improving final program"
+            )
+            _update(
+                conn,
+                job_id,
+                "compiling_finetuned",
+                progress,
+                message,
+            )
+
+        program_id, score, result = _compile(
+            spec,
+            settings.compiler_final,
+            on_progress=report_progress,
+        )
         if score < standard_score:
             raise RuntimeError(
                 "Finetuned topic program regressed its answer contract"

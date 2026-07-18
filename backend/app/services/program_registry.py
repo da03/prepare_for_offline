@@ -26,7 +26,6 @@ def _specifications() -> dict[str, str]:
         "aggregator": neural_specs.AGGREGATOR_SPEC,
         "critic": neural_specs.CRITIC_SPEC,
         "revision": neural_specs.REVISION_SPEC,
-        "followup": neural_specs.FOLLOWUP_SPEC,
         "prepared_matcher": neural_specs.PREPARED_MATCHER_SPEC,
         "language_intent": neural_specs.LANGUAGE_INTENT_SPEC,
         "heard_expression": neural_specs.HEARD_EXPRESSION_SPEC,
@@ -43,6 +42,20 @@ def ensure_builtins(conn: sqlite3.Connection) -> None:
         return
     document = json.loads(PROGRAM_MANIFEST.read_text())
     specs = _specifications()
+    active_roles = sorted(
+        role
+        for role, stages in document.get("programs", {}).items()
+        if role in specs and "standard" in stages
+    )
+    if active_roles:
+        placeholders = ",".join("?" for _ in active_roles)
+        conn.execute(
+            f"DELETE FROM neural_programs "
+            f"WHERE built_in=1 AND role NOT IN ({placeholders})",
+            active_roles,
+        )
+    else:
+        conn.execute("DELETE FROM neural_programs WHERE built_in=1")
     now = _now()
     for role, stages in document.get("programs", {}).items():
         if role not in specs or "standard" not in stages:
@@ -105,7 +118,6 @@ def _display_name(role: str) -> str:
         "aggregator": "Answer composer",
         "critic": "Answer critic",
         "revision": "Answer reviser",
-        "followup": "Follow-up rewriter",
         "prepared_matcher": "Prepared topic matcher",
         "language_intent": "Language intent classifier",
         "heard_expression": "Heard expression interpreter",

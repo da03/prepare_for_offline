@@ -63,8 +63,9 @@ packaged sidecar; rebuild the sidecar after backend changes.
 - `../brand/paw-app-icon.svg` is the editable app-icon master;
   `../brand/paw-app-icon-1024.png` is the checked-in input to `tauri icon`.
 - `../brand/paw-tray-template.svg` is the separate monochrome tray master.
-  Keep its generated 22 px and 44 px PNGs black with transparency so macOS can
-  recolor them as template images.
+  Its optically wider PAW Factory geometry keeps the toe and pad gaps visible
+  at menu-bar size. Keep its generated 32 px and 64 px PNGs black with
+  transparency so macOS can recolor them as template images.
 - Before shipping, inspect the 16/32 px app icons against both light and dark
   backgrounds, then verify Finder, Spotlight, Dock, and the menu bar at their
   smallest normal sizes in both macOS appearances. The paw must remain distinct,

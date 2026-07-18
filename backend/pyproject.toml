@@ -1,6 +1,6 @@
 [project]
 name = "prepare-for-offline"
-version = "0.4.0"
+version = "0.6.0"
 description = "PAW Offline: compile neural programs online, ask them locally."
 requires-python = ">=3.10"
 dependencies = [

@@ -10,7 +10,6 @@ interface HistoryDrawerProps {
   onClose: () => void;
   onSearch: (query: string) => void;
   onSelect: (conversationId: string) => void;
-  onNew: () => void;
   onDelete: (conversationId: string) => Promise<void>;
 }
 
@@ -33,7 +32,6 @@ export function HistoryDrawer({
   onClose,
   onSearch,
   onSelect,
-  onNew,
   onDelete,
 }: HistoryDrawerProps) {
   const [query, setQuery] = useState("");
@@ -54,7 +52,7 @@ export function HistoryDrawer({
       setConfirmDeleteId(null);
     } catch (caught) {
       setError(
-        caught instanceof Error ? caught.message : "Could not delete conversation.",
+        caught instanceof Error ? caught.message : "Could not delete this item.",
       );
     } finally {
       setDeletingId(null);
@@ -64,7 +62,7 @@ export function HistoryDrawer({
   return (
     <SurfaceDialog
       title="History"
-      description="Pick up any previous conversation."
+      description="Review previous questions and their follow-ups."
       variant="drawer"
       onClose={onClose}
     >
@@ -72,7 +70,7 @@ export function HistoryDrawer({
         <div className="search-field">
           <Icon name="search" size={18} />
           <label className="sr-only" htmlFor="history-search">
-            Search conversations
+            Search previous questions
           </label>
           <input
             data-autofocus
@@ -83,10 +81,6 @@ export function HistoryDrawer({
             placeholder="Search history"
           />
         </div>
-        <button className="button button--primary button--full" type="button" onClick={onNew}>
-          <Icon name="new-chat" size={18} />
-          New topic
-        </button>
       </div>
 
       {error ? (
@@ -101,7 +95,9 @@ export function HistoryDrawer({
         ) : null}
         {!loading && !conversations.length ? (
           <p className="inline-empty">
-            {query ? "No conversations match your search." : "No conversations yet."}
+            {query
+              ? "No questions match your search."
+              : "No saved questions yet."}
           </p>
         ) : null}
         {conversations.map((conversation) => {
@@ -115,7 +111,8 @@ export function HistoryDrawer({
               {confirming ? (
                 <div className="history-confirm">
                   <p>
-                    Delete <strong>{conversation.title}</strong>?
+                    Delete <strong>{conversation.title}</strong> and its
+                    follow-ups?
                   </p>
                   <div className="button-row">
                     <button
@@ -148,7 +145,11 @@ export function HistoryDrawer({
                   >
                     <span className="history-title">{conversation.title}</span>
                     <span className="history-meta">
-                      {conversation.message_count ?? 0} messages ·{" "}
+                      {conversation.question_count ?? 0}{" "}
+                      {(conversation.question_count ?? 0) === 1
+                        ? "question"
+                        : "questions"}{" "}
+                      ·{" "}
                       {formatUpdated(conversation.updated_at)}
                     </span>
                   </button>

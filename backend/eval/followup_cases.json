@@ -1,0 +1,288 @@
+[
+  {
+    "id": "dev-singapore-mrt-hours",
+    "split": "dev",
+    "previous_question": "What is the easiest way to get around Singapore?",
+    "previous_answer": "The MRT is usually the easiest way to cover longer distances, with buses filling the gaps between stations.",
+    "follow_up": "Does it run late?",
+    "rewrite_must_include": [
+      ["Singapore"],
+      ["MRT", "mass rapid transit"],
+      ["late", "night", "operating hours", "last train"]
+    ],
+    "rewrite_must_not_include": ["buses run late"],
+    "answer_must_include": [
+      ["midnight", "last train", "late evening"],
+      ["line", "station", "route", "check"]
+    ],
+    "answer_must_not_include": ["runs 24 hours", "all night every night"]
+  },
+  {
+    "id": "dev-tanzania-business-city",
+    "split": "dev",
+    "previous_question": "What should I understand about Tanzania's two best-known cities?",
+    "previous_answer": "Dodoma is the official capital, while Dar es Salaam is the largest city and main commercial center.",
+    "follow_up": "Which one is more practical for an international business trip?",
+    "rewrite_must_include": [
+      ["Tanzania", "Tanzanian"],
+      ["Dar es Salaam"],
+      ["business", "commercial"]
+    ],
+    "rewrite_must_not_include": ["Which one"],
+    "answer_must_include": [
+      ["Dar es Salaam"],
+      ["commercial", "business", "international connections"]
+    ],
+    "answer_must_not_include": ["Dodoma is the main commercial center"]
+  },
+  {
+    "id": "dev-korean-shopkeeper",
+    "split": "dev",
+    "previous_question": "How can I politely say thank you in Korean?",
+    "previous_answer": "감사합니다 (gamsahamnida) is a polite, formal way to say thank you.",
+    "follow_up": "Is that formal enough for a shopkeeper?",
+    "rewrite_must_include": [
+      ["감사합니다", "gamsahamnida"],
+      ["shopkeeper", "shop", "store"],
+      ["formal", "polite", "appropriate"]
+    ],
+    "rewrite_must_not_include": ["Is that"],
+    "answer_must_include": [
+      ["yes", "appropriate", "suitable"],
+      ["polite", "formal"]
+    ],
+    "answer_must_not_include": ["rude", "never use"]
+  },
+  {
+    "id": "dev-earthquake-outdoors",
+    "split": "dev",
+    "previous_question": "What should I do during an earthquake while indoors?",
+    "previous_answer": "Drop, cover, and hold on under sturdy furniture, staying away from windows until the shaking stops.",
+    "follow_up": "And if I am outside?",
+    "rewrite_must_include": [
+      ["earthquake"],
+      ["outside", "outdoors"]
+    ],
+    "rewrite_must_not_include": ["while indoors and outside"],
+    "answer_must_include": [
+      ["open area", "clear area", "open space"],
+      ["buildings", "power lines", "trees", "falling objects"]
+    ],
+    "answer_must_not_include": ["run into a building", "stand under power lines"]
+  },
+  {
+    "id": "dev-kyoto-early-train",
+    "split": "dev",
+    "previous_question": "Where should a first-time visitor stay in Kyoto?",
+    "previous_answer": "Kyoto Station is convenient for trains and day trips; Gion offers a more atmospheric historic setting.",
+    "follow_up": "Which one is better for an early train?",
+    "rewrite_must_include": [
+      ["Kyoto Station"],
+      ["early train"]
+    ],
+    "rewrite_must_not_include": ["Which one"],
+    "answer_must_include": [
+      ["Kyoto Station"],
+      ["convenient", "closer", "direct", "train"]
+    ],
+    "answer_must_not_include": ["Gion is always closer"]
+  },
+  {
+    "id": "dev-photosynthesis-simple",
+    "split": "dev",
+    "previous_question": "How does photosynthesis convert light into stored chemical energy?",
+    "previous_answer": "Chlorophyll captures light energy, which drives reactions that ultimately build sugars from carbon dioxide and water.",
+    "follow_up": "Can you explain that more simply?",
+    "rewrite_must_include": [
+      ["photosynthesis"],
+      ["simple", "simply", "beginner", "plain language"]
+    ],
+    "rewrite_must_not_include": ["explain that"],
+    "answer_must_include": [
+      ["sunlight", "light"],
+      ["sugar", "food", "energy"],
+      ["carbon dioxide", "water"]
+    ],
+    "answer_must_not_include": ["plants absorb food from sunlight"]
+  },
+  {
+    "id": "dev-georgia-vegetarian-food",
+    "split": "dev",
+    "previous_question": "What foods should I try while visiting Georgia?",
+    "previous_answer": "Popular Georgian foods include khinkali, khachapuri, lobio, pkhali, and eggplant rolls called badrijani nigvzit.",
+    "follow_up": "Which ones are vegetarian?",
+    "rewrite_must_include": [
+      ["Georgian", "Georgia"],
+      ["vegetarian"],
+      ["lobio", "pkhali", "badrijani", "khachapuri"]
+    ],
+    "rewrite_must_not_include": ["Which ones"],
+    "answer_must_include": [
+      ["lobio", "pkhali", "badrijani nigvzit"],
+      ["vegetarian", "meat-free"]
+    ],
+    "answer_must_not_include": ["all khinkali are vegetarian"]
+  },
+  {
+    "id": "dev-ottoman-aftermath",
+    "split": "dev",
+    "previous_question": "Why did the Ottoman Empire enter World War I?",
+    "previous_answer": "Its leaders aligned with Germany amid security fears, territorial losses, and hopes of recovering influence.",
+    "follow_up": "What happened to it afterward?",
+    "rewrite_must_include": [
+      ["Ottoman Empire"],
+      ["after World War I", "after the First World War", "afterward"]
+    ],
+    "rewrite_must_not_include": ["What happened to it"],
+    "answer_must_include": [
+      ["defeat", "defeated", "lost"],
+      ["dissolved", "collapsed", "partition"],
+      ["Turkey", "Turkish Republic"]
+    ],
+    "answer_must_not_include": ["Ottoman Empire still exists"]
+  },
+  {
+    "id": "test-iceland-rural-water",
+    "split": "test",
+    "previous_question": "Can visitors safely drink tap water in Iceland?",
+    "previous_answer": "Municipal tap water in Iceland is generally safe and is commonly drunk without filtering.",
+    "follow_up": "What about in rural areas?",
+    "rewrite_must_include": [
+      ["Iceland", "Icelandic"],
+      ["tap water", "drinking water"],
+      ["rural"]
+    ],
+    "rewrite_must_not_include": ["What about"],
+    "answer_must_include": [
+      ["generally safe", "usually safe", "safe"],
+      ["private supply", "local advice", "property", "untreated source"]
+    ],
+    "answer_must_not_include": ["all rural water is unsafe"]
+  },
+  {
+    "id": "test-marina-bay-land",
+    "split": "test",
+    "previous_question": "What is the boat-shaped structure above Marina Bay Sands?",
+    "previous_answer": "It is the Sands SkyPark, a rooftop structure spanning the hotel's three towers.",
+    "follow_up": "Is that the reclaimed land people mention?",
+    "rewrite_must_include": [
+      ["Sands SkyPark", "Marina Bay Sands"],
+      ["reclaimed land"]
+    ],
+    "rewrite_must_not_include": ["Is that"],
+    "answer_must_include": [
+      ["no", "not"],
+      ["SkyPark", "rooftop", "building"],
+      ["district", "area", "site", "sits on reclaimed land"]
+    ],
+    "answer_must_not_include": ["SkyPark is reclaimed land"]
+  },
+  {
+    "id": "test-seoul-solo-night",
+    "split": "test",
+    "previous_question": "Is Seoul generally safe at night?",
+    "previous_answer": "Seoul is generally considered safe, though normal precautions still apply in nightlife areas and while using late-night transport.",
+    "follow_up": "What about for someone traveling alone?",
+    "rewrite_must_include": [
+      ["Seoul"],
+      ["solo", "alone"],
+      ["night"]
+    ],
+    "rewrite_must_not_include": ["What about"],
+    "answer_must_include": [
+      ["generally safe", "usually safe", "low crime"],
+      ["precaution", "aware", "transport", "nightlife"]
+    ],
+    "answer_must_not_include": ["completely risk-free", "guaranteed safe"]
+  },
+  {
+    "id": "test-narita-shinjuku",
+    "split": "test",
+    "previous_question": "What are the main public-transport options from Narita Airport into Tokyo?",
+    "previous_answer": "Common options include the Narita Express, Keisei Skyliner, airport buses, and slower local or rapid trains.",
+    "follow_up": "Which one goes directly to Shinjuku?",
+    "rewrite_must_include": [
+      ["Narita Express", "N'EX"],
+      ["Shinjuku"],
+      ["direct", "without a transfer"]
+    ],
+    "rewrite_must_not_include": ["Which one"],
+    "answer_must_include": [
+      ["Narita Express", "N'EX"],
+      ["direct", "without a transfer", "Shinjuku"]
+    ],
+    "answer_must_not_include": ["Skyliner goes directly to Shinjuku"]
+  },
+  {
+    "id": "test-iceland-winter-driving",
+    "split": "test",
+    "previous_question": "Is driving around Iceland straightforward for a visitor?",
+    "previous_answer": "Main roads can be manageable, but conditions vary greatly by route, weather, and season, especially outside the Reykjavík area.",
+    "follow_up": "What changes in winter?",
+    "rewrite_must_include": [
+      ["Iceland", "Icelandic"],
+      ["driving", "roads"],
+      ["winter"]
+    ],
+    "rewrite_must_not_include": ["What changes"],
+    "answer_must_include": [
+      ["ice", "snow", "wind", "darkness"],
+      ["road closure", "conditions", "weather forecast", "short daylight"]
+    ],
+    "answer_must_not_include": ["all roads remain open"]
+  },
+  {
+    "id": "test-solar-tides",
+    "split": "test",
+    "previous_question": "How does the Moon cause ocean tides?",
+    "previous_answer": "Differences in the Moon's gravitational pull across Earth produce most of the tidal effect.",
+    "follow_up": "Does the Sun matter too?",
+    "rewrite_must_include": [
+      ["Sun", "solar"],
+      ["ocean tides", "tidal"]
+    ],
+    "rewrite_must_not_include": ["matter too"],
+    "answer_must_include": [
+      ["yes", "also"],
+      ["gravity", "gravitational"],
+      ["spring tides", "neap tides", "align"]
+    ],
+    "answer_must_not_include": ["Sun has no effect"]
+  },
+  {
+    "id": "test-japan-shoes",
+    "split": "test",
+    "previous_question": "When do visitors remove their shoes in Japan?",
+    "previous_answer": "Shoes are normally removed in homes, many ryokan, and some temples, restaurants, fitting rooms, and traditional spaces.",
+    "follow_up": "How can I tell when I should?",
+    "rewrite_must_include": [
+      ["Japan", "Japanese"],
+      ["remove shoes", "shoes off"],
+      ["tell", "sign", "cue", "know when"]
+    ],
+    "rewrite_must_not_include": ["when I should"],
+    "answer_must_include": [
+      ["genkan", "raised floor", "entryway"],
+      ["slippers", "shoe rack", "sign", "other people's shoes"]
+    ],
+    "answer_must_not_include": ["always keep shoes on"]
+  },
+  {
+    "id": "test-france-phone-charger",
+    "split": "test",
+    "previous_question": "What electrical plugs and voltage are used in France?",
+    "previous_answer": "France mainly uses Type E sockets at about 230 volts and 50 hertz.",
+    "follow_up": "Will my U.S. phone charger work there?",
+    "rewrite_must_include": [
+      ["France"],
+      ["U.S.", "US", "American"],
+      ["phone charger"]
+    ],
+    "rewrite_must_not_include": ["work there"],
+    "answer_must_include": [
+      ["100-240V", "100–240V", "input rating", "dual voltage"],
+      ["plug adapter", "Type E", "adapter"]
+    ],
+    "answer_must_not_include": ["all U.S. chargers need a voltage converter"]
+  }
+]

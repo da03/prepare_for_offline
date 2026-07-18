@@ -17,6 +17,30 @@ function programStatus(program: PreparedProgram): string {
   return program.stage === "finetuned" ? "Ready · finetuned" : "Ready";
 }
 
+function phaseLabel(state: string): string {
+  if (state === "compiling_standard") return "Step 1 of 2";
+  if (state === "compiling_finetuned") return "Step 2 of 2";
+  return "Starting";
+}
+
+function phaseEstimate(state: string): string {
+  if (state === "compiling_finetuned") return "Usually 2–5 minutes";
+  return "Usually under a minute";
+}
+
+function elapsedLabel(createdAt: string): string {
+  const elapsedSeconds = Math.max(
+    0,
+    Math.floor((Date.now() - Date.parse(createdAt)) / 1000),
+  );
+  if (!Number.isFinite(elapsedSeconds)) return "Preparing";
+  const minutes = Math.floor(elapsedSeconds / 60);
+  const seconds = elapsedSeconds % 60;
+  return minutes
+    ? `${minutes}m ${seconds.toString().padStart(2, "0")}s elapsed`
+    : `${seconds}s elapsed`;
+}
+
 export function PreparePage({
   programs,
   job,
@@ -29,6 +53,8 @@ export function PreparePage({
   const [removing, setRemoving] = useState<string | null>(null);
   const busy =
     !!job && !["ready", "failed", "cancelled"].includes(job.state);
+  const measuredProgress =
+    job?.state === "compiling_finetuned" && job.progress_percent > 0;
 
   async function submit(event: FormEvent) {
     event.preventDefault();
@@ -50,8 +76,8 @@ export function PreparePage({
     <section className="prepare-page" aria-labelledby="prepare-heading">
       <div className="prepare-content">
         <header className="prepare-title">
-          <h1 id="prepare-heading">What should PAW get better at?</h1>
-          <p>Prepare a specialist program from one topic.</p>
+          <h1 id="prepare-heading">Prepare a topic</h1>
+          <p>Compile a specialist from PAW&apos;s existing knowledge.</p>
         </header>
 
         <form className="enrichment-form" onSubmit={submit}>
@@ -89,11 +115,28 @@ export function PreparePage({
                 <h2>{job.state === "ready" ? "Ready" : job.message}</h2>
                 <p>{job.topic_prompt}</p>
               </div>
-              {busy ? <strong>{job.progress_percent}%</strong> : null}
+              {busy ? (
+                <strong>
+                  {phaseLabel(job.state)}
+                  {measuredProgress
+                    ? ` · ${Math.round(job.progress_percent)}%`
+                    : ""}
+                </strong>
+              ) : null}
             </div>
             {busy ? (
               <>
-                <progress max={100} value={job.progress_percent} />
+                <progress
+                  aria-label="Preparation in progress"
+                  max={100}
+                  value={
+                    measuredProgress ? job.progress_percent : undefined
+                  }
+                />
+                <div className="enrichment-progress__details">
+                  <span>{elapsedLabel(job.created_at)}</span>
+                  <span>{phaseEstimate(job.state)}</span>
+                </div>
                 <button
                   className="button button--quiet"
                   type="button"

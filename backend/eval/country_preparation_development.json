@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "split": "development",
+  "selection_policy": "Questions observed in local use are never treated as held-out evidence.",
+  "cases": [
+    {
+      "id": "country-dev-korea-gangnam-style",
+      "prepared_prompt": "I'm traveling to Korea for ICML",
+      "question": "What is Gangnam Style about?",
+      "must_include": [
+        ["Psy", "PSY"],
+        ["2012"],
+        ["satire", "parody", "pokes fun"],
+        ["Gangnam", "wealth", "status", "affluent lifestyle"]
+      ],
+      "must_not_include": [
+        "Gangnam Style is a K-pop subgenre",
+        "Gangnam is a greeting",
+        "namgwanjang"
+      ]
+    },
+    {
+      "id": "country-dev-singapore-merlion",
+      "prepared_prompt": "Singapore",
+      "question": "Why does Singapore have that lion thing?",
+      "must_include": [
+        ["Merlion"],
+        ["lion head", "fish body", "fish tail"],
+        ["Singapura", "Lion City", "Sanskrit"],
+        ["Temasek", "fishing village", "maritime"]
+      ],
+      "must_not_include": [
+        "honor the British Crown",
+        "ties to South Korea",
+        "lion god",
+        "Singapore is named after a large island"
+      ]
+    }
+  ]
+}

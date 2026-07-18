@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "programs": {
+    "answer_aware_prose": {
+      "standard": {
+        "program_id": "b798a4a8af7e3ee16a0a",
+        "compiler": "paw-4b-qwen3-0.6b",
+        "spec_sha256": "ac08c8ffc42ae5a127201670c2ed009c5d1007a370150a9ffce204ed495c27fb",
+        "compile_seconds": 4.039
+      },
+      "finetuned": {
+        "program_id": "5244a506769de154a9ab",
+        "compiler": "paw-ft-bs48",
+        "spec_sha256": "ac08c8ffc42ae5a127201670c2ed009c5d1007a370150a9ffce204ed495c27fb",
+        "compile_seconds": 147.298
+      }
+    },
+    "answer_aware_examples": {
+      "standard": {
+        "program_id": "58a5f5ced15427056ed2",
+        "compiler": "paw-4b-qwen3-0.6b",
+        "spec_sha256": "b41c677a8aead6dff5ee9fe1991d4afe35a61b23fd1541c0a2dc2d5eca62678b",
+        "compile_seconds": 3.75
+      },
+      "finetuned": {
+        "program_id": "405fbb25b3004aebaeba",
+        "compiler": "paw-ft-bs48",
+        "spec_sha256": "b41c677a8aead6dff5ee9fe1991d4afe35a61b23fd1541c0a2dc2d5eca62678b",
+        "compile_seconds": 129.296
+      }
+    }
+  }
+}

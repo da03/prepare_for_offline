@@ -58,11 +58,6 @@ function jsonBody(value: unknown): Pick<RequestInit, "body"> {
   return { body: JSON.stringify(value) };
 }
 
-export interface StarterQuestion {
-  id: string;
-  text: string;
-}
-
 export interface PreparedProgram {
   program_key: string;
   topic: string;
@@ -92,12 +87,13 @@ export interface NeuralJob {
   error?: string | null;
   standard_version_id?: string | null;
   finetuned_version_id?: string | null;
+  created_at: string;
+  updated_at: string;
 }
 
 export interface AskInput {
   text: string;
-  conversation_id?: string;
-  new_topic?: boolean;
+  reply_to_message_id?: string;
 }
 
 export interface AskStreamEvent {
@@ -106,7 +102,9 @@ export interface AskStreamEvent {
   status?: string;
   labels?: string[];
   conversation_id?: string;
+  message_id?: string;
   refined?: boolean;
+  used_context?: boolean;
   [key: string]: unknown;
 }
 
@@ -115,11 +113,12 @@ export interface ConversationSummary {
   title: string;
   created_at: string;
   updated_at: string;
-  message_count?: number;
+  question_count?: number;
 }
 
 export interface ConversationMessage {
   message_id: string;
+  conversation_id: string;
   role: "user" | "assistant";
   content: string;
   payload: Record<string, unknown>;
@@ -181,8 +180,6 @@ export async function streamAsk(
 
 export const api = {
   status: () => request<NeuralStatus>("/api/neural/status"),
-  starters: () =>
-    request<{ starters: StarterQuestion[] }>("/api/starters"),
   programs: () =>
     request<{ programs: PreparedProgram[] }>("/api/programs"),
   prepareProgram: (prompt: string) =>
@@ -210,11 +207,6 @@ export const api = {
     request<ConversationDetails>(
       `/api/conversations/${encodeURIComponent(id)}`,
     ),
-  createConversation: (title = "New conversation") =>
-    request<ConversationSummary>("/api/conversations", {
-      method: "POST",
-      ...jsonBody({ title }),
-    }),
   deleteConversation: (id: string) =>
     request<{ deleted: string }>(
       `/api/conversations/${encodeURIComponent(id)}`,

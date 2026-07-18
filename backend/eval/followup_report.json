@@ -1,0 +1,1383 @@
+{
+  "schema_version": 1,
+  "cases": 16,
+  "selection_policy": "Prefer zero-rewrite structured context unless the best PAW candidate gains at least 0.05 development answer score and reaches 0.90 development rewrite fidelity; report held-out test only after selection",
+  "broad_program_id": "b761921aba7dd4f2715f",
+  "best_paw_by_dev": "answer_aware_examples_finetuned",
+  "meaningful_dev_lift": false,
+  "rewrite_fidelity_gate": false,
+  "selected_for_product": "structured_context",
+  "selected_test_score": 0.479,
+  "candidates": {
+    "followup_only": {
+      "kind": "direct",
+      "dev": {
+        "cases": 8,
+        "rewrite_score": null,
+        "answer_score": 0.312,
+        "median_warm_rewrite_ms": 0.0,
+        "median_warm_answer_ms": 289.2
+      },
+      "test": {
+        "cases": 8,
+        "rewrite_score": null,
+        "answer_score": 0.167,
+        "median_warm_rewrite_ms": 0.0,
+        "median_warm_answer_ms": 326.1
+      },
+      "rows": [
+        {
+          "id": "dev-singapore-mrt-hours",
+          "split": "dev",
+          "follow_up": "Does it run late?",
+          "query": "Does it run late?",
+          "rewrite_score": null,
+          "rewrite_ms": null,
+          "answer": "Best guess: It depends on the timing of the trip and the schedule. If you can tell the exact departure time, I can give a more precise answer.",
+          "answer_score": 0.0,
+          "answer_ms": 508.1
+        },
+        {
+          "id": "dev-tanzania-business-city",
+          "split": "dev",
+          "follow_up": "Which one is more practical for an international business trip?",
+          "query": "Which one is more practical for an international business trip?",
+          "rewrite_score": null,
+          "rewrite_ms": null,
+          "answer": "Best guess: A business suit is usually more practical than a casual shirt for travel, especially if you’ll be in meetings or travel to another country.",
+          "answer_score": 0.5,
+          "answer_ms": 381.1
+        },
+        {
+          "id": "dev-korean-shopkeeper",
+          "split": "dev",
+          "follow_up": "Is that formal enough for a shopkeeper?",
+          "query": "Is that formal enough for a shopkeeper?",
+          "rewrite_score": null,
+          "rewrite_ms": null,
+          "answer": "Best guess: Yes, a shopkeeper usually needs a formal business address, sign, and maybe a register.",
+          "answer_score": 1.0,
+          "answer_ms": 523.3
+        },
+        {
+          "id": "dev-earthquake-outdoors",
+          "split": "dev",
+          "follow_up": "And if I am outside?",
+          "query": "And if I am outside?",
+          "rewrite_score": null,
+          "rewrite_ms": null,
+          "answer": "Best guess: If you are outside, you are not inside a house.",
+          "answer_score": 0.0,
+          "answer_ms": 200.5
+        },
+        {
+          "id": "dev-kyoto-early-train",
+          "split": "dev",
+          "follow_up": "Which one is better for an early train?",
+          "query": "Which one is better for an early train?",
+          "rewrite_score": null,
+          "rewrite_ms": null,
+          "answer": "Best guess: choose the fastest and most reliable train service, not the one with the most stops.",
+          "answer_score": 0.5,
+          "answer_ms": 256.2
+        },
+        {
+          "id": "dev-photosynthesis-simple",
+          "split": "dev",
+          "follow_up": "Can you explain that more simply?",
+          "query": "Can you explain that more simply?",
+          "rewrite_score": null,
+          "rewrite_ms": null,
+          "answer": "Best guess: It means a stronger form of the word “wet,” such as a wet carpet or wet weather.",
+          "answer_score": 0.0,
+          "answer_ms": 322.2
+        },
+        {
+          "id": "dev-georgia-vegetarian-food",
+          "split": "dev",
+          "follow_up": "Which ones are vegetarian?",
+          "query": "Which ones are vegetarian?",
+          "rewrite_score": null,
+          "rewrite_ms": null,
+          "answer": "Vegetarian diets exclude meat, fish, eggs, and dairy.",
+          "answer_score": 0.5,
+          "answer_ms": 205.4
+        },
+        {
+          "id": "dev-ottoman-aftermath",
+          "split": "dev",
+          "follow_up": "What happened to it afterward?",
+          "query": "What happened to it afterward?",
+          "rewrite_score": null,
+          "rewrite_ms": null,
+          "answer": "Best guess: It is unclear what happened because the question does not specify the situation.",
+          "answer_score": 0.0,
+          "answer_ms": 222.4
+        },
+        {
+          "id": "test-iceland-rural-water",
+          "split": "test",
+          "follow_up": "What about in rural areas?",
+          "query": "What about in rural areas?",
+          "rewrite_score": null,
+          "rewrite_ms": null,
+          "answer": "Best guess: rural areas differ from cities by infrastructure, local businesses, and transportation.",
+          "answer_score": 0.0,
+          "answer_ms": 234.9
+        },
+        {
+          "id": "test-marina-bay-land",
+          "split": "test",
+          "follow_up": "Is that the reclaimed land people mention?",
+          "query": "Is that the reclaimed land people mention?",
+          "rewrite_score": null,
+          "rewrite_ms": null,
+          "answer": "Best guess: reclaimed land is land that has been degraded or disturbed and then restored to a usable state, often through reclamation.",
+          "answer_score": 0.0,
+          "answer_ms": 368.0
+        },
+        {
+          "id": "test-seoul-solo-night",
+          "split": "test",
+          "follow_up": "What about for someone traveling alone?",
+          "query": "What about for someone traveling alone?",
+          "rewrite_score": null,
+          "rewrite_ms": null,
+          "answer": "Best guess: Traveling alone can be safe, but it depends on the situation. Consider a good plan: a destination, budget, number of people, and what you need to do.",
+          "answer_score": 0.0,
+          "answer_ms": 473.4
+        },
+        {
+          "id": "test-narita-shinjuku",
+          "split": "test",
+          "follow_up": "Which one goes directly to Shinjuku?",
+          "query": "Which one goes directly to Shinjuku?",
+          "rewrite_score": null,
+          "rewrite_ms": null,
+          "answer": "Best guess: Shinjuku is usually the main destination for a Tokyo bus or train from Tokyo.",
+          "answer_score": 0.5,
+          "answer_ms": 284.1
+        },
+        {
+          "id": "test-iceland-winter-driving",
+          "split": "test",
+          "follow_up": "What changes in winter?",
+          "query": "What changes in winter?",
+          "rewrite_score": null,
+          "rewrite_ms": null,
+          "answer": "Best guess: Snow, cold air, shorter days, and cooler temperatures are common changes in winter.",
+          "answer_score": 0.5,
+          "answer_ms": 269.4
+        },
+        {
+          "id": "test-solar-tides",
+          "split": "test",
+          "follow_up": "Does the Sun matter too?",
+          "query": "Does the Sun matter too?",
+          "rewrite_score": null,
+          "rewrite_ms": null,
+          "answer": "Yes. The Sun is a major factor in climate, weather, and the timing of seasonal changes.",
+          "answer_score": 0.333,
+          "answer_ms": 259.2
+        },
+        {
+          "id": "test-japan-shoes",
+          "split": "test",
+          "follow_up": "How can I tell when I should?",
+          "query": "How can I tell when I should?",
+          "rewrite_score": null,
+          "rewrite_ms": null,
+          "answer": "Best guess: Ask yourself what you need right now. If you need urgent information, ask a trusted person or use a specific tool like a calculator or phone app.",
+          "answer_score": 0.0,
+          "answer_ms": 448.5
+        },
+        {
+          "id": "test-france-phone-charger",
+          "split": "test",
+          "follow_up": "Will my U.S. phone charger work there?",
+          "query": "Will my U.S. phone charger work there?",
+          "rewrite_score": null,
+          "rewrite_ms": null,
+          "answer": "Best guess: it depends on the country’s electrical standards and the charger’s power output. For example, a 120 V outlet may not work in some countries, so check the outlet type and the charger’s maximum power rating.",
+          "answer_score": 0.0,
+          "answer_ms": 615.4
+        }
+      ]
+    },
+    "structured_context": {
+      "kind": "structured",
+      "dev": {
+        "cases": 8,
+        "rewrite_score": null,
+        "answer_score": 0.667,
+        "median_warm_rewrite_ms": 0.0,
+        "median_warm_answer_ms": 436.3
+      },
+      "test": {
+        "cases": 8,
+        "rewrite_score": null,
+        "answer_score": 0.479,
+        "median_warm_rewrite_ms": 0.0,
+        "median_warm_answer_ms": 521.2
+      },
+      "rows": [
+        {
+          "id": "dev-singapore-mrt-hours",
+          "split": "dev",
+          "follow_up": "Does it run late?",
+          "query": "Use the immediate context below to answer only the follow-up.\nPREVIOUS_QUESTION: What is the easiest way to get around Singapore?\nPREVIOUS_ANSWER: The MRT is usually the easiest way to cover longer distances, with buses filling the gaps between stations.\nFOLLOW_UP: Does it run late?",
+          "rewrite_score": null,
+          "rewrite_ms": null,
+          "answer": "Best guess: Yes, the MRT can be late depending on traffic, bus schedules, and weather.",
+          "answer_score": 0.0,
+          "answer_ms": 341.3
+        },
+        {
+          "id": "dev-tanzania-business-city",
+          "split": "dev",
+          "follow_up": "Which one is more practical for an international business trip?",
+          "query": "Use the immediate context below to answer only the follow-up.\nPREVIOUS_QUESTION: What should I understand about Tanzania's two best-known cities?\nPREVIOUS_ANSWER: Dodoma is the official capital, while Dar es Salaam is the largest city and main commercial center.\nFOLLOW_UP: Which one is more practical for an international business trip?",
+          "rewrite_score": null,
+          "rewrite_ms": null,
+          "answer": "Dar es Salaam is more practical for an international business trip because it has more business and office space, while Dodoma is usually the best place to start for a business visit.",
+          "answer_score": 1.0,
+          "answer_ms": 528.1
+        },
+        {
+          "id": "dev-korean-shopkeeper",
+          "split": "dev",
+          "follow_up": "Is that formal enough for a shopkeeper?",
+          "query": "Use the immediate context below to answer only the follow-up.\nPREVIOUS_QUESTION: How can I politely say thank you in Korean?\nPREVIOUS_ANSWER: 감사합니다 (gamsahamnida) is a polite, formal way to say thank you.\nFOLLOW_UP: Is that formal enough for a shopkeeper?",
+          "rewrite_score": null,
+          "rewrite_ms": null,
+          "answer": "Yes, it is formal enough for a shopkeeper.",
+          "answer_score": 1.0,
+          "answer_ms": 214.2
+        },
+        {
+          "id": "dev-earthquake-outdoors",
+          "split": "dev",
+          "follow_up": "And if I am outside?",
+          "query": "Use the immediate context below to answer only the follow-up.\nPREVIOUS_QUESTION: What should I do during an earthquake while indoors?\nPREVIOUS_ANSWER: Drop, cover, and hold on under sturdy furniture, staying away from windows until the shaking stops.\nFOLLOW_UP: And if I am outside?",
+          "rewrite_score": null,
+          "rewrite_ms": null,
+          "answer": "Best guess: If you are outside, stay in a safe building or open window; do not use elevators or windows until the shaking stops.",
+          "answer_score": 0.0,
+          "answer_ms": 429.5
+        },
+        {
+          "id": "dev-kyoto-early-train",
+          "split": "dev",
+          "follow_up": "Which one is better for an early train?",
+          "query": "Use the immediate context below to answer only the follow-up.\nPREVIOUS_QUESTION: Where should a first-time visitor stay in Kyoto?\nPREVIOUS_ANSWER: Kyoto Station is convenient for trains and day trips; Gion offers a more atmospheric historic setting.\nFOLLOW_UP: Which one is better for an early train?",
+          "rewrite_score": null,
+          "rewrite_ms": null,
+          "answer": "Best guess: Kyoto Station is better for an early train because it’s closest to the main Kyoto train network and offers more direct options. Gion is more suitable for a late train or a quiet, historic neighborhood if you prefer a different route.",
+          "answer_score": 1.0,
+          "answer_ms": 695.5
+        },
+        {
+          "id": "dev-photosynthesis-simple",
+          "split": "dev",
+          "follow_up": "Can you explain that more simply?",
+          "query": "Use the immediate context below to answer only the follow-up.\nPREVIOUS_QUESTION: How does photosynthesis convert light into stored chemical energy?\nPREVIOUS_ANSWER: Chlorophyll captures light energy, which drives reactions that ultimately build sugars from carbon dioxide and water.\nFOLLOW_UP: Can you explain that more simply?",
+          "rewrite_score": null,
+          "rewrite_ms": null,
+          "answer": "Photosynthesis is like a plant’s engine: it uses sunlight to make sugar from carbon dioxide and water, releasing oxygen as a byproduct.",
+          "answer_score": 1.0,
+          "answer_ms": 443.1
+        },
+        {
+          "id": "dev-georgia-vegetarian-food",
+          "split": "dev",
+          "follow_up": "Which ones are vegetarian?",
+          "query": "Use the immediate context below to answer only the follow-up.\nPREVIOUS_QUESTION: What foods should I try while visiting Georgia?\nPREVIOUS_ANSWER: Popular Georgian foods include khinkali, khachapuri, lobio, pkhali, and eggplant rolls called badrijani nigvzit.\nFOLLOW_UP: Which ones are vegetarian?",
+          "rewrite_score": null,
+          "rewrite_ms": null,
+          "answer": "Best guess: Vegetarian options include khinkali, khachapuri, lobio, pkhali, and eggplant rolls called badrijani nigvzit.",
+          "answer_score": 1.0,
+          "answer_ms": 523.9
+        },
+        {
+          "id": "dev-ottoman-aftermath",
+          "split": "dev",
+          "follow_up": "What happened to it afterward?",
+          "query": "Use the immediate context below to answer only the follow-up.\nPREVIOUS_QUESTION: Why did the Ottoman Empire enter World War I?\nPREVIOUS_ANSWER: Its leaders aligned with Germany amid security fears, territorial losses, and hopes of recovering influence.\nFOLLOW_UP: What happened to it afterward?",
+          "rewrite_score": null,
+          "rewrite_ms": null,
+          "answer": "After the war, the empire was weakened, divided, and eventually collapsed.",
+          "answer_score": 0.333,
+          "answer_ms": 274.7
+        },
+        {
+          "id": "test-iceland-rural-water",
+          "split": "test",
+          "follow_up": "What about in rural areas?",
+          "query": "Use the immediate context below to answer only the follow-up.\nPREVIOUS_QUESTION: Can visitors safely drink tap water in Iceland?\nPREVIOUS_ANSWER: Municipal tap water in Iceland is generally safe and is commonly drunk without filtering.\nFOLLOW_UP: What about in rural areas?",
+          "rewrite_score": null,
+          "rewrite_ms": null,
+          "answer": "In rural areas, tap water can be safe to drink, but it may be less reliable because of higher contamination risk. Some rural areas may use filtered or treated water for drinking.",
+          "answer_score": 0.5,
+          "answer_ms": 516.4
+        },
+        {
+          "id": "test-marina-bay-land",
+          "split": "test",
+          "follow_up": "Is that the reclaimed land people mention?",
+          "query": "Use the immediate context below to answer only the follow-up.\nPREVIOUS_QUESTION: What is the boat-shaped structure above Marina Bay Sands?\nPREVIOUS_ANSWER: It is the Sands SkyPark, a rooftop structure spanning the hotel's three towers.\nFOLLOW_UP: Is that the reclaimed land people mention?",
+          "rewrite_score": null,
+          "rewrite_ms": null,
+          "answer": "No. That is the Sands SkyPark, not the reclaimed land. The reclaimed land is the area that was once used for the hotel, now part of the Marina Bay Sands development.",
+          "answer_score": 1.0,
+          "answer_ms": 558.8
+        },
+        {
+          "id": "test-seoul-solo-night",
+          "split": "test",
+          "follow_up": "What about for someone traveling alone?",
+          "query": "Use the immediate context below to answer only the follow-up.\nPREVIOUS_QUESTION: Is Seoul generally safe at night?\nPREVIOUS_ANSWER: Seoul is generally considered safe, though normal precautions still apply in nightlife areas and while using late-night transport.\nFOLLOW_UP: What about for someone traveling alone?",
+          "rewrite_score": null,
+          "rewrite_ms": null,
+          "answer": "For someone traveling alone, it’s safer to use public transport and keep an extra layer of safety, especially in crowded places. Nighttime can be more stressful, so it’s worth checking the area’s traffic and local rules before leaving.",
+          "answer_score": 0.5,
+          "answer_ms": 721.7
+        },
+        {
+          "id": "test-narita-shinjuku",
+          "split": "test",
+          "follow_up": "Which one goes directly to Shinjuku?",
+          "query": "Use the immediate context below to answer only the follow-up.\nPREVIOUS_QUESTION: What are the main public-transport options from Narita Airport into Tokyo?\nPREVIOUS_ANSWER: Common options include the Narita Express, Keisei Skyliner, airport buses, and slower local or rapid trains.\nFOLLOW_UP: Which one goes directly to Shinjuku?",
+          "rewrite_score": null,
+          "rewrite_ms": null,
+          "answer": "Best guess: The Narita Express usually goes directly to Shinjuku, but it may stop or change routes depending on the schedule.",
+          "answer_score": 1.0,
+          "answer_ms": 410.3
+        },
+        {
+          "id": "test-iceland-winter-driving",
+          "split": "test",
+          "follow_up": "What changes in winter?",
+          "query": "Use the immediate context below to answer only the follow-up.\nPREVIOUS_QUESTION: Is driving around Iceland straightforward for a visitor?\nPREVIOUS_ANSWER: Main roads can be manageable, but conditions vary greatly by route, weather, and season, especially outside the Reykjavík area.\nFOLLOW_UP: What changes in winter?",
+          "rewrite_score": null,
+          "rewrite_ms": null,
+          "answer": "Winter can make driving more difficult because roads are often icy, temperatures drop, and visibility is worse.",
+          "answer_score": 0.0,
+          "answer_ms": 306.4
+        },
+        {
+          "id": "test-solar-tides",
+          "split": "test",
+          "follow_up": "Does the Sun matter too?",
+          "query": "Use the immediate context below to answer only the follow-up.\nPREVIOUS_QUESTION: How does the Moon cause ocean tides?\nPREVIOUS_ANSWER: Differences in the Moon's gravitational pull across Earth produce most of the tidal effect.\nFOLLOW_UP: Does the Sun matter too?",
+          "rewrite_score": null,
+          "rewrite_ms": null,
+          "answer": "Yes. The Sun also contributes to ocean tides, especially near the equator.",
+          "answer_score": 0.333,
+          "answer_ms": 294.7
+        },
+        {
+          "id": "test-japan-shoes",
+          "split": "test",
+          "follow_up": "How can I tell when I should?",
+          "query": "Use the immediate context below to answer only the follow-up.\nPREVIOUS_QUESTION: When do visitors remove their shoes in Japan?\nPREVIOUS_ANSWER: Shoes are normally removed in homes, many ryokan, and some temples, restaurants, fitting rooms, and traditional spaces.\nFOLLOW_UP: How can I tell when I should?",
+          "rewrite_score": null,
+          "rewrite_ms": null,
+          "answer": "Best guess: In Japan, you usually remove your shoes in the evening, often at the door or in the fitting room. If you see someone else removing their shoes, it’s a sign of a ryokan or a traditional space.",
+          "answer_score": 0.5,
+          "answer_ms": 693.3
+        },
+        {
+          "id": "test-france-phone-charger",
+          "split": "test",
+          "follow_up": "Will my U.S. phone charger work there?",
+          "query": "Use the immediate context below to answer only the follow-up.\nPREVIOUS_QUESTION: What electrical plugs and voltage are used in France?\nPREVIOUS_ANSWER: France mainly uses Type E sockets at about 230 volts and 50 hertz.\nFOLLOW_UP: Will my U.S. phone charger work there?",
+          "rewrite_score": null,
+          "rewrite_ms": null,
+          "answer": "Not at all. A U.S. charger is designed for 120 V and 60 Hz; France uses 230 V and 50 Hz.",
+          "answer_score": 0.0,
+          "answer_ms": 526.1
+        }
+      ]
+    },
+    "legacy_question_only_finetuned": {
+      "kind": "legacy",
+      "program_id": "b2648cc9e8f9dfd1ad41",
+      "dev": {
+        "cases": 8,
+        "rewrite_score": 0.709,
+        "answer_score": 0.646,
+        "median_warm_rewrite_ms": 216.7,
+        "median_warm_answer_ms": 459.3
+      },
+      "test": {
+        "cases": 8,
+        "rewrite_score": 0.854,
+        "answer_score": 0.5,
+        "median_warm_rewrite_ms": 193.6,
+        "median_warm_answer_ms": 447.7
+      },
+      "rows": [
+        {
+          "id": "dev-singapore-mrt-hours",
+          "split": "dev",
+          "follow_up": "Does it run late?",
+          "query": "Does the easiest way to get around Singapore run late?",
+          "rewrite_score": 0.667,
+          "rewrite_ms": 321.8,
+          "answer": "Not necessarily. Depending on traffic, time of day, and the route, the easiest way can run late, but it is not always the fastest.",
+          "answer_score": 0.5,
+          "answer_ms": 415.5
+        },
+        {
+          "id": "dev-tanzania-business-city",
+          "split": "dev",
+          "follow_up": "Which one is more practical for an international business trip?",
+          "query": "Which is more practical for an international business trip, Nairobi or Dar es Salaam?",
+          "rewrite_score": 0.667,
+          "rewrite_ms": 258.1,
+          "answer": "Best guess: Nairobi is more practical for an international business trip because it is closer to major international airports and business hubs, while Dar es Salaam is more practical for a more relaxed, local business environment.",
+          "answer_score": 1.0,
+          "answer_ms": 521.4
+        },
+        {
+          "id": "dev-korean-shopkeeper",
+          "split": "dev",
+          "follow_up": "Is that formal enough for a shopkeeper?",
+          "query": "Is a polite \"thank you\" in Korean formal enough for a shopkeeper?",
+          "rewrite_score": 0.667,
+          "rewrite_ms": 237.0,
+          "answer": "Best guess: Yes, a polite \"thank you\" in Korean formal business speech is usually sufficient.",
+          "answer_score": 1.0,
+          "answer_ms": 290.6
+        },
+        {
+          "id": "dev-earthquake-outdoors",
+          "split": "dev",
+          "follow_up": "And if I am outside?",
+          "query": "What should I do during an earthquake while indoors and outside?",
+          "rewrite_score": 0.5,
+          "rewrite_ms": 196.4,
+          "answer": "Best guess: Stay inside, use windows or doors to avoid collapse, and avoid glass if you can. If you are outside, get to a safe area and use the nearest building or structure to stabilize.",
+          "answer_score": 0.0,
+          "answer_ms": 529.5
+        },
+        {
+          "id": "dev-kyoto-early-train",
+          "split": "dev",
+          "follow_up": "Which one is better for an early train?",
+          "query": "Which is better for a first-time visitor in Kyoto to stay on an early train?",
+          "rewrite_score": 0.5,
+          "rewrite_ms": 256.1,
+          "answer": "Best guess: Kyoto is a good place to start on an early morning train, especially if you want to see temples and shrines before the day gets too hot.",
+          "answer_score": 0.5,
+          "answer_ms": 433.8
+        },
+        {
+          "id": "dev-photosynthesis-simple",
+          "split": "dev",
+          "follow_up": "Can you explain that more simply?",
+          "query": "Can you explain photosynthesis more simply?",
+          "rewrite_score": 1.0,
+          "rewrite_ms": 144.8,
+          "answer": "Photosynthesis is the process plants use to turn sunlight, water, and carbon dioxide into sugar and oxygen.",
+          "answer_score": 1.0,
+          "answer_ms": 277.4
+        },
+        {
+          "id": "dev-georgia-vegetarian-food",
+          "split": "dev",
+          "follow_up": "Which ones are vegetarian?",
+          "query": "Which vegetarian foods should I try while visiting Georgia?",
+          "rewrite_score": 0.667,
+          "rewrite_ms": 163.9,
+          "answer": "Best guess: Try hearty vegetarian dishes like lentils, chickpeas, potatoes, and hearty soups. Avoid overly spicy or high-sugar foods unless you know the restaurant.",
+          "answer_score": 0.5,
+          "answer_ms": 484.8
+        },
+        {
+          "id": "dev-ottoman-aftermath",
+          "split": "dev",
+          "follow_up": "What happened to it afterward?",
+          "query": "What happened to the Ottoman Empire after World War I?",
+          "rewrite_score": 1.0,
+          "rewrite_ms": 178.3,
+          "answer": "After World War I, the Ottoman Empire was absorbed into the Allied war effort, and the empire gradually declined. It was not fully dissolved into the modern state of Turkey until the 1920s.",
+          "answer_score": 0.667,
+          "answer_ms": 546.2
+        },
+        {
+          "id": "test-iceland-rural-water",
+          "split": "test",
+          "follow_up": "What about in rural areas?",
+          "query": "Can visitors safely drink tap water in rural areas of Iceland?",
+          "rewrite_score": 1.0,
+          "rewrite_ms": 193.7,
+          "answer": "Best guess: In Iceland, tap water is generally safe for drinking, but it may be low in minerals and can be risky if you have kidney problems or are very young.",
+          "answer_score": 0.5,
+          "answer_ms": 453.0
+        },
+        {
+          "id": "test-marina-bay-land",
+          "split": "test",
+          "follow_up": "Is that the reclaimed land people mention?",
+          "query": "Is the boat-shaped structure above Marina Bay Sands the reclaimed land people mention?",
+          "rewrite_score": 1.0,
+          "rewrite_ms": 222.7,
+          "answer": "Yes. The boat-shaped structure above Marina Bay Sands is the reclaimed land, not the sand.",
+          "answer_score": 0.333,
+          "answer_ms": 263.3
+        },
+        {
+          "id": "test-seoul-solo-night",
+          "split": "test",
+          "follow_up": "What about for someone traveling alone?",
+          "query": "Is Seoul generally safe for someone traveling alone at night?",
+          "rewrite_score": 1.0,
+          "rewrite_ms": 176.9,
+          "answer": "Not necessarily. Nighttime can be safer in some places, but safety depends on location, visibility, and whether the person is aware of nearby dangers.",
+          "answer_score": 0.5,
+          "answer_ms": 405.2
+        },
+        {
+          "id": "test-narita-shinjuku",
+          "split": "test",
+          "follow_up": "Which one goes directly to Shinjuku?",
+          "query": "Which public-transport option from Narita Airport directly goes to Shinjuku?",
+          "rewrite_score": 0.667,
+          "rewrite_ms": 246.9,
+          "answer": "Best guess: Narita Airport has two main transit options: the Narita Express and the Narita SkyTrain. The Narita Express usually takes the main line to Shinjuku, while the SkyTrain is usually the secondary line.",
+          "answer_score": 1.0,
+          "answer_ms": 600.6
+        },
+        {
+          "id": "test-iceland-winter-driving",
+          "split": "test",
+          "follow_up": "What changes in winter?",
+          "query": "What changes in winter affect driving around Iceland for a visitor?",
+          "rewrite_score": 0.5,
+          "rewrite_ms": 199.8,
+          "answer": "Best guess: colder temperatures, thinner air, reduced visibility, and snow or ice on roads can make driving more difficult.",
+          "answer_score": 0.5,
+          "answer_ms": 322.2
+        },
+        {
+          "id": "test-solar-tides",
+          "split": "test",
+          "follow_up": "Does the Sun matter too?",
+          "query": "Does the Sun also affect ocean tides?",
+          "rewrite_score": 1.0,
+          "rewrite_ms": 158.6,
+          "answer": "Yes. The Sun also affects ocean tides, especially in the Northern Hemisphere. The Moon’s gravity is the main driving force, but the Sun’s gravity adds more of the tides.",
+          "answer_score": 0.667,
+          "answer_ms": 500.1
+        },
+        {
+          "id": "test-japan-shoes",
+          "split": "test",
+          "follow_up": "How can I tell when I should?",
+          "query": "How can I tell when to remove my shoes in Japan?",
+          "rewrite_score": 0.667,
+          "rewrite_ms": 193.5,
+          "answer": "Best guess: In Japan, it’s common to remove shoes before the end of the first week of the month, especially in spring. If you’re in a busy area, remove them earlier to avoid crowds.",
+          "answer_score": 0.0,
+          "answer_ms": 538.0
+        },
+        {
+          "id": "test-france-phone-charger",
+          "split": "test",
+          "follow_up": "Will my U.S. phone charger work there?",
+          "query": "Will my U.S. phone charger work in France?",
+          "rewrite_score": 1.0,
+          "rewrite_ms": 178.1,
+          "answer": "Best guess: the plug and cord may work, but the voltage and adapter may differ. If the phone is low-power, the plug may not be safe to use.",
+          "answer_score": 0.5,
+          "answer_ms": 442.4
+        }
+      ]
+    },
+    "answer_aware_prose_standard": {
+      "kind": "answer_aware",
+      "program_id": "b798a4a8af7e3ee16a0a",
+      "dev": {
+        "cases": 8,
+        "rewrite_score": 0.875,
+        "answer_score": 0.583,
+        "median_warm_rewrite_ms": 197.9,
+        "median_warm_answer_ms": 414.2
+      },
+      "test": {
+        "cases": 8,
+        "rewrite_score": 0.688,
+        "answer_score": 0.438,
+        "median_warm_rewrite_ms": 205.9,
+        "median_warm_answer_ms": 375.0
+      },
+      "rows": [
+        {
+          "id": "dev-singapore-mrt-hours",
+          "split": "dev",
+          "follow_up": "Does it run late?",
+          "query": "Does the MRT run late?",
+          "rewrite_score": 0.667,
+          "rewrite_ms": 203.8,
+          "answer": "Best guess: Yes, it can be late depending on traffic, delays, and the day of the week.",
+          "answer_score": 0.0,
+          "answer_ms": 284.3
+        },
+        {
+          "id": "dev-tanzania-business-city",
+          "split": "dev",
+          "follow_up": "Which one is more practical for an international business trip?",
+          "query": "Which city is more practical for an international business trip, Dodoma or Dar es Salaam?",
+          "rewrite_score": 0.667,
+          "rewrite_ms": 284.1,
+          "answer": "Best guess: Dar es Salaam is more practical for an international business trip because it has more business districts, hotels, and transit options. Dodoma is usually less practical because it is closer to the river and less developed for large-scale business travel.",
+          "answer_score": 1.0,
+          "answer_ms": 676.6
+        },
+        {
+          "id": "dev-korean-shopkeeper",
+          "split": "dev",
+          "follow_up": "Is that formal enough for a shopkeeper?",
+          "query": "Is \"감사합니다\" (gamsahamnida) formal enough for a shopkeeper?",
+          "rewrite_score": 1.0,
+          "rewrite_ms": 335.3,
+          "answer": "It depends on the business. Formality varies by region and business type. A polite greeting is usually fine, but a more formal tone may be expected in a shop.",
+          "answer_score": 0.5,
+          "answer_ms": 452.5
+        },
+        {
+          "id": "dev-earthquake-outdoors",
+          "split": "dev",
+          "follow_up": "And if I am outside?",
+          "query": "What should I do during an earthquake while outside?",
+          "rewrite_score": 1.0,
+          "rewrite_ms": 171.7,
+          "answer": "Stay inside a building, use the nearest building or window to get inside, and avoid glass if you can.",
+          "answer_score": 0.0,
+          "answer_ms": 318.8
+        },
+        {
+          "id": "dev-kyoto-early-train",
+          "split": "dev",
+          "follow_up": "Which one is better for an early train?",
+          "query": "Which is better for an early train in Kyoto, Kyoto Station or Gion?",
+          "rewrite_score": 1.0,
+          "rewrite_ms": 237.3,
+          "answer": "Best guess: Gion is usually better for an early train in Kyoto because it’s closer to the main train station and offers more transit options. Kyoto Station is usually better for late trains or longer trips.",
+          "answer_score": 1.0,
+          "answer_ms": 525.3
+        },
+        {
+          "id": "dev-photosynthesis-simple",
+          "split": "dev",
+          "follow_up": "Can you explain that more simply?",
+          "query": "Can you explain photosynthesis more simply?",
+          "rewrite_score": 1.0,
+          "rewrite_ms": 147.8,
+          "answer": "Photosynthesis is the process plants use to turn sunlight, water, and carbon dioxide into sugar and oxygen.",
+          "answer_score": 1.0,
+          "answer_ms": 295.8
+        },
+        {
+          "id": "dev-georgia-vegetarian-food",
+          "split": "dev",
+          "follow_up": "Which ones are vegetarian?",
+          "query": "Which Georgian foods are vegetarian?",
+          "rewrite_score": 0.667,
+          "rewrite_ms": 139.1,
+          "answer": "Best guess: vegetarian foods include dishes like ravi, kavkaz, and mramras, but not all of them are strictly vegetarian.",
+          "answer_score": 0.5,
+          "answer_ms": 376.0
+        },
+        {
+          "id": "dev-ottoman-aftermath",
+          "split": "dev",
+          "follow_up": "What happened to it afterward?",
+          "query": "What happened to the Ottoman Empire after World War I?",
+          "rewrite_score": 1.0,
+          "rewrite_ms": 191.9,
+          "answer": "After World War I, the Ottoman Empire was absorbed into the Allied war effort, and the empire gradually declined. It was not fully dissolved into the modern state of Turkey until the 1920s.",
+          "answer_score": 0.667,
+          "answer_ms": 558.2
+        },
+        {
+          "id": "test-iceland-rural-water",
+          "split": "test",
+          "follow_up": "What about in rural areas?",
+          "query": "What about in rural areas in Iceland?",
+          "rewrite_score": 0.167,
+          "rewrite_ms": 149.5,
+          "answer": "Best guess: Iceland is a landmass, not a country. Rural areas can exist in Iceland, but the country itself is known for its high-altitude landscapes, volcanoes, and unique geography.",
+          "answer_score": 0.0,
+          "answer_ms": 503.4
+        },
+        {
+          "id": "test-marina-bay-land",
+          "split": "test",
+          "follow_up": "Is that the reclaimed land people mention?",
+          "query": "Is the Sands SkyPark the reclaimed land people refer to?",
+          "rewrite_score": 1.0,
+          "rewrite_ms": 194.4,
+          "answer": "Yes. Sands SkyPark is a reclaimed land in Texas, often used for golf, sports, and recreation.",
+          "answer_score": 0.333,
+          "answer_ms": 295.2
+        },
+        {
+          "id": "test-seoul-solo-night",
+          "split": "test",
+          "follow_up": "What about for someone traveling alone?",
+          "query": "How safe is Seoul for someone traveling alone at night?",
+          "rewrite_score": 1.0,
+          "rewrite_ms": 192.5,
+          "answer": "It can be safe, but traffic, noise, and safety concerns are common. Keep an emergency contact number, avoid crowded places, and use public transport.",
+          "answer_score": 0.5,
+          "answer_ms": 397.2
+        },
+        {
+          "id": "test-narita-shinjuku",
+          "split": "test",
+          "follow_up": "Which one goes directly to Shinjuku?",
+          "query": "Which public-transport option goes directly to Shinjuku from Narita Airport into Tokyo?",
+          "rewrite_score": 0.667,
+          "rewrite_ms": 312.1,
+          "answer": "Best guess: Narita Airport to Shinjuku is usually the Narita Express, unless you use the JR transit system.",
+          "answer_score": 1.0,
+          "answer_ms": 352.9
+        },
+        {
+          "id": "test-iceland-winter-driving",
+          "split": "test",
+          "follow_up": "What changes in winter?",
+          "query": "What changes in winter do you see in driving around Iceland for a visitor?",
+          "rewrite_score": 0.5,
+          "rewrite_ms": 251.6,
+          "answer": "Best guess: colder temperatures, thinner air, shorter daylight, and more snow on roads and trails.",
+          "answer_score": 0.5,
+          "answer_ms": 263.2
+        },
+        {
+          "id": "test-solar-tides",
+          "split": "test",
+          "follow_up": "Does the Sun matter too?",
+          "query": "Does the Sun matter too much in the tidal effect?",
+          "rewrite_score": 0.5,
+          "rewrite_ms": 191.7,
+          "answer": "Yes. The Sun’s gravity can contribute to the tides, especially in places near the equator.",
+          "answer_score": 0.667,
+          "answer_ms": 287.0
+        },
+        {
+          "id": "test-japan-shoes",
+          "split": "test",
+          "follow_up": "How can I tell when I should?",
+          "query": "How can I tell when to remove my shoes in Japan?",
+          "rewrite_score": 0.667,
+          "rewrite_ms": 217.4,
+          "answer": "Best guess: In Japan, it’s common to remove shoes before the end of the first week of the month, especially in spring. If you’re in a busy area, remove them earlier to avoid crowds.",
+          "answer_score": 0.0,
+          "answer_ms": 548.9
+        },
+        {
+          "id": "test-france-phone-charger",
+          "split": "test",
+          "follow_up": "Will my U.S. phone charger work there?",
+          "query": "Will a U.S. phone charger that uses Type E sockets at about 230 volts and 50 hertz work in France?",
+          "rewrite_score": 1.0,
+          "rewrite_ms": 418.1,
+          "answer": "Best guess: Type E sockets are not the same as Type E mains in France. A Type E socket is designed for 230 V and 50 Hz, so a Type E charger would not work in France.",
+          "answer_score": 0.5,
+          "answer_ms": 639.9
+        }
+      ]
+    },
+    "answer_aware_prose_finetuned": {
+      "kind": "answer_aware",
+      "program_id": "5244a506769de154a9ab",
+      "dev": {
+        "cases": 8,
+        "rewrite_score": 0.875,
+        "answer_score": 0.583,
+        "median_warm_rewrite_ms": 218.4,
+        "median_warm_answer_ms": 405.6
+      },
+      "test": {
+        "cases": 8,
+        "rewrite_score": 0.771,
+        "answer_score": 0.458,
+        "median_warm_rewrite_ms": 208.7,
+        "median_warm_answer_ms": 433.4
+      },
+      "rows": [
+        {
+          "id": "dev-singapore-mrt-hours",
+          "split": "dev",
+          "follow_up": "Does it run late?",
+          "query": "Does the MRT run late?",
+          "rewrite_score": 0.667,
+          "rewrite_ms": 199.3,
+          "answer": "Best guess: Yes, it can be late depending on traffic, delays, and the day of the week.",
+          "answer_score": 0.0,
+          "answer_ms": 280.1
+        },
+        {
+          "id": "dev-tanzania-business-city",
+          "split": "dev",
+          "follow_up": "Which one is more practical for an international business trip?",
+          "query": "Which city, Dodoma or Dar es Salaam, is more practical for an international business trip?",
+          "rewrite_score": 0.667,
+          "rewrite_ms": 289.4,
+          "answer": "Best guess: both are good for business, but the best choice depends on the business needs. Dodoma is often seen as more practical for international travel because of its proximity to the Nile, airport, and business district, while Dar es Salaam is more practical for smaller, more local business trips.",
+          "answer_score": 1.0,
+          "answer_ms": 794.9
+        },
+        {
+          "id": "dev-korean-shopkeeper",
+          "split": "dev",
+          "follow_up": "Is that formal enough for a shopkeeper?",
+          "query": "Is \"감사합니다\" (gamsahamnida) formal enough for a shopkeeper?",
+          "rewrite_score": 1.0,
+          "rewrite_ms": 334.9,
+          "answer": "It depends on the business. Formality varies by region and business type. A polite greeting is usually fine, but a more formal tone may be expected in a shop.",
+          "answer_score": 0.5,
+          "answer_ms": 436.3
+        },
+        {
+          "id": "dev-earthquake-outdoors",
+          "split": "dev",
+          "follow_up": "And if I am outside?",
+          "query": "What should I do during an earthquake while outside?",
+          "rewrite_score": 1.0,
+          "rewrite_ms": 175.2,
+          "answer": "Stay inside a building, use the nearest building or window to get inside, and avoid glass if you can.",
+          "answer_score": 0.0,
+          "answer_ms": 255.1
+        },
+        {
+          "id": "dev-kyoto-early-train",
+          "split": "dev",
+          "follow_up": "Which one is better for an early train?",
+          "query": "Which is better for an early train in Kyoto, Kyoto Station or Gion?",
+          "rewrite_score": 1.0,
+          "rewrite_ms": 238.5,
+          "answer": "Best guess: Gion is usually better for an early train in Kyoto because it’s closer to the main train station and offers more transit options. Kyoto Station is usually better for late trains or longer trips.",
+          "answer_score": 1.0,
+          "answer_ms": 516.0
+        },
+        {
+          "id": "dev-photosynthesis-simple",
+          "split": "dev",
+          "follow_up": "Can you explain that more simply?",
+          "query": "Can you explain how photosynthesis converts light into stored chemical energy more simply?",
+          "rewrite_score": 1.0,
+          "rewrite_ms": 237.5,
+          "answer": "Photosynthesis is the process plants use to turn sunlight, water, and carbon dioxide into sugars and oxygen.",
+          "answer_score": 1.0,
+          "answer_ms": 291.0
+        },
+        {
+          "id": "dev-georgia-vegetarian-food",
+          "split": "dev",
+          "follow_up": "Which ones are vegetarian?",
+          "query": "Which Georgian foods are vegetarian?",
+          "rewrite_score": 0.667,
+          "rewrite_ms": 141.0,
+          "answer": "Best guess: vegetarian foods include dishes like ravi, kavkaz, and mramras, but not all of them are strictly vegetarian.",
+          "answer_score": 0.5,
+          "answer_ms": 374.9
+        },
+        {
+          "id": "dev-ottoman-aftermath",
+          "split": "dev",
+          "follow_up": "What happened to it afterward?",
+          "query": "What happened to the Ottoman Empire after World War I?",
+          "rewrite_score": 1.0,
+          "rewrite_ms": 193.3,
+          "answer": "After World War I, the Ottoman Empire was absorbed into the Allied war effort, and the empire gradually declined. It was not fully dissolved into the modern state of Turkey until the 1920s.",
+          "answer_score": 0.667,
+          "answer_ms": 558.1
+        },
+        {
+          "id": "test-iceland-rural-water",
+          "split": "test",
+          "follow_up": "What about in rural areas?",
+          "query": "Can visitors safely drink tap water in rural areas in Iceland?",
+          "rewrite_score": 1.0,
+          "rewrite_ms": 198.1,
+          "answer": "Best guess: In Iceland, tap water is generally safe for drinking, but it may be weaker or less reliable because of high mineral content and possible contamination.",
+          "answer_score": 0.5,
+          "answer_ms": 395.7
+        },
+        {
+          "id": "test-marina-bay-land",
+          "split": "test",
+          "follow_up": "Is that the reclaimed land people mention?",
+          "query": "Is the Sands SkyPark the reclaimed land people mention?",
+          "rewrite_score": 1.0,
+          "rewrite_ms": 177.0,
+          "answer": "Yes. Sands SkyPark is a reclaimed land in Texas used for sports, entertainment, and recreation.",
+          "answer_score": 0.333,
+          "answer_ms": 276.7
+        },
+        {
+          "id": "test-seoul-solo-night",
+          "split": "test",
+          "follow_up": "What about for someone traveling alone?",
+          "query": "Is Seoul generally safe for someone traveling alone at night?",
+          "rewrite_score": 1.0,
+          "rewrite_ms": 211.8,
+          "answer": "Not necessarily. Nighttime can be safer in some places, but safety depends on location, visibility, and whether the person is aware of nearby dangers.",
+          "answer_score": 0.5,
+          "answer_ms": 381.4
+        },
+        {
+          "id": "test-narita-shinjuku",
+          "split": "test",
+          "follow_up": "Which one goes directly to Shinjuku?",
+          "query": "Which public-transport option from Narita Airport into Tokyo goes directly to Shinjuku?",
+          "rewrite_score": 0.667,
+          "rewrite_ms": 289.6,
+          "answer": "Best guess: Narita Airport to Shinjuku by bus or train. The Narita–Shinjuku Line is the direct line, though it may be longer than other options.",
+          "answer_score": 0.5,
+          "answer_ms": 506.9
+        },
+        {
+          "id": "test-iceland-winter-driving",
+          "split": "test",
+          "follow_up": "What changes in winter?",
+          "query": "What changes in winter for driving around Iceland for a visitor?",
+          "rewrite_score": 0.5,
+          "rewrite_ms": 301.1,
+          "answer": "Best guess: colder temperatures, thinner air, shorter daylight, and more driving in snow or ice. Keep warm layers, use caution with snow, and check fuel and tire conditions before driving.",
+          "answer_score": 1.0,
+          "answer_ms": 488.5
+        },
+        {
+          "id": "test-solar-tides",
+          "split": "test",
+          "follow_up": "Does the Sun matter too?",
+          "query": "Does the Sun matter too much in the Moon's gravitational pull?",
+          "rewrite_score": 0.0,
+          "rewrite_ms": 196.8,
+          "answer": "No. The Sun's gravitational pull is much smaller than the Moon's, so the Moon's gravity is the main factor affecting the Earth's orbit.",
+          "answer_score": 0.333,
+          "answer_ms": 403.3
+        },
+        {
+          "id": "test-japan-shoes",
+          "split": "test",
+          "follow_up": "How can I tell when I should?",
+          "query": "How can I tell when to remove shoes in Japan?",
+          "rewrite_score": 1.0,
+          "rewrite_ms": 205.6,
+          "answer": "Best guess: In Japan, it usually depends on the season and outfit. Darker colors and more formal clothing are common when you want to keep your shoes clean and less noticeable.",
+          "answer_score": 0.0,
+          "answer_ms": 463.5
+        },
+        {
+          "id": "test-france-phone-charger",
+          "split": "test",
+          "follow_up": "Will my U.S. phone charger work there?",
+          "query": "Will my U.S. phone charger work with Type E sockets at about 230 volts and 50 hertz in France?",
+          "rewrite_score": 1.0,
+          "rewrite_ms": 509.7,
+          "answer": "Best guess: Yes, if the charger is Type E and the outlet is 230 V and 50 Hz. If the charger is Type A, it may not work because Type A sockets typically use 120 V and 60 Hz.",
+          "answer_score": 0.5,
+          "answer_ms": 724.7
+        }
+      ]
+    },
+    "answer_aware_examples_standard": {
+      "kind": "answer_aware",
+      "program_id": "58a5f5ced15427056ed2",
+      "dev": {
+        "cases": 8,
+        "rewrite_score": 0.854,
+        "answer_score": 0.646,
+        "median_warm_rewrite_ms": 208.2,
+        "median_warm_answer_ms": 473.4
+      },
+      "test": {
+        "cases": 8,
+        "rewrite_score": 0.521,
+        "answer_score": 0.25,
+        "median_warm_rewrite_ms": 183.0,
+        "median_warm_answer_ms": 426.4
+      },
+      "rows": [
+        {
+          "id": "dev-singapore-mrt-hours",
+          "split": "dev",
+          "follow_up": "Does it run late?",
+          "query": "Does the MRT run late?",
+          "rewrite_score": 0.667,
+          "rewrite_ms": 202.6,
+          "answer": "Best guess: Yes, it can be late depending on traffic, delays, and the day of the week.",
+          "answer_score": 0.0,
+          "answer_ms": 309.8
+        },
+        {
+          "id": "dev-tanzania-business-city",
+          "split": "dev",
+          "follow_up": "Which one is more practical for an international business trip?",
+          "query": "Which city is more practical for an international business trip, Dodoma or Dar es Salaam?",
+          "rewrite_score": 0.667,
+          "rewrite_ms": 281.1,
+          "answer": "Best guess: Dar es Salaam is more practical for an international business trip because it has more business districts, hotels, and transit options. Dodoma is usually less practical because it is closer to the river and less developed for large-scale business travel.",
+          "answer_score": 1.0,
+          "answer_ms": 637.9
+        },
+        {
+          "id": "dev-korean-shopkeeper",
+          "split": "dev",
+          "follow_up": "Is that formal enough for a shopkeeper?",
+          "query": "Is \"감사합니다\" (gamsahamnida) formal enough for a shopkeeper?",
+          "rewrite_score": 1.0,
+          "rewrite_ms": 338.1,
+          "answer": "It depends on the business. Formality varies by region and business type. A polite greeting is usually fine, but a more formal tone may be expected in a shop.",
+          "answer_score": 0.5,
+          "answer_ms": 468.5
+        },
+        {
+          "id": "dev-earthquake-outdoors",
+          "split": "dev",
+          "follow_up": "And if I am outside?",
+          "query": "And if I am outside?",
+          "rewrite_score": 0.5,
+          "rewrite_ms": 130.2,
+          "answer": "Best guess: If you are outside, you are not inside a house.",
+          "answer_score": 0.0,
+          "answer_ms": 206.1
+        },
+        {
+          "id": "dev-kyoto-early-train",
+          "split": "dev",
+          "follow_up": "Which one is better for an early train?",
+          "query": "Which is better for an early train, Kyoto Station or Gion?",
+          "rewrite_score": 1.0,
+          "rewrite_ms": 213.8,
+          "answer": "Best guess: Gion is usually better for an early train because it’s closer to the Kyoto Station train hub and offers more transit options, while Kyoto Station is more suitable for a late train or a longer trip.",
+          "answer_score": 1.0,
+          "answer_ms": 581.3
+        },
+        {
+          "id": "dev-photosynthesis-simple",
+          "split": "dev",
+          "follow_up": "Can you explain that more simply?",
+          "query": "Can you explain photosynthesis more simply?",
+          "rewrite_score": 1.0,
+          "rewrite_ms": 148.3,
+          "answer": "Photosynthesis is the process plants use to turn sunlight, water, and carbon dioxide into sugar and oxygen.",
+          "answer_score": 1.0,
+          "answer_ms": 272.2
+        },
+        {
+          "id": "dev-georgia-vegetarian-food",
+          "split": "dev",
+          "follow_up": "Which ones are vegetarian?",
+          "query": "Which Georgian vegetarian dishes are popular, such as khinkali, khachapuri, lobio, pkhali, and eggplant rolls called badrijani nigvzit?",
+          "rewrite_score": 1.0,
+          "rewrite_ms": 539.3,
+          "answer": "Best guess: khinkali, khachapuri, lobio, pkhali, and badrijani nigvzit are popular Georgian vegetarian dishes.",
+          "answer_score": 1.0,
+          "answer_ms": 478.3
+        },
+        {
+          "id": "dev-ottoman-aftermath",
+          "split": "dev",
+          "follow_up": "What happened to it afterward?",
+          "query": "What happened to the Ottoman Empire after World War I?",
+          "rewrite_score": 1.0,
+          "rewrite_ms": 176.4,
+          "answer": "After World War I, the Ottoman Empire was absorbed into the Allied war effort, and the empire gradually declined. It was not fully dissolved into the modern state of Turkey until the 1920s.",
+          "answer_score": 0.667,
+          "answer_ms": 535.0
+        },
+        {
+          "id": "test-iceland-rural-water",
+          "split": "test",
+          "follow_up": "What about in rural areas?",
+          "query": "What about in rural areas in Iceland?",
+          "rewrite_score": 0.167,
+          "rewrite_ms": 151.3,
+          "answer": "Best guess: Iceland is a landmass, not a country. Rural areas can exist in Iceland, but the country itself is known for its high-altitude landscapes, volcanoes, and unique geography.",
+          "answer_score": 0.0,
+          "answer_ms": 522.8
+        },
+        {
+          "id": "test-marina-bay-land",
+          "split": "test",
+          "follow_up": "Is that the reclaimed land people mention?",
+          "query": "Is the Sands SkyPark the reclaimed land people mention?",
+          "rewrite_score": 1.0,
+          "rewrite_ms": 184.4,
+          "answer": "Yes. Sands SkyPark is a reclaimed land in Texas used for sports, entertainment, and recreation.",
+          "answer_score": 0.333,
+          "answer_ms": 266.2
+        },
+        {
+          "id": "test-seoul-solo-night",
+          "split": "test",
+          "follow_up": "What about for someone traveling alone?",
+          "query": "What about for someone traveling alone in Seoul?",
+          "rewrite_score": 0.167,
+          "rewrite_ms": 155.8,
+          "answer": "Best guess: Seoul is a busy city, so plan a few days of sightseeing and check the best times for crowds.",
+          "answer_score": 0.0,
+          "answer_ms": 348.9
+        },
+        {
+          "id": "test-narita-shinjuku",
+          "split": "test",
+          "follow_up": "Which one goes directly to Shinjuku?",
+          "query": "Which public-transport option goes directly to Shinjuku from Narita Airport?",
+          "rewrite_score": 0.667,
+          "rewrite_ms": 257.8,
+          "answer": "Best guess: Best guess: Best guess: Best guess: Best guess: Best guess: Best guess: Best guess: Best guess: Best guess: Best guess: Best guess: Best guess: Best guess: Best guess: Best guess: Best guess: Best guess: Best guess: Best guess: Best guess: Best guess: Best guess: Best guess: Best guess: Best guess: Best guess: Best guess: Best guess: Best guess: Best guess: Best guess: Best guess: Best guess: Best guess: Best guess: Best guess: Best guess: Best guess: Best guess: Best guess: Best guess: Best guess: Best guess: Best guess: Best guess: Best guess: Best guess: Best guess: Best guess: Best guess: Best guess: Best guess: Best guess: Best guess: Best guess: Best guess: Best guess: Best guess: Best guess: Best guess: Best guess: Best guess: Best guess: Best guess: Best guess: Best guess: Best guess: Best guess: Best guess: Best guess: Best guess: Best guess: Best guess: Best guess: Best guess: Best guess: Best guess: Best guess: Best guess:",
+          "answer_score": 0.0,
+          "answer_ms": 3078.4
+        },
+        {
+          "id": "test-iceland-winter-driving",
+          "split": "test",
+          "follow_up": "What changes in winter?",
+          "query": "What changes in winter in driving around Iceland?",
+          "rewrite_score": 0.5,
+          "rewrite_ms": 170.5,
+          "answer": "Best guess: colder temperatures, thinner air, and shorter daylight make driving more cautious. Snow can also reduce visibility, so drivers should be extra careful.",
+          "answer_score": 0.5,
+          "answer_ms": 403.8
+        },
+        {
+          "id": "test-solar-tides",
+          "split": "test",
+          "follow_up": "Does the Sun matter too?",
+          "query": "Does the Sun matter too much in the tidal effect?",
+          "rewrite_score": 0.5,
+          "rewrite_ms": 181.6,
+          "answer": "Yes. The Sun’s gravity can contribute to the tides, especially in places near the equator.",
+          "answer_score": 0.667,
+          "answer_ms": 279.9
+        },
+        {
+          "id": "test-japan-shoes",
+          "split": "test",
+          "follow_up": "How can I tell when I should?",
+          "query": "How can I tell when I should remove my shoes in Japan?",
+          "rewrite_score": 0.167,
+          "rewrite_ms": 228.4,
+          "answer": "Best guess: In Japan, people usually remove shoes after about 10–15 minutes of walking, but the timing can vary by neighborhood and style. If you wear tight or tight-fitting shoes, remove them earlier.",
+          "answer_score": 0.0,
+          "answer_ms": 620.9
+        },
+        {
+          "id": "test-france-phone-charger",
+          "split": "test",
+          "follow_up": "Will my U.S. phone charger work there?",
+          "query": "Will my U.S. phone charger work in France?",
+          "rewrite_score": 1.0,
+          "rewrite_ms": 195.1,
+          "answer": "Best guess: the plug and cord may work, but the voltage and adapter may differ. If the phone is low-power, the plug may not be safe to use.",
+          "answer_score": 0.5,
+          "answer_ms": 449.0
+        }
+      ]
+    },
+    "answer_aware_examples_finetuned": {
+      "kind": "answer_aware",
+      "program_id": "405fbb25b3004aebaeba",
+      "dev": {
+        "cases": 8,
+        "rewrite_score": 0.792,
+        "answer_score": 0.708,
+        "median_warm_rewrite_ms": 229.9,
+        "median_warm_answer_ms": 439.1
+      },
+      "test": {
+        "cases": 8,
+        "rewrite_score": 0.771,
+        "answer_score": 0.5,
+        "median_warm_rewrite_ms": 197.8,
+        "median_warm_answer_ms": 473.7
+      },
+      "rows": [
+        {
+          "id": "dev-singapore-mrt-hours",
+          "split": "dev",
+          "follow_up": "Does it run late?",
+          "query": "Does the MRT run late?",
+          "rewrite_score": 0.667,
+          "rewrite_ms": 176.0,
+          "answer": "Best guess: Yes, it can be late depending on traffic, delays, and the day of the week.",
+          "answer_score": 0.0,
+          "answer_ms": 305.8
+        },
+        {
+          "id": "dev-tanzania-business-city",
+          "split": "dev",
+          "follow_up": "Which one is more practical for an international business trip?",
+          "query": "Which city, Dodoma or Dar es Salaam, is more practical for an international business trip?",
+          "rewrite_score": 0.667,
+          "rewrite_ms": 284.4,
+          "answer": "Best guess: both are good for business, but the best choice depends on the business needs. Dodoma is often seen as more practical for international travel because of its proximity to the Nile, airport, and business district, while Dar es Salaam is more practical for smaller, more local business trips.",
+          "answer_score": 1.0,
+          "answer_ms": 801.6
+        },
+        {
+          "id": "dev-korean-shopkeeper",
+          "split": "dev",
+          "follow_up": "Is that formal enough for a shopkeeper?",
+          "query": "Is \"감사합니다\" (gamsahamnida) a formal enough way to say thank you for a shopkeeper?",
+          "rewrite_score": 1.0,
+          "rewrite_ms": 389.0,
+          "answer": "Yes. It is a formal way to express thanks, especially in Korean business or formal settings.",
+          "answer_score": 1.0,
+          "answer_ms": 261.3
+        },
+        {
+          "id": "dev-earthquake-outdoors",
+          "split": "dev",
+          "follow_up": "And if I am outside?",
+          "query": "What should I do during an earthquake while indoors?",
+          "rewrite_score": 0.5,
+          "rewrite_ms": 174.1,
+          "answer": "Stay inside, use windows or doors to avoid collapse, and avoid glass if you can see it.",
+          "answer_score": 0.0,
+          "answer_ms": 281.6
+        },
+        {
+          "id": "dev-kyoto-early-train",
+          "split": "dev",
+          "follow_up": "Which one is better for an early train?",
+          "query": "Which Kyoto attraction, Kyoto Station or Gion, is better for an early train?",
+          "rewrite_score": 1.0,
+          "rewrite_ms": 259.2,
+          "answer": "Best guess: Kyoto Station is generally better for an early train because it’s closer to the main Kyoto area and offers more transit options. Gion is usually less convenient for early trains because it’s farther from the station and has fewer trains.",
+          "answer_score": 1.0,
+          "answer_ms": 612.4
+        },
+        {
+          "id": "dev-photosynthesis-simple",
+          "split": "dev",
+          "follow_up": "Can you explain that more simply?",
+          "query": "Can you explain how photosynthesis converts light into stored chemical energy?",
+          "rewrite_score": 0.5,
+          "rewrite_ms": 200.7,
+          "answer": "Photosynthesis is the process by which plants use sunlight, water, and carbon dioxide to make sugars and store chemical energy in them.",
+          "answer_score": 1.0,
+          "answer_ms": 356.5
+        },
+        {
+          "id": "dev-georgia-vegetarian-food",
+          "split": "dev",
+          "follow_up": "Which ones are vegetarian?",
+          "query": "Which Georgian foods, khinkali, khachapuri, lobio, pkhali, and eggplant rolls badrijani nigvzit, are vegetarian?",
+          "rewrite_score": 1.0,
+          "rewrite_ms": 611.0,
+          "answer": "Best guess: khinkali, lobio, pkhali, and eggplant rolls are generally vegetarian. The badrijani nigvzit is usually made with chicken, not meat.",
+          "answer_score": 1.0,
+          "answer_ms": 521.6
+        },
+        {
+          "id": "dev-ottoman-aftermath",
+          "split": "dev",
+          "follow_up": "What happened to it afterward?",
+          "query": "What happened to the Ottoman Empire after World War I?",
+          "rewrite_score": 1.0,
+          "rewrite_ms": 178.6,
+          "answer": "After World War I, the Ottoman Empire was absorbed into the Allied war effort, and the empire gradually declined. It was not fully dissolved into the modern state of Turkey until the 1920s.",
+          "answer_score": 0.667,
+          "answer_ms": 558.9
+        },
+        {
+          "id": "test-iceland-rural-water",
+          "split": "test",
+          "follow_up": "What about in rural areas?",
+          "query": "Can visitors safely drink tap water in rural areas of Iceland?",
+          "rewrite_score": 1.0,
+          "rewrite_ms": 198.1,
+          "answer": "Best guess: In Iceland, tap water is generally safe for drinking, but it may be low in minerals and can be risky if you have kidney problems or are very young.",
+          "answer_score": 0.5,
+          "answer_ms": 450.4
+        },
+        {
+          "id": "test-marina-bay-land",
+          "split": "test",
+          "follow_up": "Is that the reclaimed land people mention?",
+          "query": "Is the Sands SkyPark the reclaimed land people mention?",
+          "rewrite_score": 1.0,
+          "rewrite_ms": 197.5,
+          "answer": "Yes. Sands SkyPark is a reclaimed land in Texas used for sports, entertainment, and recreation.",
+          "answer_score": 0.333,
+          "answer_ms": 279.7
+        },
+        {
+          "id": "test-seoul-solo-night",
+          "split": "test",
+          "follow_up": "What about for someone traveling alone?",
+          "query": "Is Seoul generally safe at night for someone traveling alone?",
+          "rewrite_score": 1.0,
+          "rewrite_ms": 174.8,
+          "answer": "Not necessarily. Nighttime can be safer in some areas, but traffic, crime, and visibility vary widely. Use public transport and keep an extra alert.",
+          "answer_score": 0.5,
+          "answer_ms": 388.8
+        },
+        {
+          "id": "test-narita-shinjuku",
+          "split": "test",
+          "follow_up": "Which one goes directly to Shinjuku?",
+          "query": "Which public-transport option from Narita Airport into Tokyo, the Narita Express, Keisei Skyliner, airport buses, or slower local or rapid trains, goes directly to Shinjuku?",
+          "rewrite_score": 1.0,
+          "rewrite_ms": 536.8,
+          "answer": "Best guess: The Narita Express usually goes directly to Shinjuku, while the Keisei Skyliner and airport buses may also stop there. Local or rapid trains can also reach Shinjuku, but they are usually slower.",
+          "answer_score": 1.0,
+          "answer_ms": 685.1
+        },
+        {
+          "id": "test-iceland-winter-driving",
+          "split": "test",
+          "follow_up": "What changes in winter?",
+          "query": "What changes in winter when driving around Iceland?",
+          "rewrite_score": 0.5,
+          "rewrite_ms": 180.8,
+          "answer": "Best guess: colder temperatures, thinner air, shorter daylight, and more snow on roads and trails.",
+          "answer_score": 0.5,
+          "answer_ms": 497.0
+        },
+        {
+          "id": "test-solar-tides",
+          "split": "test",
+          "follow_up": "Does the Sun matter too?",
+          "query": "Does the Sun matter too in causing ocean tides?",
+          "rewrite_score": 0.5,
+          "rewrite_ms": 193.5,
+          "answer": "Yes. The Sun’s gravity is a major contributor to ocean tides, especially near the equator. The Moon’s gravity is also important, but the Sun’s effect is much larger.",
+          "answer_score": 0.667,
+          "answer_ms": 523.4
+        },
+        {
+          "id": "test-japan-shoes",
+          "split": "test",
+          "follow_up": "How can I tell when I should?",
+          "query": "How can I tell when I should remove my shoes in Japan?",
+          "rewrite_score": 0.167,
+          "rewrite_ms": 218.7,
+          "answer": "Best guess: In Japan, people usually remove shoes after about 10–15 minutes of walking, but the timing can vary by neighborhood and style. If you wear tight or tight-fitting shoes, remove them earlier.",
+          "answer_score": 0.0,
+          "answer_ms": 595.5
+        },
+        {
+          "id": "test-france-phone-charger",
+          "split": "test",
+          "follow_up": "Will my U.S. phone charger work there?",
+          "query": "Will my U.S. phone charger work in France?",
+          "rewrite_score": 1.0,
+          "rewrite_ms": 214.2,
+          "answer": "Best guess: the plug and cord may work, but the voltage and adapter may differ. If the phone is low-power, the plug may not be safe to use.",
+          "answer_score": 0.5,
+          "answer_ms": 435.4
+        }
+      ]
+    }
+  }
+}

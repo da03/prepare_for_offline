@@ -45,6 +45,13 @@ The broad draft can appear first in the same answer card while specialists and
 aggregation finish. Program names and routing details are intentionally hidden
 from the normal UI.
 
+Every composer submission is a standalone question by default. **Follow up** on
+an answer explicitly attaches only that question-answer pair to the next
+request; no earlier transcript is sent. A separate PAW rewriter was rejected
+after answer-aware Standard and Finetuned candidates failed the rewrite-fidelity
+and meaningful-lift gates, so bounded context goes directly through the normal
+answer graph without another model invocation.
+
 Every prepared topic is checked independently. When several match, the app
 runs all of them rather than reducing the question to the highest match.
 The broad spec intentionally contains no examples; examples are used only in
@@ -64,7 +71,35 @@ passes that exact specification to PAW:
 PAW has no corpus-ingestion or arbitrary dataset-finetuning API. A prepared
 program specializes the knowledge represented by the PAW compiler/runtime; it
 cannot promise to learn private, live, or future facts that were never part of
-that process.
+that process. A country name therefore does not create a complete country
+encyclopedia, and **Ready** means that the program compiled and passed its
+answer contract—not that every factual answer was validated.
+
+The PAW compile endpoint returns only when each compilation finishes; it does
+not expose intermediate percentage progress. Prepare therefore shows the
+current step, elapsed time, and expected duration with an indeterminate bar
+instead of inventing fine-grained percentages.
+
+## Local question history
+
+Questions, answers, and routing traces are retained only in the local SQLite
+history used by the app. They are not uploaded as telemetry. Topic prompts
+submitted through **Prepare** are different: the generated specification is
+sent to PAW's online compiler. New user-prepared programs are submitted with
+`public: false` so they are not listed on the public PAW hub.
+
+Developers can export deduplicated question candidates for manual review
+without answers:
+
+```bash
+cd backend
+python -m scripts.export_question_candidates \
+  --output question-candidates.json
+```
+
+Add `--include-answers` only when needed. Review and redact every export before
+sharing it or adding selected questions to development benchmarks; exports are
+never committed or uploaded automatically.
 
 ## Development
 
@@ -112,6 +147,7 @@ python -m eval.universal_qa.runner validate
 python -m eval.run_leakage_free_eval
 python -m eval.run_language_generalization
 python -m eval.run_prepared_ottoman_eval
+python -m eval.run_followup_eval
 ```
 
 Release candidates must maintain a 100% answer rate and are compared by relative

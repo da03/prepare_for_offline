@@ -1,6 +1,10 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { AppHeader, type PrimaryPage } from "./components/AppHeader";
-import { AskPage, type AnswerTurn } from "./components/AskPage";
+import {
+  AskPage,
+  type AnswerTurn,
+  type FollowUpTarget,
+} from "./components/AskPage";
 import { HistoryDrawer } from "./components/HistoryDrawer";
 import { PreparePage } from "./components/PreparePage";
 import {
@@ -11,26 +15,28 @@ import {
   type ConversationSummary,
   type NeuralJob,
   type PreparedProgram,
-  type StarterQuestion,
 } from "./lib/api";
 
 function messageTurns(messages: ConversationMessage[]): AnswerTurn[] {
   const turns: AnswerTurn[] = [];
-  let question = "";
+  let question: ConversationMessage | null = null;
   for (const message of messages) {
     if (message.role === "user") {
-      question = message.content;
+      question = message;
     } else if (question) {
       turns.push({
         id: message.message_id,
-        question,
+        question: question.content,
         answer: message.content,
         state: "complete",
         status: "",
         refined: message.payload.refined === true,
-        startsNewTopic: message.payload.new_topic === true,
+        conversationId: message.conversation_id,
+        answerMessageId: message.message_id,
+        isFollowUp:
+          typeof question.payload.reply_to_message_id === "string",
       });
-      question = "";
+      question = null;
     }
   }
   return turns;
@@ -45,13 +51,15 @@ function friendlyError(caught: unknown): string {
 
 export default function App() {
   const [page, setPage] = useState<PrimaryPage>("ask");
-  const [starters, setStarters] = useState<StarterQuestion[]>([]);
   const [programs, setPrograms] = useState<PreparedProgram[]>([]);
   const [turns, setTurns] = useState<AnswerTurn[]>([]);
   const [question, setQuestion] = useState("");
   const [asking, setAsking] = useState(false);
-  const [nextStartsNewTopic, setNextStartsNewTopic] = useState(false);
-  const [conversationId, setConversationId] = useState<string | null>(null);
+  const [followUpTarget, setFollowUpTarget] =
+    useState<FollowUpTarget | null>(null);
+  const [activeConversationId, setActiveConversationId] = useState<
+    string | null
+  >(null);
   const [conversations, setConversations] = useState<ConversationSummary[]>([]);
   const [historyOpen, setHistoryOpen] = useState(false);
   const [historyLoading, setHistoryLoading] = useState(false);
@@ -73,9 +81,8 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    void Promise.all([api.starters(), api.programs(), api.conversations()])
-      .then(([starterResult, programResult, historyResult]) => {
-        setStarters(starterResult.starters);
+    void Promise.all([api.programs(), api.conversations()])
+      .then(([programResult, historyResult]) => {
         setPrograms(programResult.programs);
         setConversations(historyResult.conversations);
       })
@@ -96,10 +103,10 @@ export default function App() {
     const text = raw.trim();
     if (!text || asking) return;
     const id = `turn-${Date.now()}`;
-    const startsNewTopic = nextStartsNewTopic;
+    const target = followUpTarget;
     setQuestion("");
     setAsking(true);
-    setNextStartsNewTopic(false);
+    setFollowUpTarget(null);
     setTurns((current) => [
       ...current,
       {
@@ -109,7 +116,7 @@ export default function App() {
         state: "working",
         status: "Thinking…",
         refined: false,
-        startsNewTopic,
+        isFollowUp: target !== null,
       },
     ]);
     const controller = new AbortController();
@@ -118,11 +125,14 @@ export default function App() {
       await streamAsk(
         {
           text,
-          ...(conversationId ? { conversation_id: conversationId } : {}),
-          ...(startsNewTopic ? { new_topic: true } : {}),
+          ...(target
+            ? { reply_to_message_id: target.messageId }
+            : {}),
         },
         (event) => {
-          if (event.conversation_id) setConversationId(event.conversation_id);
+          if (event.conversation_id) {
+            setActiveConversationId(event.conversation_id);
+          }
           if (event.type === "answer_update" && event.answer) {
             updateTurn(id, (turn) => ({
               ...turn,
@@ -142,6 +152,8 @@ export default function App() {
               state: "complete",
               status: "",
               refined: event.refined === true,
+              conversationId: event.conversation_id,
+              answerMessageId: event.message_id,
             }));
           }
         },
@@ -164,25 +176,31 @@ export default function App() {
 
   async function selectConversation(id: string) {
     const conversation = await api.conversation(id);
-    setConversationId(id);
+    setActiveConversationId(id);
     setTurns(messageTurns(conversation.messages));
+    setFollowUpTarget(null);
     setHistoryOpen(false);
     setPage("ask");
   }
 
-  function newConversation() {
-    askAbort.current?.abort();
-    setConversationId(null);
-    setTurns([]);
-    setQuestion("");
-    setNextStartsNewTopic(false);
-    setHistoryOpen(false);
+  function beginFollowUp(turn: AnswerTurn) {
+    if (!turn.answerMessageId) return;
+    setFollowUpTarget({
+      messageId: turn.answerMessageId,
+      question: turn.question,
+    });
     setPage("ask");
   }
 
   async function deleteConversation(id: string) {
     await api.deleteConversation(id);
-    if (id === conversationId) newConversation();
+    setTurns((current) =>
+      current.filter((turn) => turn.conversationId !== id),
+    );
+    if (id === activeConversationId) {
+      setActiveConversationId(null);
+      setFollowUpTarget(null);
+    }
     await refreshHistory();
   }
 
@@ -240,14 +258,14 @@ export default function App() {
       <main className="app-main">
         {page === "ask" ? (
           <AskPage
-            starters={starters}
             turns={turns}
             value={question}
             asking={asking}
-            nextStartsNewTopic={nextStartsNewTopic}
+            followUpTarget={followUpTarget}
             onValueChange={setQuestion}
             onSubmit={(value) => void ask(value)}
-            onNewTopic={() => setNextStartsNewTopic(true)}
+            onFollowUp={beginFollowUp}
+            onCancelFollowUp={() => setFollowUpTarget(null)}
           />
         ) : (
           <PreparePage
@@ -263,12 +281,11 @@ export default function App() {
       {historyOpen ? (
         <HistoryDrawer
           conversations={conversations}
-          activeConversationId={conversationId}
+          activeConversationId={activeConversationId}
           loading={historyLoading}
           onClose={() => setHistoryOpen(false)}
           onSearch={(value) => void refreshHistory(value)}
           onSelect={(id) => void selectConversation(id)}
-          onNew={newConversation}
           onDelete={deleteConversation}
         />
       ) : null}
